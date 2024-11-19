@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import InputTextField from "../components/common/InputTextField";
 import { Formik } from "formik";
+import CheckboxField from "../components/common/CheckboxField";
 
 export const Home = () => {
   return (
@@ -41,6 +42,9 @@ export const Home = () => {
                     placeholder="National ID or Iqama"
                     startEndroment={<img src="/../src/assets/ID.svg" />}
                   />
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                  <CheckboxField name="rajName" lbl="National ID or Iqama" />
                 </Grid>
               </Grid>
             </Grid>
