@@ -24,11 +24,24 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        "*": {
+          "--white": "#fff",
+          "--primaryColor": "#cf8702",
+          "--secondaryColor": "#f1a100",
+          "--linearBg": "linear-gradient(90deg, #FFCE72 0%, #F6B333 100%)",
+          "--endromentBgColor": "#ffebc7",
+          "--endromentColor": "#b67600",
+          "--highlightFontColor": "#bd0000",
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: "none",
-          color: "#fff",
+          color: "var(--white)",
         },
       },
     },
@@ -52,7 +65,6 @@ const theme = createTheme({
     MuiInputAdornment: {
       styleOverrides: {
         root: {
-          backgroundColor: "#e3f2fd",
           padding: "5px",
           height: "100%",
           width: "40px",

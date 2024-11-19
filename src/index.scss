@@ -2,15 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-$primary: #cf8702;
-$background: linear-gradient(90deg, #ffce72 0%, #f6b333 100%);
-
 body {
   height: 100vh;
 
   > #root {
     height: 100%;
-    background: $background;
+    background: var(--linearBg);
   }
 }
 
@@ -311,7 +308,6 @@ body[dir="rtl"] {
       > button {
         position: absolute;
         top: 8px;
-        color: #9e9e9e;
 
         &.left {
           left: 8px;
@@ -394,8 +390,8 @@ body[dir="rtl"] {
 
 .fieldWrapper {
   .start-adornment {
-    color: #b67600;
-    background-color: #ffebc7;
+    color: var(--endromentColor);
+    background-color: var(--endromentBgColor);
     margin-right: 0;
     width: 52px;
 
@@ -407,7 +403,7 @@ body[dir="rtl"] {
 
   .input-textfield {
     input {
-      background: white;
+      background: var(--white);
       padding-left: 10px;
       border-radius: 0 16px 16px 0;
     }
@@ -427,7 +423,7 @@ body[dir="rtl"] {
   font-size: 36px;
 
   > span {
-    color: #bd0000;
+    color: var(--highlightFontColor);
   }
 }
 

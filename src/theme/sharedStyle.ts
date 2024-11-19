@@ -8,7 +8,7 @@ export const ButtonPrimary = styled(Button)`
     #f1a100 0%,
     #cf8702 100%
   ) !important;
-  color: #fff !important;
+  color: var(--white) !important;
 
   &:hover {
     background: radial-gradient(
