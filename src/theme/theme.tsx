@@ -5,13 +5,13 @@ const theme = createTheme({
   direction: i18n.dir() === "rtl" ? "rtl" : "ltr",
   palette: {
     primary: {
-      main: "#244b62",
+      main: "#cf8702",
     },
     secondary: {
-      main: "#dc004e",
+      main: "#f1a100",
     },
     background: {
-      default: "rgb(247, 247, 247)",
+      default: "linear-gradient(90deg, #FFCE72 0%, #F6B333 100%)",
     },
   },
   typography: {
@@ -28,6 +28,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
+          color: "#fff",
         },
       },
     },

@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+$primary: #cf8702;
+$background: linear-gradient(90deg, #ffce72 0%, #f6b333 100%);
+
 body {
   height: 100vh;
 
   > #root {
     height: 100%;
+    background: $background;
   }
 }
 
@@ -124,7 +128,7 @@ body[dir="rtl"] {
 .fieldWrapper {
   height: 100%;
   display: grid;
-  grid-template-columns: 9fr 1fr;
+  // grid-template-columns: 9fr 1fr;
   gap: 8px;
 
   .helperIcon {
@@ -386,4 +390,52 @@ body[dir="rtl"] {
   margin-top: 30px;
   color: var(--primaryBackground);
   font-size: 24px;
+}
+
+.fieldWrapper {
+  .start-adornment {
+    color: #b67600;
+    background-color: #ffebc7;
+    margin-right: 0;
+    width: 52px;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .input-textfield {
+    input {
+      background: white;
+      padding-left: 10px;
+      border-radius: 0 16px 16px 0;
+    }
+
+    fieldset {
+      border: 0;
+    }
+  }
+}
+
+.main-content {
+  padding: 20px;
+}
+
+.more-fund-title {
+  font-weight: 700;
+  font-size: 36px;
+
+  > span {
+    color: #bd0000;
+  }
+}
+
+.more-fund-description {
+  font-weight: 400;
+  font-size: 16px;
+  padding-block: 20px;
+  > span {
+    font-weight: 700;
+  }
 }

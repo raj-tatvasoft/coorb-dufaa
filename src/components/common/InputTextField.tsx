@@ -57,7 +57,8 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
       {({ field, meta }: FieldProps) => (
         <div className="fieldWrapper">
           <TextField
-            size="small"
+            size="medium"
+            classes={{ root: "input-textfield" }}
             id={`textfield-${name}`}
             label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
             variant="outlined"
@@ -85,7 +86,10 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
             autoComplete="off"
             InputProps={{
               startAdornment: startEndroment ? (
-                <InputAdornment position="start">
+                <InputAdornment
+                  position="start"
+                  classes={{ root: "start-adornment" }}
+                >
                   {startEndroment ? startEndroment : ""}
                 </InputAdornment>
               ) : null,

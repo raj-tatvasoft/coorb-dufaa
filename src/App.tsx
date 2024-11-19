@@ -14,9 +14,8 @@ import { NotFound } from "./pages/NotFound.tsx";
 
 import { useTranslation } from "react-i18next";
 import Loader from "./components/common/Loader.tsx";
-import { Formik } from "formik";
-import InputTextField from "./components/common/InputTextField.tsx";
-import { MailLock } from "@mui/icons-material";
+import { Home } from "./pages/Home.tsx";
+import { Layout } from "./components/layout/Layout.tsx";
 
 function App() {
   const { i18n } = useTranslation();
@@ -26,31 +25,19 @@ function App() {
     stylisPlugins: i18n.language === "ar" ? [prefixer, rtlPlugin] : [prefixer],
   });
   return (
-    <div className="p-20">
+    <>
       <Loader />
       <CacheProvider value={cacheRtl}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Formik initialValues={{}} onSubmit={() => {}}>
-            {() => {
-              return (
-                <form className="workflowDetailWrapper">
-                  <InputTextField
-                    name="rajName"
-                    placeholder="rajName"
-                    startEndroment={<MailLock />}
-                  />
-                </form>
-              );
-            }}
-          </Formik>
+
           <Router>
-            {/* <Layout> */}
-            <Routes>
-              <Route path="/" element={<>Demo Page</>} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            {/* </Layout> */}
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
           </Router>
           <ToastContainer
             position="top-right"
@@ -67,7 +54,7 @@ function App() {
           />
         </ThemeProvider>
       </CacheProvider>
-    </div>
+    </>
   );
 }
 

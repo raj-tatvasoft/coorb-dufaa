@@ -1,0 +1,64 @@
+.headerAppBar {
+  box-shadow: none !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+
+  .headerToolBar {
+    justify-content: space-between;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .headerLogoBox {
+    display: flex;
+    align-items: center;
+    > button:hover {
+      background-color: transparent;
+    }
+
+    .headerLogo {
+      height: "40px";
+      margin-inline-start: "8px";
+    }
+
+    .headerName {
+      font-weight: 800;
+      font-size: 20px;
+      margin-left: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .headerLogo {
+        height: "40px";
+        margin-inline-start: "8px";
+      }
+
+      .headerName {
+        font-weight: 800;
+        font-size: 20px;
+        line-height: 40px;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .headerBox {
+    .menuIcon {
+      > svg {
+        height: 30px;
+        width: 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .menuIcon {
+        > svg {
+          height: 30px;
+          width: 30px;
+        }
+      }
+    }
+  }
+}
