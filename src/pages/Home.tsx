@@ -3,48 +3,75 @@ import Grid from "@mui/material/Grid2";
 import InputTextField from "../components/common/InputTextField";
 import { Formik } from "formik";
 import CheckboxField from "../components/common/CheckboxField";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { NafathVerifyModal } from "../components/dialog/NafathVerifyModal";
+import { OTPModal } from "../components/dialog/OTPModal";
+import { EligibilityCheckModal } from "../components/dialog/EligibilityCheckModal";
 
 export const Home = () => {
+  const { t } = useTranslation();
+
+  const [otpModal, setOtpModal] = useState(false);
+  const [nafathModal, setNafathModal] = useState(false);
+  const [eligibilityCheckModal, setEligibilityCheckModal] = useState(false);
+
   return (
-    <Box>
+    <Box className="wrapper">
       <p className="more-fund-title">
-        Need <span> more funds </span> over your current financing?
+        {t("need")} <span> {t("moreFunds")} </span>{" "}
+        {t("overYourCurrentFinancing?")}
       </p>
-
       <p className="more-fund-description">
-        Get an instant Microfinance, starting from <span> 2,000 SAR! </span> No
-        paper work, fast approvals and flexible terms.
+        {t("getAnInstantMicrofinance")} <span> {t("2000SAR")} </span>{" "}
+        {t("noPaperWorkFastApprovalsAndFlexibleTerms")}
       </p>
-
       <Formik initialValues={{}} onSubmit={() => {}}>
         {() => {
           return (
             // <form className="workflowDetailWrapper">
-            <Grid container spacing={2}>
-              <Grid container spacing={2} size={{ xs: 12 }}>
+            <Grid container spacing={{ xs: 1, lg: 2 }}>
+              <Grid
+                container
+                spacing={{ xs: 1.5, lg: 2 }}
+                size={{ xs: 12 }}
+                alignItems={"center"}
+              >
                 <Grid size={{ xs: 12, md: 6 }}>
                   <InputTextField
                     name="nationalID"
-                    placeholder="National ID or Iqama"
-                    startEndroment={<img src="/../src/assets/ID.svg" />}
+                    placeholder={t("NationalIDorIqama")}
+                    startEndroment={<img src="/images/ID.svg" />}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
                   <InputTextField
-                    name="rajName"
-                    placeholder="National ID or Iqama"
-                    startEndroment={<img src="/../src/assets/ID.svg" />}
+                    name="saudiMobileNumber"
+                    placeholder={t("saudiMobileNumber")}
+                    startEndroment={<img src="/images/SmartPhone.svg" />}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
                   <InputTextField
-                    name="rajName"
-                    placeholder="National ID or Iqama"
-                    startEndroment={<img src="/../src/assets/ID.svg" />}
+                    name="dateOfBirth"
+                    placeholder={t("dateOfBirth")}
+                    startEndroment={<img src="/images/Calendar.svg" />}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
-                  <CheckboxField name="rajName" lbl="National ID or Iqama" />
+                  <CheckboxField
+                    name="dataShareWithDuffa"
+                    lbl={t("agreeToShareDataWithDuffa")}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                  <CheckboxField name="t&c" lbl={t("readT&C")} />
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                  <CheckboxField
+                    name="receiveMails"
+                    lbl={t("wantToReceiveMarketingMails")}
+                  />
                 </Grid>
               </Grid>
             </Grid>
@@ -52,6 +79,10 @@ export const Home = () => {
           );
         }}
       </Formik>
+
+      <OTPModal open={otpModal} setOpen={setOtpModal} />
+      <NafathVerifyModal open={nafathModal} setOpen={setNafathModal} />
+      <EligibilityCheckModal open={eligibilityCheckModal} />
     </Box>
   );
 };

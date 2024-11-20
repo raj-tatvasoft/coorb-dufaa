@@ -95,5 +95,24 @@
   "Identification": "Identification",
   "Commodity Type": "Commodity Type",
   "moreThen100RecordPending": "Over 100 tasks are still pending.",
-  "notFound": "404 | NOT FOUND"
+  "notFound": "404 | NOT FOUND",
+
+  "need": "Need",
+  "moreFunds": "more funds",
+  "overYourCurrentFinancing?": "over your current financing?",
+  "getAnInstantMicrofinance": "Get an instant Microfinance, starting from",
+  "2000SAR": "2,000 SAR!",
+  "noPaperWorkFastApprovalsAndFlexibleTerms": "No paper work, fast approvals and flexible terms.",
+  "NationalIDorIqama": "National ID or Iqama",
+  "saudiMobileNumber": "Saudi Mobile Number",
+  "duffa": "Duffa",
+  "agreeToShareDataWithDuffa": "I agree to share this data with Dufaa",
+  "readT&C": "I have read the terms & conditions",
+  "wantToReceiveMarketingMails": "I want to receive marketing emails",
+  "codeSentToYourMobileNumber": "A code was sent to your mobile number",
+  "enterReceiveNumber": "Please enter the number you received",
+  "verifyWithNafath": "Verify With Nafath",
+  "verificationText": "Open your Nafath app and select this code to complete your verification.",
+  "workingOnEligibilityChecking": "We're working on checking your eligibility...",
+  "thisMightTakeMoment": "This might take a moment, please do not leave this page"
 }

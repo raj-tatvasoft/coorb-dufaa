@@ -94,5 +94,24 @@
   "Identification": "الهوية",
   "Commodity Type": "نوع السلعة",
   "moreThen100RecordPending": "لا يزال هناك أكثر من 100 مهمة معلقة.",
-  "notFound": "404 | لم يتم العثور عليه"
+  "notFound": "404 | لم يتم العثور عليه",
+
+  "need": "يحتاج",
+  "moreFunds": "مزيد من الأموال",
+  "overYourCurrentFinancing?": "على تمويلك الحالي؟",
+  "getAnInstantMicrofinance": "احصل على تمويل صغير فوري، ابتداءً من",
+  "2000SAR": "2000 ريال سعودي!",
+  "noPaperWorkFastApprovalsAndFlexibleTerms": "لا حاجة إلى العمل الورقي، والموافقات السريعة والشروط المرنة.",
+  "NationalIDorIqama": "الهوية الوطنية أو الإقامة",
+  "saudiMobileNumber": "رقم الجوال السعودي",
+  "duffa": "دوفا",
+  "agreeToShareDataWithDuffa": "أوافق على مشاركة هذه البيانات مع دوفا",
+  "readT&C": "لقد قرأت الشروط والأحكام",
+  "wantToReceiveMarketingMails": "أريد تلقي رسائل التسويق عبر البريد الإلكتروني",
+  "codeSentToYourMobileNumber": "تم إرسال الرمز إلى رقم هاتفك المحمول",
+  "enterReceiveNumber": "الرجاء إدخال الرقم الذي تلقيته",
+  "verifyWithNafath": "التحقق مع نافث",
+  "verificationText": "افتح تطبيق Nafath الخاص بك وحدد هذا الرمز لإكمال عملية التحقق الخاصة بك.",
+  "workingOnEligibilityChecking": "نحن نعمل على التحقق من أهليتك...",
+  "thisMightTakeMoment": "قد يستغرق هذا بعض الوقت، يرجى عدم مغادرة هذه الصفحة"
 }

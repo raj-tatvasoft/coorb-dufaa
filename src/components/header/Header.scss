@@ -5,10 +5,10 @@
 
   .headerToolBar {
     justify-content: space-between;
-    background-color: transparent;
     display: flex;
     flex-direction: row;
     align-items: center;
+    background: var(--linearBg);
   }
 
   .headerLogoBox {
@@ -26,20 +26,13 @@
     .headerName {
       font-weight: 800;
       font-size: 20px;
-      margin-left: 10px;
+      margin-inline-start: 10px;
     }
 
     @media (max-width: 600px) {
       .headerLogo {
         height: "40px";
         margin-inline-start: "8px";
-      }
-
-      .headerName {
-        font-weight: 800;
-        font-size: 20px;
-        line-height: 40px;
-        margin-left: 10px;
       }
     }
   }

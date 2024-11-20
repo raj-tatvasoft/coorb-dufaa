@@ -34,6 +34,7 @@ const theme = createTheme({
           "--endromentBgColor": "#ffebc7",
           "--endromentColor": "#b67600",
           "--highlightFontColor": "#bd0000",
+          "--checkboxText": "#6B5121",
         },
       },
     },

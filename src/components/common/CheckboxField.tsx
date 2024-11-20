@@ -36,6 +36,8 @@ const CheckboxField: FC<IGenericFieldProps> = (props) => {
                   {...field}
                   checked={field.value ? true : false}
                   value={field.value}
+                  icon={<img src="/images/Checkbox.svg" />}
+                  checkedIcon={<img src="/images/CheckboxActive.svg" />}
                   onChange={(e) => {
                     const isChecked = e.target.checked;
                     setFieldTouched(name, true, true);

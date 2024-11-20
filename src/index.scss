@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 body {
-  height: 100vh;
+  min-height: 100vh;
 
   > #root {
+    min-height: 100vh;
     height: 100%;
     background: var(--linearBg);
   }
@@ -304,6 +305,8 @@ body[dir="rtl"] {
   .MuiDialog-container {
     .MuiPaper-root {
       border-radius: 8px;
+      background: rgba(14, 14, 14, 0.2);
+      backdrop-filter: blur(6px);
 
       > button {
         position: absolute;
@@ -320,6 +323,12 @@ body[dir="rtl"] {
         }
       }
 
+      &.transparentDialog {
+        justify-content: center;
+        gap: 30px;
+        margin: auto;
+      }
+
       .MuiDialogTitle-root {
         font-size: 24px;
         font-weight: 600;
@@ -330,15 +339,99 @@ body[dir="rtl"] {
       .MuiDialogContent-root {
         padding-block: 0;
         margin-block: 16px;
+
+        &.transparentContent {
+          flex: 0 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          > .eligibility-background {
+            background-image: url(/public/images/eligibility.gif);
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            width: 600px;
+            position: relative;
+
+            > img {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 300px;
+              height: auto;
+            }
+
+            > p {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 280px;
+              font-weight: 700;
+              font-size: 24px;
+              color: var(--white);
+              text-align: center;
+            }
+
+            @media (max-width: 599px) {
+              height: 400px;
+              width: 400px;
+
+              > img {
+                width: 220px;
+              }
+
+              > p {
+                width: 200px;
+                font-weight: 700;
+                font-size: 19px;
+              }
+            }
+          }
+
+          > .waitText {
+            font-size: 15px;
+            font-weight: 400;
+            width: 300px;
+            text-align: center;
+            margin-top: -70px;
+            padding-bottom: 70px;
+
+            @media (max-width: 599px) {
+              font-size: 12px;
+              width: 200px;
+              margin-top: -50px;
+              padding-bottom: 50px;
+            }
+          }
+        }
       }
 
       .MuiDialogActions-root {
         padding: 0 24px 16px;
+
+        &.transparentActionButton {
+          justify-content: center;
+
+          > button {
+            font-size: 18px;
+            font-weight: 500;
+            > svg {
+              height: 30px;
+              width: 30px;
+            }
+            > p {
+              line-height: 30px;
+            }
+          }
+        }
       }
     }
   }
   @media (max-width: 575px) {
-    margin: -24px;
+    // margin: -24px;
 
     .MuiDialogContent-root,
     .MuiDialogActions-root,
@@ -392,24 +485,44 @@ body[dir="rtl"] {
   .start-adornment {
     color: var(--endromentColor);
     background-color: var(--endromentBgColor);
-    margin-right: 0;
+    margin-inline: 0;
     width: 52px;
+    border-radius: 0;
 
     img {
       width: 25px;
       height: 25px;
     }
+
+    @media (max-width: 599px) {
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 
   .input-textfield {
+    > div {
+      padding-inline: 0;
+      overflow: hidden;
+    }
     input {
       background: var(--white);
-      padding-left: 10px;
-      border-radius: 0 16px 16px 0;
+      padding-inline: 10px;
     }
 
     fieldset {
       border: 0;
+      padding: 0;
+    }
+  }
+
+  .checkboxFormField {
+    span.MuiTypography-root {
+      color: var(--checkboxText);
+      font-weight: 400;
+      font-size: 14px;
     }
   }
 }
@@ -433,5 +546,35 @@ body[dir="rtl"] {
   padding-block: 20px;
   > span {
     font-weight: 700;
+  }
+}
+
+.wrapper {
+  padding: 20px;
+
+  @media (max-width: 599px) {
+    padding: 10px;
+  }
+}
+
+.OtpInput {
+  padding-block: 20px;
+  .inputRoot {
+    border-radius: 12px;
+    overflow: hidden;
+    height: 69px;
+    width: 69px;
+
+    .fieldsetInput {
+      border: 0;
+    }
+
+    .inputField {
+      background-color: var(--white);
+      height: inherit;
+      width: inherit;
+      font-size: 24px;
+      font-weight: 600;
+    }
   }
 }
