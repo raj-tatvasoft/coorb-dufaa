@@ -4,12 +4,6 @@ import { IGenericFieldProps } from "../../service/commonModel";
 import { useField } from "formik";
 
 const LabelField: FC<IGenericFieldProps> = (props) => {
-  console.log(
-    "------rajlog---props.variableStyle",
-    props.variableStyle,
-    props.lbl
-  );
-
   const { t } = useTranslation();
   const { name, lbl, variableStyle } = props;
   const [field] = useField(name);

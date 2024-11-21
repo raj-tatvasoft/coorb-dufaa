@@ -31,8 +31,9 @@ export interface IGenericFieldProps extends Partial<Variable> {
   options?: { value: string | number; label: string | number }[];
   hideClr?: boolean;
   fetchOpt?: boolean;
-  startEndroment?: string | React.ReactNode;
-  endEndroment?: string | React.ReactNode;
+  startIcon?: string;
+  endIcon?: string;
+  variableStyle?: any;
 }
 
 export interface IObject {

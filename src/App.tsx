@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import Loader from "./components/common/Loader.tsx";
 import { Home } from "./pages/Home.tsx";
 import { Layout } from "./components/layout/Layout.tsx";
+import { DynamicForm } from "./pages/DynamicHome.tsx";
 
 function App() {
   const { i18n } = useTranslation();
@@ -35,6 +36,7 @@ function App() {
             <Layout>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/home" element={<DynamicForm />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>

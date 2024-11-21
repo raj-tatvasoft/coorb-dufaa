@@ -1,5 +1,4 @@
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import "./Header.scss";
 import i18n from "../../translation/i18n";
 import { useTranslation } from "react-i18next";
@@ -26,7 +25,7 @@ export const Header = () => {
             </Typography>
           </IconButton>
         </Box>
-        <Box className="headerBox">
+        {/* <Box className="headerBox">
           <IconButton
             edge="start"
             color="inherit"
@@ -39,7 +38,7 @@ export const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-        </Box>
+        </Box> */}
       </Toolbar>
     </AppBar>
   );

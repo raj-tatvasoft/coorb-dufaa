@@ -9,6 +9,7 @@ import {
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IGenericFieldProps } from "../../service/commonModel";
+import { checkIsIcon } from "../../utils/helperFunction";
 
 const InputTextField: FC<IGenericFieldProps> = (props) => {
   const { t } = useTranslation();
@@ -20,11 +21,10 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
     required,
     readOnly,
     valRegex,
-    startEndroment,
-    endEndroment,
+    startIcon,
+    endIcon,
   } = props;
   const [field] = useField(name);
-
   const {
     setFieldValue,
     setFieldTouched,
@@ -51,7 +51,6 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
   };
 
   const isTextArea = fieldType === "textarea";
-
   return (
     <Field name={name}>
       {({ field, meta }: FieldProps) => (
@@ -63,7 +62,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
             label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
             variant="outlined"
             type={fieldType}
-            placeholder={placeholder}
+            placeholder={placeholder ? t(placeholder) : ""}
             {...field}
             value={val ?? ""}
             multiline={isTextArea}
@@ -85,17 +84,21 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
             disabled={Boolean(readOnly)}
             autoComplete="off"
             InputProps={{
-              startAdornment: startEndroment ? (
+              startAdornment: startIcon ? (
                 <InputAdornment
                   position="start"
                   classes={{ root: "start-adornment" }}
                 >
-                  {startEndroment ? startEndroment : ""}
+                  {checkIsIcon(startIcon) ? (
+                    <img src={`images/${startIcon}`} />
+                  ) : (
+                    startIcon
+                  )}
                 </InputAdornment>
               ) : null,
-              endAdornment: endEndroment ? (
+              endAdornment: endIcon ? (
                 <InputAdornment position="end">
-                  {endEndroment ? endEndroment : ""}
+                  {endIcon ? endIcon : ""}
                 </InputAdornment>
               ) : null,
             }}

@@ -1,0 +1,16 @@
+.stepFramWrapper {
+  display: flex;
+  gap: 5px;
+
+  .stepFrame {
+    width: 16px;
+    height: 7px;
+    border-radius: 8px;
+    background-color: var(--secondaryColor);
+
+    &.active {
+      width: 38px;
+      background-color: var(--darkRed);
+    }
+  }
+}

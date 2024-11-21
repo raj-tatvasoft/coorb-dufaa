@@ -12,7 +12,7 @@ import { EligibilityCheckModal } from "../components/dialog/EligibilityCheckModa
 export const Home = () => {
   const { t } = useTranslation();
 
-  const [otpModal, setOtpModal] = useState(false);
+  const [otpModal, setOtpModal] = useState(true);
   const [nafathModal, setNafathModal] = useState(false);
   const [eligibilityCheckModal, setEligibilityCheckModal] = useState(false);
 
@@ -41,21 +41,21 @@ export const Home = () => {
                   <InputTextField
                     name="nationalID"
                     placeholder={t("NationalIDorIqama")}
-                    startEndroment={<img src="/images/ID.svg" />}
+                    startIcon={"ID.svg"}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
                   <InputTextField
                     name="saudiMobileNumber"
                     placeholder={t("saudiMobileNumber")}
-                    startEndroment={<img src="/images/SmartPhone.svg" />}
+                    startIcon={"SmartPhone.svg"}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
                   <InputTextField
                     name="dateOfBirth"
                     placeholder={t("dateOfBirth")}
-                    startEndroment={<img src="/images/Calendar.svg" />}
+                    startIcon={"Calendar.svg"}
                   />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
