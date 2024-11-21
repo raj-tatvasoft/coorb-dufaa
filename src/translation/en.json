@@ -121,5 +121,11 @@
   "marketing_tick": "I want to receive marketing emails",
   "button_go_next": "Next",
   "button_apply": "Apply",
-  "resend_button": "Resend"
+  "resend_button": "Resend",
+  "user_name": "Username",
+  "name": "Name",
+  "email": "Email",
+  "password": "Passowrd",
+  "confirm_password": "Confirm Password",
+  "register_button": "Register"
 }

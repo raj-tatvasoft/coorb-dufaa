@@ -16,7 +16,7 @@ const CheckboxField: FC<IGenericFieldProps> = (props) => {
     setFieldTouched,
   }: FormikContextType<{ [key: string]: any }> = useFormikContext();
 
-  const { name, required, readOnly, lbl } = props;
+  const { name, required, readOnly, lbl, variableStyle } = props;
 
   return (
     <Field name={name}>
@@ -46,7 +46,19 @@ const CheckboxField: FC<IGenericFieldProps> = (props) => {
                   disabled={Boolean(readOnly)}
                 />
               }
-              label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : ""}
+              label={
+                variableStyle?.htmlLabel ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: variableStyle?.htmlLabel,
+                    }}
+                  />
+                ) : lbl ? (
+                  `${t(lbl)} ${required ? "*" : ""}`
+                ) : (
+                  ""
+                )
+              }
             />
 
             <FormHelperText>
