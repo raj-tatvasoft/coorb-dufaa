@@ -8,7 +8,7 @@ import {
 } from "formik";
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IGenericFieldProps } from "../../service/commonModel";
+import { IGenericFieldProps, IObject } from "../../service/commonModel";
 import { checkIsIcon } from "../../utils/helperFunction";
 import OTPInput from "./OTPField";
 
@@ -31,7 +31,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
   const {
     setFieldValue,
     setFieldTouched,
-  }: FormikContextType<{ [key: string]: any }> = useFormikContext();
+  }: FormikContextType<IObject> = useFormikContext();
 
   const [val, setVal] = useState<string>("");
 
