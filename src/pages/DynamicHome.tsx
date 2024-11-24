@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { Formik, FormikErrors, FormikProps, FormikTouched } from "formik";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -235,26 +235,61 @@ export const DynamicForm = () => {
               <Grid container spacing={2}>
                 {groupedVariables &&
                   groupNames?.length > 0 &&
-                  groupedVariables[groupNames[currentStep]].map(
-                    (variable: any, idx: any) => (
-                      <Grid
-                        size={{ xs: 12 }}
-                        key={`tab-field-${idx}`}
-                        className="responsiveGrid"
-                      >
-                        <WorkflowFormField
-                          groupedVariables={groupedVariables}
-                          handleBtnClick={() => {
-                            setCurrentStep(currentStep + 1);
-                          }}
-                          currentStepIndex={currentStep}
-                          {...variable}
-                        />
-                      </Grid>
-                    )
-                  )}
+                  groupedVariables[
+                    groupNames[currentStep === 1 ? 0 : currentStep]
+                  ].map((variable: any, idx: any) => (
+                    <Grid
+                      size={{ xs: 12 }}
+                      key={`tab-field-${idx}`}
+                      className="responsiveGrid"
+                    >
+                      <WorkflowFormField
+                        groupedVariables={groupedVariables}
+                        handleBtnClick={() => {
+                          setCurrentStep(currentStep + 1);
+                        }}
+                        currentStepIndex={currentStep}
+                        {...variable}
+                        variableStyle={eval(`(${variable.variableStyle})`)}
+                      />
+                    </Grid>
+                  ))}
               </Grid>
               <br />
+              {currentStep === 1 && (
+                <Dialog
+                  open={true}
+                  fullScreen
+                  sx={{ background: "transparent" }}
+                  classes={{ paper: "transparentDialog" }}
+                >
+                  <DialogContent classes={{ root: "transparentContent" }}>
+                    <Grid container rowSpacing={1.5}>
+                      {groupedVariables[groupNames[currentStep]].map(
+                        (variable: any, idx: any) => (
+                          <Grid
+                            size={{ xs: 12 }}
+                            key={`tab-field-${idx}`}
+                            className="responsiveGrid"
+                          >
+                            <WorkflowFormField
+                              groupedVariables={groupedVariables}
+                              handleBtnClick={() => {
+                                setCurrentStep(currentStep + 1);
+                              }}
+                              currentStepIndex={currentStep}
+                              {...variable}
+                              variableStyle={eval(
+                                `(${variable.variableStyle})`
+                              )}
+                            />
+                          </Grid>
+                        )
+                      )}
+                    </Grid>
+                  </DialogContent>
+                </Dialog>
+              )}
             </form>
           );
         }}

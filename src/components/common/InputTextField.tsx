@@ -10,6 +10,7 @@ import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IGenericFieldProps } from "../../service/commonModel";
 import { checkIsIcon } from "../../utils/helperFunction";
+import OTPInput from "./OTPField";
 
 const InputTextField: FC<IGenericFieldProps> = (props) => {
   const { t } = useTranslation();
@@ -23,8 +24,10 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
     valRegex,
     startIcon,
     endIcon,
+    variableStyle,
   } = props;
   const [field] = useField(name);
+
   const {
     setFieldValue,
     setFieldTouched,
@@ -53,59 +56,68 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
   const isTextArea = fieldType === "textarea";
   return (
     <Field name={name}>
-      {({ field, meta }: FieldProps) => (
-        <div className="fieldWrapper">
-          <TextField
-            size="medium"
-            classes={{ root: "input-textfield" }}
-            id={`textfield-${name}`}
-            label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
-            variant="outlined"
-            type={fieldType}
-            placeholder={placeholder ? t(placeholder) : ""}
-            {...field}
-            value={val ?? ""}
-            multiline={isTextArea}
-            rows={isTextArea ? 4 : 1}
-            onChange={(e) => {
-              const targetVal = e.target.value;
-              if (valRegex) {
-                if (valRegex.test(targetVal)) setVal(targetVal);
-              } else {
-                setVal(targetVal);
-              }
-            }}
-            onBlur={(e) => {
-              setFieldTouched(name, true, true);
-              setFieldValue(name, e.target?.value?.trim(), true);
-            }}
-            error={Boolean(meta.touched && meta.error)}
-            helperText={meta.touched && meta.error ? meta.error : undefined}
-            disabled={Boolean(readOnly)}
-            autoComplete="off"
-            InputProps={{
-              startAdornment: startIcon ? (
-                <InputAdornment
-                  position="start"
-                  classes={{ root: "start-adornment" }}
-                >
-                  {checkIsIcon(startIcon) ? (
-                    <img src={`images/${startIcon}`} />
-                  ) : (
-                    startIcon
-                  )}
-                </InputAdornment>
-              ) : null,
-              endAdornment: endIcon ? (
-                <InputAdornment position="end">
-                  {endIcon ? endIcon : ""}
-                </InputAdornment>
-              ) : null,
+      {({ field, meta }: FieldProps) =>
+        variableStyle?.otpCount ? (
+          <OTPInput
+            fields={variableStyle.otpCount}
+            handleChange={(val) => {
+              setFieldValue(name, val?.join(""));
             }}
           />
-          {/* <FieldHelper desc={t(lbl + "_desc")} /> */}
-        </div>
-      )}
+        ) : (
+          <div className="fieldWrapper">
+            <TextField
+              size="medium"
+              classes={{ root: "input-textfield" }}
+              id={`textfield-${name}`}
+              label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
+              variant="outlined"
+              type={fieldType}
+              placeholder={placeholder ? t(placeholder) : ""}
+              {...field}
+              value={val ?? ""}
+              multiline={isTextArea}
+              rows={isTextArea ? 4 : 1}
+              onChange={(e) => {
+                const targetVal = e.target.value;
+                if (valRegex) {
+                  if (valRegex.test(targetVal)) setVal(targetVal);
+                } else {
+                  setVal(targetVal);
+                }
+              }}
+              onBlur={(e) => {
+                setFieldTouched(name, true, true);
+                setFieldValue(name, e.target?.value?.trim(), true);
+              }}
+              error={Boolean(meta.touched && meta.error)}
+              helperText={meta.touched && meta.error ? meta.error : undefined}
+              disabled={Boolean(readOnly)}
+              autoComplete="off"
+              InputProps={{
+                startAdornment: startIcon ? (
+                  <InputAdornment
+                    position="start"
+                    classes={{ root: "start-adornment" }}
+                  >
+                    {checkIsIcon(startIcon) ? (
+                      <img src={`images/${startIcon}`} />
+                    ) : (
+                      startIcon
+                    )}
+                  </InputAdornment>
+                ) : null,
+                endAdornment: endIcon ? (
+                  <InputAdornment position="end">
+                    {endIcon ? endIcon : ""}
+                  </InputAdornment>
+                ) : null,
+              }}
+            />
+            {/* <FieldHelper desc={t(lbl + "_desc")} /> */}
+          </div>
+        )
+      }
     </Field>
   );
 };
