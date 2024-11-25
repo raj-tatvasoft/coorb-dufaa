@@ -28,10 +28,8 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
   } = props;
   const [field] = useField(name);
 
-  const {
-    setFieldValue,
-    setFieldTouched,
-  }: FormikContextType<IObject> = useFormikContext();
+  const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
+    useFormikContext();
 
   const [val, setVal] = useState<string>("");
 
@@ -108,8 +106,15 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                   </InputAdornment>
                 ) : null,
                 endAdornment: endIcon ? (
-                  <InputAdornment position="end">
-                    {endIcon ? endIcon : ""}
+                  <InputAdornment
+                    position="end"
+                    classes={{ root: "end-adornment" }}
+                  >
+                    {checkIsIcon(endIcon) ? (
+                      <img src={`images/${endIcon}`} />
+                    ) : (
+                      endIcon
+                    )}
                   </InputAdornment>
                 ) : null,
               }}

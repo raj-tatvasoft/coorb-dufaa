@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Field, FieldProps, useFormikContext } from "formik";
 import { NumericFormat } from "react-number-format";
 import { IGenericFieldProps } from "../../service/commonModel";
-import { TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 
 interface IDecimalFieldProps extends IGenericFieldProps {
   fractionDigits?: number;
@@ -16,6 +16,8 @@ const DecimalField: FC<IDecimalFieldProps> = ({
   required,
   readOnly,
   fractionDigits = 2,
+  startIcon,
+  endIcon,
 }) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched } = useFormikContext();
@@ -43,7 +45,8 @@ const DecimalField: FC<IDecimalFieldProps> = ({
         <div className="fieldWrapper">
           <NumericFormat
             customInput={TextField}
-            size="small"
+            classes={{ root: "input-textfield" }}
+            size="medium"
             id={`decimalField-${name}`}
             label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
             variant="outlined"
@@ -63,6 +66,24 @@ const DecimalField: FC<IDecimalFieldProps> = ({
             helperText={meta.touched && meta.error ? meta.error : undefined}
             disabled={Boolean(readOnly)}
             autoComplete="off"
+            InputProps={{
+              startAdornment: startIcon ? (
+                <InputAdornment
+                  position="start"
+                  classes={{ root: "start-adornment" }}
+                >
+                  {startIcon ? startIcon : ""}
+                </InputAdornment>
+              ) : null,
+              endAdornment: endIcon ? (
+                <InputAdornment
+                  position="end"
+                  classes={{ root: "end-adornment" }}
+                >
+                  {endIcon ? endIcon : ""}
+                </InputAdornment>
+              ) : null,
+            }}
           />
         </div>
       )}

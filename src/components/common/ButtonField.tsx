@@ -86,6 +86,7 @@ const ButtonField: FC<
       <Button
         type="button"
         variant={variant}
+        size={variableStyle?.size || "medium"}
         onClick={() => {
           if (variableStyle?.isValidateBeforeClick) {
             validateCurrentStepFields(handleBtnClick);
@@ -94,7 +95,14 @@ const ButtonField: FC<
           }
         }}
         className="genericBtn"
-        style={{ backgroundColor: variableStyle?.bgColor }}
+        style={{
+          backgroundColor: variableStyle?.bgColor,
+          color: variableStyle?.color,
+          fontWeight: variableStyle?.fontWeight,
+          justifyContent: variableStyle?.justifyContent,
+          height: variableStyle?.height,
+          borderRadius: variableStyle?.borderRadius,
+        }}
       >
         {startIcon && <img src={`images/${startIcon}`} className="mr-2" />}
         {lbl ? t(lbl) : ""}
