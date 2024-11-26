@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 body {
-  min-height: 100vh;
+  height: 100vh;
 
   > #root {
     min-height: 100vh;
     height: 100%;
+    overflow: auto;
     background: var(--linearBg);
   }
 }
@@ -255,12 +256,12 @@ body[dir="rtl"] {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--textDark);
+  background: var(--endromentBgColor);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--textDark);
+  background: var(--endromentBgColor);
 }
 
 /* Firefox Scrollbar Styles */
@@ -447,17 +448,19 @@ body[dir="rtl"] {
 }
 
 // Toast-Css
+.Toastify {
+  @media (max-width: 480px) {
+    .toast {
+      max-width: 70vw;
+      top: 12px;
+      right: 12px;
+      left: auto;
+      font-size: small;
 
-@media (max-width: 480px) {
-  .toast {
-    max-width: 70vw;
-    top: 16px;
-    right: 16px;
-    left: auto;
-    font-size: small;
-
-    > div {
-      border-radius: 6px;
+      > div {
+        border-radius: 6px;
+        margin-bottom: 8px;
+      }
     }
   }
 }
@@ -487,7 +490,7 @@ body[dir="rtl"] {
     color: var(--endromentColor);
     background-color: var(--endromentBgColor);
     margin-inline: 0;
-    width: 52px;
+    min-width: 52px;
     border-radius: 0;
 
     img {
@@ -500,6 +503,17 @@ body[dir="rtl"] {
         width: 20px;
         height: 20px;
       }
+    }
+  }
+
+  .end-adornment {
+    background-color: var(--white);
+    min-width: 52px;
+    padding-inline-end: 15px;
+    border-radius: 0;
+
+    @media (max-width: 599px) {
+      padding-inline-end: 10px;
     }
   }
 
@@ -530,6 +544,12 @@ body[dir="rtl"] {
 
 .main-content {
   padding: 20px;
+  height: calc(100vh - 64px);
+  overflow: auto;
+
+  @media (max-width: 599px) {
+    height: calc(100vh - 56px);
+  }
 }
 
 .more-fund-title {
