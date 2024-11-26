@@ -36,6 +36,8 @@ const theme = createTheme({
           "--highlightFontColor": "#bd0000",
           "--checkboxText": "#6B5121",
           "--darkRed": "#bd0000",
+          "--btnDarkGreyBg": "#1F1F1F",
+          "--error": "#d32f2f",
         },
       },
     },

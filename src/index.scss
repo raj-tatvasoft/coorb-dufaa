@@ -42,11 +42,11 @@ body[dir="rtl"] {
 .fieldError,
 .errorText {
   color: var(--error);
-  font-size: 0.75rem;
-  font-weight: 400;
+  font-size: 0.9rem;
   margin-top: 4px;
   margin-left: 14px;
   margin-right: 14px;
+  white-space: normal;
 }
 
 .errorBorderDashed {
@@ -465,6 +465,7 @@ body[dir="rtl"] {
 // error text
 .Mui-error {
   text-wrap: nowrap;
+  white-space: normal;
 }
 
 // button radius

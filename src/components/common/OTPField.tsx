@@ -5,6 +5,8 @@ interface OTPInputProps {
   fields: number;
   handleChange: (value: string[]) => void;
   disabled?: boolean;
+  error?: string;
+  onBlur?: () => void;
 }
 
 const BACKSPACE_KEY = 8;
@@ -15,6 +17,8 @@ const OTPInput: React.FC<OTPInputProps> = ({
   fields,
   disabled,
   handleChange,
+  error,
+  onBlur,
 }) => {
   const [input, setInput] = useState<string[]>(Array(fields).fill(""));
   const inputRef = useRef({});
@@ -69,37 +73,42 @@ const OTPInput: React.FC<OTPInputProps> = ({
   };
 
   return (
-    <Box
-      sx={{ display: "flex", flexDirection: "row", gap: "10px" }}
-      justifyContent={"center"}
-      className="OtpInput"
-    >
-      {input.map((item, index) => (
-        <OutlinedInput
-          key={index}
-          value={item}
-          onChange={(e) => handleOTPUpdate(e.target.value, index)}
-          autoFocus={index === 0}
-          inputRef={(element) => ((inputRef as any).current[index] = element)}
-          onKeyDown={(
-            event: React.KeyboardEventHandler<HTMLDivElement> | any
-          ) => {
-            handleKeyDown(event, index);
-          }}
-          inputProps={{
-            maxLength: 1,
-            style: { textAlign: "center" },
-          }}
-          disabled={disabled}
-          autoComplete="off"
-          classes={{
-            notchedOutline: "fieldsetInput",
-            input: "inputField",
-            root: "inputRoot",
-          }}
-        />
-      ))}
-    </Box>
+    <>
+      <Box
+        sx={{ display: "flex", flexDirection: "row", gap: "10px" }}
+        justifyContent={"center"}
+        className="OtpInput"
+      >
+        {input.map((item, index) => (
+          <OutlinedInput
+            key={index}
+            value={item}
+            onChange={(e) => handleOTPUpdate(e.target.value, index)}
+            // autoFocus={index === 0}
+            inputRef={(element) => ((inputRef as any).current[index] = element)}
+            onKeyDown={(
+              event: React.KeyboardEventHandler<HTMLDivElement> | any
+            ) => {
+              handleKeyDown(event, index);
+            }}
+            onBlur={onBlur}
+            inputProps={{
+              maxLength: 1,
+              style: { textAlign: "center" },
+            }}
+            error={Boolean(error)}
+            disabled={disabled}
+            autoComplete="off"
+            classes={{
+              notchedOutline: "fieldsetInput",
+              input: "inputField",
+              root: "inputRoot",
+            }}
+          />
+        ))}
+      </Box>
+      {error && <span className="errorText font-bold">{error}</span>}
+    </>
   );
 };
 

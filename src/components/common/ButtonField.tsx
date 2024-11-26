@@ -10,7 +10,7 @@ import { taskService } from "../../service/task/TaskService";
 import { FormikContextType, useFormikContext } from "formik";
 import { ITaskDetail } from "../../service/task/TaskModel";
 import { errorToast } from "./ToastMsg";
-// import { transferObjectForTaskSave } from "../../pages/WorkflowFormPage";
+import { transferTaskObjectForPayload } from "../../utils/helperFunction";
 
 const ButtonField: FC<
   IGenericFieldProps & {
@@ -64,10 +64,10 @@ const ButtonField: FC<
   };
 
   const handleBtnClick = () => {
-    if (isServerClick) {
+    if (isServerClick && false) {
       taskService
         .buttonClick({
-          // task: transferObjectForTaskSave(values) as ITaskDetail,
+          task: transferTaskObjectForPayload(values) as ITaskDetail,
           buttonVarialeId: props.id!.toString(),
         })
         .then((res) => {

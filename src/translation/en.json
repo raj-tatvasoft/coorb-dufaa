@@ -105,8 +105,9 @@
   "noPaperWorkFastApprovalsAndFlexibleTerms": "No paper work, fast approvals and flexible terms.",
   "NationalIDorIqama": "National ID or Iqama",
   "saudiMobileNumber": "Saudi Mobile Number",
+  "invalidSaudiMobileNumber": "Invalid Saudi Mobile Number",
+  "pleaseTickThis": "Please Tick This",
   "duffa": "Duffa",
-  "agreeToShareDataWithDuffa": "I agree to share this data with Dufaa",
   "readT&C": "I have read the terms & conditions",
   "wantToReceiveMarketingMails": "I want to receive marketing emails",
   "codeSentToYourMobileNumber": "A code was sent to your mobile number",
@@ -125,7 +126,13 @@
   "user_name": "Username",
   "name": "Name",
   "email": "Email",
-  "password": "Passowrd",
+  "password": "Password",
   "confirm_password": "Confirm Password",
-  "register_button": "Register"
+  "register_button": "Register",
+  "lengthShouldBe": "Length must be {{length}} characters",
+  "validEmail": "Please enter a valid Email.",
+  "minLengthShouldBe": "Min {{length}} characters required",
+  "maxLengthShouldBe": "Max {{length}} characters allowed",
+  "passwordValid": "Password must contain at least one letter, one number, and one special character and length must be 8 to 15 characters long",
+  "passwordConfirmPasswordMustMatch": "Password and Confirm Password must match"
 }

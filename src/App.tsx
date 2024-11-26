@@ -14,7 +14,7 @@ import { NotFound } from "./pages/NotFound.tsx";
 
 import { useTranslation } from "react-i18next";
 import Loader from "./components/common/Loader.tsx";
-import { Home } from "./pages/Home.tsx";
+import { Home } from "./pages/Home/Home.tsx";
 import { Layout } from "./components/layout/Layout.tsx";
 import { DynamicForm } from "./pages/DynamicHome.tsx";
 
