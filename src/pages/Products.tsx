@@ -29,23 +29,23 @@ export const Products = ({
       {() => {
         return (
           <>
-            <div className="products white-header">
-              <div className="user-card">
-                <p className="hello-user">
+            <div className="groupContainer whiteHeader">
+              <div className="userCard">
+                <p className="helloUser">
                   {t("hello")} {t("Mansour")},
                 </p>
-                <div className="salary-label">
+                <div className="salaryLabel">
                   <p>{t("yourSalaryIs")}:</p>
                   <p className="salary">20,000 SAR</p>
                 </div>
-                <div className="eligible-label">
+                <div className="eligibleLabel">
                   <img src="/images/Check.svg" alt="" />
                   <p>{t("You'reEligibleForLoan")}</p>
                 </div>
               </div>
-              <div className="group-label-container">
-                <p className="group-label">{t("chooseYourProduct")}</p>
-                <div className="loan-calculator">
+              <div className="groupLabelContainer">
+                <p className="groupLabel">{t("chooseYourProduct")}</p>
+                <div className="loanCalculator">
                   <img src="/images/Calculator.svg" alt="" />
                   <p>{t("loanCalculator")}</p>
                 </div>
@@ -67,7 +67,7 @@ export const Products = ({
                             ? `${camelToPascal(btnName)}Active.svg`
                             : `${camelToPascal(btnName)}.svg`
                         }
-                        className={`product-button p-0 justify-center ${
+                        className={`productButton p-0 justify-center ${
                           selectedProduct === btnName ? "active" : ""
                         }`}
                         variableStyle={{
@@ -80,7 +80,7 @@ export const Products = ({
                 })}
               </Grid>
 
-              <div className="stepper-container">
+              <div className="stepperContainer">
                 <ButtonField
                   lbl={"continue"}
                   handleClick={() => {
