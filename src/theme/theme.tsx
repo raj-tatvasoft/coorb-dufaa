@@ -10,12 +10,9 @@ const theme = createTheme({
     secondary: {
       main: "#f1a100",
     },
-    background: {
-      default: "linear-gradient(90deg, #FFCE72 0%, #F6B333 100%)",
-    },
   },
   typography: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "'Inter', sans-serif",
     h1: {
       fontSize: "2.5rem",
     },
@@ -28,6 +25,8 @@ const theme = createTheme({
       styleOverrides: {
         "*": {
           "--white": "#fff",
+          "--textColor": "#1f1f1f",
+          "--black": "#000",
           "--primaryColor": "#cf8702",
           "--secondaryColor": "#f1a100",
           "--linearBg": "linear-gradient(90deg, #FFCE72 0%, #F6B333 100%)",
@@ -38,6 +37,10 @@ const theme = createTheme({
           "--darkRed": "#bd0000",
           "--btnDarkGreyBg": "#1F1F1F",
           "--error": "#d32f2f",
+          "--radialBg":
+            "radial-gradient(100.63% 100.63% at 50% -0.63%,#f1a100 0%,#cf8702 100%)",
+          "--linearWhiteGoldBg":
+            "linear-gradient(180deg, #FFFFFF 0%, #FFFAF1 81.63%, #FFF6E5 98.35%)",
         },
       },
     },

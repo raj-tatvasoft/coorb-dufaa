@@ -113,5 +113,13 @@
   "verifyWithNafath": "التحقق مع نافث",
   "verificationText": "افتح تطبيق Nafath الخاص بك وحدد هذا الرمز لإكمال عملية التحقق الخاصة بك.",
   "workingOnEligibilityChecking": "نحن نعمل على التحقق من أهليتك...",
-  "thisMightTakeMoment": "قد يستغرق هذا بعض الوقت، يرجى عدم مغادرة هذه الصفحة"
+  "thisMightTakeMoment": "قد يستغرق هذا بعض الوقت، يرجى عدم مغادرة هذه الصفحة",
+
+  "hello": "مرحبًا",
+  "yourSalaryIs": "راتبك هو:",
+  "You'reEligibleForLoan": "أنت مؤهل للحصول على قرض!",
+  "chooseYourProduct": "اختر منتجك",
+  "loanCalculator": "حاسبة القروض",
+  "personalLoan": "قرض شخصي",
+  "reFinancing": "إعادة التمويل"
 }

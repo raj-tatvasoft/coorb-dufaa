@@ -134,5 +134,13 @@
   "minLengthShouldBe": "Min {{length}} characters required",
   "maxLengthShouldBe": "Max {{length}} characters allowed",
   "passwordValid": "Password must contain at least one letter, one number, and one special character and length must be 8 to 15 characters long",
-  "passwordConfirmPasswordMustMatch": "Password and Confirm Password must match"
+  "passwordConfirmPasswordMustMatch": "Password and Confirm Password must match",
+
+  "hello": "Hello",
+  "yourSalaryIs": "Your salary is:",
+  "You'reEligibleForLoan": "You're eligible for a loan!",
+  "chooseYourProduct": "Choose your product",
+  "loanCalculator": "Loan calculator",
+  "personalLoan": "Personal Loan",
+  "reFinancing": "Re-Financing"
 }

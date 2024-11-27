@@ -9,6 +9,7 @@
     flex-direction: row;
     align-items: center;
     background: var(--linearBg);
+    padding-inline: 24px;
   }
 
   .headerLogoBox {
@@ -19,20 +20,21 @@
     }
 
     .headerLogo {
-      height: "40px";
-      margin-inline-start: "8px";
+      width: 32px;
+      margin-inline-start: 8px;
     }
 
     .headerName {
       font-weight: 800;
       font-size: 20px;
+      line-height: 40px;
       margin-inline-start: 10px;
     }
 
     @media (max-width: 600px) {
       .headerLogo {
-        height: "40px";
-        margin-inline-start: "8px";
+        width: 32px;
+        margin-inline-start: 8px;
       }
     }
   }

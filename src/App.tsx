@@ -17,6 +17,12 @@ import Loader from "./components/common/Loader.tsx";
 import { Home } from "./pages/Home/Home.tsx";
 import { Layout } from "./components/layout/Layout.tsx";
 import { DynamicForm } from "./pages/DynamicHome.tsx";
+import { ResponsibleLending } from "./pages/ResponsibleLending.tsx";
+import { TailorLoan } from "./pages/TailorLoan.tsx";
+import { ReviewLoan } from "./pages/ReviewLoan.tsx";
+import { Congratulations } from "./pages/Congratulations.tsx";
+import { PreviewContract } from "./pages/PreviewContract.tsx";
+import { Products } from "./pages/Products.tsx";
 
 function App() {
   const { i18n } = useTranslation();
@@ -37,6 +43,15 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<DynamicForm />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/tailor-loan" element={<TailorLoan />} />
+                <Route path="/review-loan" element={<ReviewLoan />} />
+                <Route path="/preview-contract" element={<PreviewContract />} />
+                <Route path="/congratulation" element={<Congratulations />} />
+                <Route
+                  path="/responsible-lending"
+                  element={<ResponsibleLending />}
+                />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>

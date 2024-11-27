@@ -19,7 +19,7 @@ export const Header = () => {
               document.body.dir = "ltr";
             }}
           >
-            <img src="/images/logo.svg" alt="logo" />
+            <img src="/images/logo.svg" alt="logo" className="headerLogo" />
             <Typography className="headerName" variant="body2">
               {t("duffa")}
             </Typography>
