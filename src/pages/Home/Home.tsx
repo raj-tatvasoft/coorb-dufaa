@@ -9,15 +9,21 @@ import Welcome, { WelcomeFields } from "./Welcome";
 import { OTPFields, OTPModal } from "../../components/dialog/OTPModal";
 import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
 import { Products } from "../Products";
+import { ResponsibleLending } from "../ResponsibleLending";
 
-export type HomeStep = "welcome" | "otp" | "userEnrollment" | "product";
+export type HomeStep =
+  | "welcome"
+  | "otp"
+  | "userEnrollment"
+  | "product"
+  | "responsibleLending";
 
 export const Home = () => {
   const { t } = useTranslation();
 
   const formRef = useRef<FormikProps<IObject>>(null);
 
-  const [step, setStep] = useState<HomeStep>("product");
+  const [step, setStep] = useState<HomeStep>("responsibleLending");
   const [initValues, setInitValues] = useState<IObject>({});
 
   const welcomeValidationSchema = yup.object().shape({
@@ -143,6 +149,7 @@ export const Home = () => {
           if (step === "welcome") setStep("otp");
           else if (step === "otp") setStep("userEnrollment");
           else if (step === "userEnrollment") setStep("product");
+          else if (step === "product") setStep("responsibleLending");
         }
       });
     }
@@ -168,6 +175,8 @@ export const Home = () => {
         return <UserEnrollment handleButtonClick={handleButtonClick} />;
       case "product":
         return <Products handleButtonClick={handleButtonClick} />;
+      case "responsibleLending":
+        return <ResponsibleLending />;
       default:
         <></>;
         break;

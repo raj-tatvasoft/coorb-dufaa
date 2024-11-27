@@ -33,7 +33,7 @@ const Welcome = ({
           container
           spacing={{ xs: 1.5, lg: 2 }}
           size={{ xs: 12 }}
-          alignItems={"center"}
+          alignItems={"start"}
         >
           <Grid size={{ xs: 12, md: 6 }}>
             <InputTextField

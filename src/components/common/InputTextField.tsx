@@ -92,31 +92,33 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
               helperText={meta.touched && meta.error ? meta.error : undefined}
               disabled={Boolean(readOnly)}
               autoComplete="off"
-              InputProps={{
-                startAdornment: startIcon ? (
-                  <InputAdornment
-                    position="start"
-                    classes={{ root: "start-adornment" }}
-                  >
-                    {checkIsIcon(startIcon) ? (
-                      <img src={`images/${startIcon}`} />
-                    ) : (
-                      startIcon
-                    )}
-                  </InputAdornment>
-                ) : null,
-                endAdornment: endIcon ? (
-                  <InputAdornment
-                    position="end"
-                    classes={{ root: "end-adornment" }}
-                  >
-                    {checkIsIcon(endIcon) ? (
-                      <img src={`images/${endIcon}`} />
-                    ) : (
-                      endIcon
-                    )}
-                  </InputAdornment>
-                ) : null,
+              slotProps={{
+                input: {
+                  startAdornment: startIcon ? (
+                    <InputAdornment
+                      position="start"
+                      classes={{ root: "start-adornment" }}
+                    >
+                      {checkIsIcon(startIcon) ? (
+                        <img src={`images/${startIcon}`} />
+                      ) : (
+                        startIcon
+                      )}
+                    </InputAdornment>
+                  ) : null,
+                  endAdornment: endIcon ? (
+                    <InputAdornment
+                      position="end"
+                      classes={{ root: "end-adornment" }}
+                    >
+                      {checkIsIcon(endIcon) ? (
+                        <img src={`images/${endIcon}`} />
+                      ) : (
+                        endIcon
+                      )}
+                    </InputAdornment>
+                  ) : null,
+                },
               }}
             />
             {/* <FieldHelper desc={t(lbl + "_desc")} /> */}

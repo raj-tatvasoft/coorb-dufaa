@@ -4,6 +4,7 @@ import { Field, FieldProps, useFormikContext } from "formik";
 import { NumericFormat } from "react-number-format";
 import { IGenericFieldProps } from "../../service/commonModel";
 import { InputAdornment, TextField } from "@mui/material";
+import { checkIsIcon } from "../../utils/helperFunction";
 
 interface IDecimalFieldProps extends IGenericFieldProps {
   fractionDigits?: number;
@@ -66,23 +67,33 @@ const DecimalField: FC<IDecimalFieldProps> = ({
             helperText={meta.touched && meta.error ? meta.error : undefined}
             disabled={Boolean(readOnly)}
             autoComplete="off"
-            InputProps={{
-              startAdornment: startIcon ? (
-                <InputAdornment
-                  position="start"
-                  classes={{ root: "start-adornment" }}
-                >
-                  {startIcon ? startIcon : ""}
-                </InputAdornment>
-              ) : null,
-              endAdornment: endIcon ? (
-                <InputAdornment
-                  position="end"
-                  classes={{ root: "end-adornment" }}
-                >
-                  {endIcon ? endIcon : ""}
-                </InputAdornment>
-              ) : null,
+            slotProps={{
+              input: {
+                startAdornment: startIcon ? (
+                  <InputAdornment
+                    position="start"
+                    classes={{ root: "start-adornment" }}
+                  >
+                    {checkIsIcon(startIcon) ? (
+                      <img src={`images/${startIcon}`} />
+                    ) : (
+                      startIcon
+                    )}
+                  </InputAdornment>
+                ) : null,
+                endAdornment: endIcon ? (
+                  <InputAdornment
+                    position="end"
+                    classes={{ root: "end-adornment" }}
+                  >
+                    {checkIsIcon(endIcon) ? (
+                      <img src={`images/${endIcon}`} />
+                    ) : (
+                      endIcon
+                    )}
+                  </InputAdornment>
+                ) : null,
+              },
             }}
           />
         </div>

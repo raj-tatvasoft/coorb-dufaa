@@ -612,12 +612,11 @@ body[dir="rtl"] {
 
 // toggle button group
 
-.toggle-button-group {
+.toggleButtonGroup {
   gap: 5px;
   .buttons {
     background-color: var(--white);
-    // color: var(--black);
-    color: #332925;
+    color: var(--textColor);
     font-weight: 500;
     font-size: 16px;
     border: 0;
@@ -626,10 +625,10 @@ body[dir="rtl"] {
       background-color: var(--white);
     }
 
-    &.first-button {
+    &.firstButton {
       border-radius: 20px 2px 2px 20px;
     }
-    &.last-button {
+    &.lastButton {
       border-radius: 2px 20px 20px 2px;
     }
 
@@ -642,7 +641,7 @@ body[dir="rtl"] {
 
 // white header
 
-.layout-container:has(.white-header) {
+.layout-container:has(.whiteHeader) {
   .headerToolBar {
     background: var(--white);
   }
@@ -650,25 +649,25 @@ body[dir="rtl"] {
 
 // product step
 
-.products {
+.groupContainer {
   display: flex;
   flex-direction: column;
   gap: 16px;
 
-  > .user-card {
+  > .userCard {
     background: var(--linearWhiteGoldBg);
     padding: 16px 28px 28px 28px;
     margin: -30px -30px 0 -30px;
     border-radius: 0 0 24px 24px;
 
-    > .hello-user {
+    > .helloUser {
       font-weight: 700;
       font-size: 32px;
       line-height: 35px;
       width: 50%;
     }
 
-    .salary-expenses-container {
+    .salaryExpensesContainer {
       display: flex;
       justify-content: flex-start;
       gap: 24px;
@@ -678,7 +677,7 @@ body[dir="rtl"] {
         font-weight: 400;
         font-size: 12px;
         line-height: 16px;
-        color: #808080;
+        color: var(--mediumGray);
         display: flex;
         gap: 4px;
 
@@ -693,11 +692,11 @@ body[dir="rtl"] {
       }
     }
 
-    > .salary-label {
+    > .salaryLabel {
       font-weight: 400;
       font-size: 12px;
       line-height: 16px;
-      color: #808080;
+      color: var(--mediumGray);
       margin-top: 24px;
 
       > .salary {
@@ -708,12 +707,12 @@ body[dir="rtl"] {
       }
     }
 
-    > .eligible-label {
+    > .eligibleLabel {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
-      background-color: #ffe3b0;
+      background-color: var(--lightSand);
       border-radius: 36px;
       padding: 12px 24px;
       margin-top: 28px;
@@ -722,16 +721,16 @@ body[dir="rtl"] {
         font-weight: 600;
         font-size: 14px;
         line-height: 14px;
-        color: #6e4c00;
+        color: var(--violinBrown);
       }
     }
 
-    .tailor-loan-eligible-label {
+    .tailorLoanEligibleLabel {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
-      background-color: #3d2000;
+      background-color: var(--pitchBrown);
       border-radius: 22px;
       padding: 12px 24px;
       margin-top: 28px;
@@ -740,10 +739,10 @@ body[dir="rtl"] {
         font-weight: 400;
         font-size: 12px;
         line-height: 18px;
-        color: #f19d00;
+        color: var(--goldenOrange);
       }
 
-      .max-loan-amount {
+      .maxLoanAmount {
         font-weight: 700;
         font-size: 20px;
         line-height: 22px;
@@ -752,7 +751,7 @@ body[dir="rtl"] {
     }
   }
 
-  > .group-label-container {
+  > .groupLabelContainer {
     display: flex;
     justify-content: space-between;
     padding-top: 16px;
@@ -762,7 +761,7 @@ body[dir="rtl"] {
       gap: 15px;
     }
 
-    > .loan-calculator {
+    > .loanCalculator {
       display: flex;
       align-items: center;
       gap: 5px;
@@ -770,18 +769,18 @@ body[dir="rtl"] {
       font-weight: 600;
       font-size: 14px;
       line-height: 15px;
-      color: #c65600;
+      color: var(--warmOrange);
       cursor: pointer;
     }
   }
 
-  .group-label {
+  .groupLabel {
     font-weight: 600;
     font-size: 18px;
     line-height: 22px;
   }
 
-  .product-button {
+  .productButton {
     justify-content: flex-start;
     background-color: var(--white);
     font-weight: 600;
@@ -798,13 +797,13 @@ body[dir="rtl"] {
     }
   }
 
-  .stepper-container {
+  .stepperContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 24px;
 
-    .next-button {
+    .nextButton {
       background: var(--textColor);
       height: 52px;
       font-weight: 600;
@@ -812,8 +811,8 @@ body[dir="rtl"] {
       color: var(--white);
       border-radius: 16px;
 
-      &.disable-next {
-        color: #5a5858;
+      &.disableNext {
+        color: var(--disabledNext);
         opacity: 0.9;
 
         img {
@@ -829,43 +828,43 @@ body[dir="rtl"] {
       gap: 20px;
       padding-top: 10px;
 
-      > .next-button {
+      > .nextButton {
         align-self: flex-end;
       }
     }
   }
 
-  .tailor-loan-card {
-    background: #f6b333;
+  .tailorLoanCard {
+    background: var(--goldenYellow);
     padding: 16px;
     border-radius: 24px;
   }
 
-  .loan-tenor-container {
+  .loanTenorContainer {
     padding-block: 12px;
-    .loan-tenor-label {
+    .loanTenorLabel {
       font-weight: 500;
       font-size: 16px;
       line-height: 20px;
-      color: #342a26;
+      color: var(--darkBrown);
     }
 
-    .month-label {
+    .monthLabel {
       font-weight: 400;
       font-size: 12px;
       padding-bottom: 8px;
-      color: #905e00;
+      color: var(--goldenBrown);
     }
   }
 
   .divider {
     margin-inline: -16px;
     margin-block: 12px 24px;
-    border-top: 1px solid #f1a100;
+    border-top: 1px solid var(--secondaryColor);
   }
 
-  .loan-detail-container,
-  .installment-container {
+  .loanDetailContainer,
+  .installmentContainer {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -879,27 +878,27 @@ body[dir="rtl"] {
         font-weight: 400;
         font-size: 16px;
 
-        &.detail-label {
-          color: #6b5121;
+        &.detailLabel {
+          color: var(--checkboxText);
         }
 
-        &.detail-value {
-          color: #261900;
+        &.detailValue {
+          color: var(--blackBrown);
         }
       }
     }
   }
 
-  .loan-detail-container {
+  .loanDetailContainer {
     margin-bottom: 20px;
   }
 }
 
 // slider
 
-.slider-container {
+.sliderContainer {
   padding-block: 12px;
-  .slider-label {
+  .sliderLabel {
     display: flex;
     justify-content: space-between;
 
@@ -911,30 +910,30 @@ body[dir="rtl"] {
     .value {
       font-weight: 600;
       font-size: 14px;
-      color: #c65600;
-      border-bottom: 1px solid #c6560099;
+      color: var(--warmOrange);
+      border-bottom: 1px solid var(--fadedWarmOrange);
     }
   }
 
-  .min-max {
+  .minMax {
     font-weight: 400;
     font-size: 12px;
-    color: #905e00;
+    color: var(--goldenBrown);
     padding-block: 5px;
   }
 
-  .slider-wrapper {
+  .sliderWrapper {
     margin-inline: 15px;
     .slider {
-      .slider-rail {
-        background-color: #3d2800;
+      .sliderRail {
+        background-color: var(--darkWood);
       }
 
-      .slider-track {
-        background-color: #3d2800;
+      .sliderTrack {
+        background-color: var(--darkWood);
       }
 
-      .slider-thumb {
+      .sliderThumb {
         height: 42px;
         width: 42px;
       }
