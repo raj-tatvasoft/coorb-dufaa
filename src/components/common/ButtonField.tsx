@@ -31,6 +31,8 @@ const ButtonField: FC<
     endIcon,
     groupedVariables,
     currentStepIndex,
+    className,
+    readOnly,
   } = props;
   const {
     values,
@@ -82,7 +84,7 @@ const ButtonField: FC<
   };
 
   return (
-    <div className="fieldWrapper">
+    <div className="fieldWrapper w-full">
       <Button
         type="button"
         variant={variant}
@@ -94,7 +96,9 @@ const ButtonField: FC<
             handleBtnClick();
           }
         }}
-        className="genericBtn"
+        disabled={readOnly === 1}
+        fullWidth
+        className={"genericBtn " + className?.toString()}
         style={{
           backgroundColor: variableStyle?.bgColor,
           color: variableStyle?.color,
@@ -104,9 +108,9 @@ const ButtonField: FC<
           borderRadius: variableStyle?.borderRadius,
         }}
       >
-        {startIcon && <img src={`images/${startIcon}`} className="mr-2" />}
+        {startIcon && <img src={`images/${startIcon}`} className="mr-1" />}
         {lbl ? t(lbl) : ""}
-        {endIcon && <img src={`images/${endIcon}`} className="ml-2" />}
+        {endIcon && <img src={`images/${endIcon}`} className="ml-1" />}
       </Button>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Formik, FormikProps } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IObject } from "../../service/commonModel";
 import { WORKFLOW_DETAIL, yup } from "../../utils/constant";
@@ -8,17 +8,16 @@ import { regex } from "../../utils/regex";
 import Welcome, { WelcomeFields } from "./Welcome";
 import { OTPFields, OTPModal } from "../../components/dialog/OTPModal";
 import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
-import { workflowService } from "../../service/workflow/WorkflowService";
-import { taskService } from "../../service/task/TaskService";
+import { Products } from "../Products";
 
-export type HomeStep = "welcome" | "otp" | "userEnrollment";
+export type HomeStep = "welcome" | "otp" | "userEnrollment" | "product";
 
 export const Home = () => {
   const { t } = useTranslation();
 
   const formRef = useRef<FormikProps<IObject>>(null);
 
-  const [step, setStep] = useState<HomeStep>("welcome");
+  const [step, setStep] = useState<HomeStep>("product");
   const [initValues, setInitValues] = useState<IObject>({});
 
   const welcomeValidationSchema = yup.object().shape({
@@ -73,40 +72,47 @@ export const Home = () => {
   });
 
   useEffect(() => {
-    setStep("welcome");
+    // setStep("welcome");
     getTaskDetail();
   }, []);
 
   const getTaskDetail = () => {
-    workflowService.getStartableWorkflows().then((res) => {
-      if (res?.data) {
-        workflowService
-          .instantiate(res.data[1].id, res.data[1].tokenId)
-          .then((subRes) => {
-            if (subRes?.data) {
-              taskService
-                .load(
-                  subRes.data?.taskInstanceId,
-                  subRes.data?.taskInstanceTokenId
-                )
-                .then((subChildRes) => {
-                  if (subChildRes?.data) {
-                    setInitValues({
-                      initialDetails: subChildRes.data,
-                      ...Object.values(WelcomeFields).reduce(
-                        (acc: IObject, key) => {
-                          acc[key] = "";
-                          return acc;
-                        },
-                        {}
-                      ),
-                    });
-                  }
-                });
-            }
-          });
-      }
+    setInitValues({
+      initialDetails: WORKFLOW_DETAIL,
+      ...Object.values(WelcomeFields).reduce((acc: IObject, key) => {
+        acc[key] = "";
+        return acc;
+      }, {}),
     });
+    // workflowService.getStartableWorkflows().then((res) => {
+    //   if (res?.data) {
+    //     workflowService
+    //       .instantiate(res.data[1].id, res.data[1].tokenId)
+    //       .then((subRes) => {
+    //         if (subRes?.data) {
+    //           taskService
+    //             .load(
+    //               subRes.data?.taskInstanceId,
+    //               subRes.data?.taskInstanceTokenId
+    //             )
+    //             .then((subChildRes) => {
+    //               if (subChildRes?.data) {
+    //                 setInitValues({
+    //                   initialDetails: subChildRes.data,
+    //                   ...Object.values(WelcomeFields).reduce(
+    //                     (acc: IObject, key) => {
+    //                       acc[key] = "";
+    //                       return acc;
+    //                     },
+    //                     {}
+    //                   ),
+    //                 });
+    //               }
+    //             });
+    //         }
+    //       });
+    //   }
+    // });
   };
 
   const handleButtonClick = (btnName: string) => {
@@ -135,11 +141,38 @@ export const Home = () => {
           // });
 
           if (step === "welcome") setStep("otp");
-          if (step === "otp") setStep("userEnrollment");
+          else if (step === "otp") setStep("userEnrollment");
+          else if (step === "userEnrollment") setStep("product");
         }
       });
     }
   };
+
+  const renderStepContent = useMemo(() => {
+    switch (step) {
+      case "welcome":
+      case "otp":
+        return (
+          <>
+            <Welcome handleButtonClick={handleButtonClick} />
+            {step === "otp" && (
+              <OTPModal
+                open={true}
+                handleClose={() => setStep("welcome")}
+                handleButtonClick={handleButtonClick}
+              />
+            )}
+          </>
+        );
+      case "userEnrollment":
+        return <UserEnrollment handleButtonClick={handleButtonClick} />;
+      case "product":
+        return <Products handleButtonClick={handleButtonClick} />;
+      default:
+        <></>;
+        break;
+    }
+  }, [step]);
 
   return (
     <Box className="wrapper">
@@ -160,24 +193,7 @@ export const Home = () => {
       >
         {() => {
           return (
-            <form className="workflowDetailWrapper">
-              {step === "welcome" || step === "otp" ? (
-                <>
-                  <Welcome handleButtonClick={handleButtonClick} />
-                  {step === "otp" && (
-                    <OTPModal
-                      open={true}
-                      handleClose={() => setStep("welcome")}
-                      handleButtonClick={handleButtonClick}
-                    />
-                  )}
-                </>
-              ) : step === "userEnrollment" ? (
-                <UserEnrollment handleButtonClick={handleButtonClick} />
-              ) : (
-                <></>
-              )}
-            </form>
+            <form className="workflowDetailWrapper">{renderStepContent}</form>
           );
         }}
       </Formik>

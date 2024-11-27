@@ -34,6 +34,7 @@ export interface IGenericFieldProps extends Partial<Variable> {
   startIcon?: string;
   endIcon?: string;
   variableStyle?: any;
+  className?: string;
 }
 
 export interface IObject {

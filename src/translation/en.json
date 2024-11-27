@@ -137,10 +137,14 @@
   "passwordConfirmPasswordMustMatch": "Password and Confirm Password must match",
 
   "hello": "Hello",
-  "yourSalaryIs": "Your salary is:",
+  "yourSalaryIs": "Your salary is",
   "You'reEligibleForLoan": "You're eligible for a loan!",
   "chooseYourProduct": "Choose your product",
   "loanCalculator": "Loan calculator",
   "personalLoan": "Personal Loan",
-  "reFinancing": "Re-Financing"
+  "reFinancing": "Re-Financing",
+  "autoLoan": "Auto-Loan",
+  "retailFinance": "Retail Finance",
+  "Mansour": "Mansour",
+  "continue": "Continue"
 }

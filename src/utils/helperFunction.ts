@@ -71,3 +71,7 @@ export const handleGenericButtonClick = (
       }
     });
 };
+
+export const camelToPascal = (str: string) => {
+  return str.replace(/^./, (match) => match.toUpperCase());
+};

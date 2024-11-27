@@ -1,17 +1,27 @@
-import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { Formik } from "formik";
-import StepFrame from "../components/common/StepFrame/StepFrame";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { camelToPascal } from "../utils/helperFunction";
+import ButtonField from "../components/common/ButtonField";
 
-export const Products = () => {
-  const [selectedProduct, setSelectedProduct] = useState<string>("");
+const ProductBtnName = {
+  personalLoan: "personalLoan",
+  reFinancing: "reFinancing",
+  autoLoan: "autoLoan",
+  retailFinance: "retailFinance",
+};
+export const Products = ({
+  handleButtonClick,
+}: {
+  handleButtonClick: (btnName: string) => void;
+}) => {
+  const [selectedProduct, setSelectedProduct] = useState<
+    keyof typeof ProductBtnName | ""
+  >("");
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
-  const handleProductSelect = (val: string) => {
+  const handleProductSelect = (val: keyof typeof ProductBtnName) => {
     setSelectedProduct((prev) => (prev === val ? "" : val));
   };
   return (
@@ -22,10 +32,10 @@ export const Products = () => {
             <div className="products white-header">
               <div className="user-card">
                 <p className="hello-user">
-                  {t("hello")} {"Mansour,"}
+                  {t("hello")} {t("Mansour")},
                 </p>
                 <div className="salary-label">
-                  <p>Your salary is:</p>
+                  <p>{t("yourSalaryIs")}:</p>
                   <p className="salary">20,000 SAR</p>
                 </div>
                 <div className="eligible-label">
@@ -42,117 +52,47 @@ export const Products = () => {
               </div>
 
               <Grid container spacing={2}>
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <Button
-                    startIcon={
-                      <img
-                        src={`${
-                          selectedProduct === "Personal Loan"
-                            ? "/images/PersonalLoanActive.svg"
-                            : "/images/PersonalLoan.svg"
+                {Object.values(ProductBtnName).map((btnName, i: number) => {
+                  return (
+                    <Grid size={{ xs: 12, sm: 6 }} key={`product-btn-${i}`}>
+                      <ButtonField
+                        lbl={btnName}
+                        handleClick={() => {
+                          handleProductSelect(btnName as any);
+                        }}
+                        readOnly={i > 0 ? 1 : 0}
+                        name={btnName}
+                        startIcon={
+                          selectedProduct === btnName
+                            ? `${camelToPascal(btnName)}Active.svg`
+                            : `${camelToPascal(btnName)}.svg`
+                        }
+                        className={`product-button p-0 justify-center ${
+                          selectedProduct === btnName ? "active" : ""
                         }`}
-                        alt=""
+                        variableStyle={{
+                          size: "large",
+                          bgColor: "var(--white)",
+                        }}
                       />
-                    }
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    className={`product-button ${
-                      selectedProduct === "Personal Loan" ? "active" : ""
-                    }`}
-                    onClick={() => handleProductSelect("Personal Loan")}
-                  >
-                    {t("personalLoan")}
-                  </Button>
-                </Grid>
-
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <Button
-                    startIcon={
-                      <img
-                        src={`${
-                          selectedProduct === "Re-Financing"
-                            ? "/images/ReFinancingActive.svg"
-                            : "/images/ReFinancing.svg"
-                        }`}
-                        alt=""
-                      />
-                    }
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    className={`product-button ${
-                      selectedProduct === "Re-Financing" ? "active" : ""
-                    }`}
-                    onClick={() => handleProductSelect("Re-Financing")}
-                  >
-                    {t("reFinancing")}
-                  </Button>
-                </Grid>
-
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <Button
-                    startIcon={
-                      <img
-                        src={`${
-                          selectedProduct === "Auto-Loan"
-                            ? "/images/AutoLoanActive.svg"
-                            : "/images/AutoLoan.svg"
-                        }`}
-                        alt=""
-                      />
-                    }
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    className={`product-button ${
-                      selectedProduct === "Auto-Loan" ? "active" : ""
-                    }`}
-                    onClick={() => handleProductSelect("Auto-Loan")}
-                  >
-                    {t("Auto-Loan")}
-                  </Button>
-                </Grid>
-
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <Button
-                    startIcon={
-                      <img
-                        src={`${
-                          selectedProduct === "Retail Finance"
-                            ? "/images/RetailFinanceActive.svg"
-                            : "/images/RetailFinance.svg"
-                        }`}
-                        alt=""
-                      />
-                    }
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    className={`product-button ${
-                      selectedProduct === "Retail Finance" ? "active" : ""
-                    }`}
-                    onClick={() => handleProductSelect("Retail Finance")}
-                  >
-                    {t("Retail Finance")}
-                  </Button>
-                </Grid>
+                    </Grid>
+                  );
+                })}
               </Grid>
 
               <div className="stepper-container">
-                <StepFrame stepCount={6} activeStep={1} />
-                <Button
-                  variant="contained"
-                  fullWidth={false}
-                  size="large"
-                  endIcon={<img src="/images/ForwardArrow.svg" />}
-                  className="next-button"
-                  classes={{ disabled: "disable-next" }}
-                  disabled={!!!selectedProduct}
-                  onClick={() => navigate("/responsible-lending")}
-                >
-                  {t("continue")}
-                </Button>
+                <ButtonField
+                  lbl={"continue"}
+                  handleClick={() => {
+                    handleButtonClick("continue");
+                  }}
+                  name={"continue"}
+                  endIcon="ForwardArrow.svg"
+                  variableStyle={{
+                    bgColor: "var(--btnDarkGreyBg)",
+                    size: "large",
+                  }}
+                />
               </div>
             </div>
           </>
