@@ -174,5 +174,6 @@
   "fromToSAR": "From {{from}} SAR to {{to}} SAR",
   "months": "{{months}} months",
   "review": "Review",
-  "invalidErrorWithLabel": "Invalid {{name}}"
+  "invalidErrorWithLabel": "Invalid {{name}}",
+  "congratsUser": "Congrats {{user}},"
 }
