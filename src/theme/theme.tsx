@@ -41,6 +41,8 @@ const theme = createTheme({
             "radial-gradient(100.63% 100.63% at 50% -0.63%,#f1a100 0%,#cf8702 100%)",
           "--linearWhiteGoldBg":
             "linear-gradient(180deg, #FFFFFF 0%, #FFFAF1 81.63%, #FFF6E5 98.35%)",
+          "--previewContractCardBg":
+            "linear-gradient(180deg, rgba(255, 255, 255, 0) 44.5%, #FFC862 85.5%, #F9C666 100%)",
           "--disabledNext": "#5a5858",
           "--goldenYellow": "#f6b333",
           "--darkBrown": "#342a26",
@@ -54,6 +56,8 @@ const theme = createTheme({
           "--violinBrown": "#6e4c00",
           "--pitchBrown": "#3d2000",
           "--goldenOrange": "#f19d00",
+          "--burntOrange": "#ed6700",
+          "--goldenPeach": "#ffd17a",
         },
       },
     },

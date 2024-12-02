@@ -175,5 +175,14 @@
   "months": "{{months}} months",
   "review": "Review",
   "invalidErrorWithLabel": "Invalid {{name}}",
-  "congratsUser": "Congrats {{user}},"
+  "congratsUser": "Congrats {{user}},",
+  "maxLoanAmount": "Max Loan Amount:",
+  "reviewYourFinalDecision": "Review your final decision",
+  "youHaveSettledPersonalLoanAmountOf": "You have settled for a personal loan amount of",
+  "tailorLoan": "Tailor Loan",
+  "reviewContract": "Review Contract",
+  "personalLoanAmountRequested": "Personal Loan Amount Requested:",
+  "reviewSignContract": "Review & Sign Contract",
+  "signAndComplete": "Sign & Complete",
+  "previewContract": "Preview Contract"
 }
