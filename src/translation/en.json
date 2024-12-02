@@ -184,5 +184,10 @@
   "personalLoanAmountRequested": "Personal Loan Amount Requested:",
   "reviewSignContract": "Review & Sign Contract",
   "signAndComplete": "Sign & Complete",
-  "previewContract": "Preview Contract"
+  "previewContract": "Preview Contract",
+  "congratulationsAndLockedPersonalLoan": "Congratulations {{user}}, We've locked in your personal loan of",
+  "callYouIn24HourForLoanActivation": "We will call you in 24 hours to activate your personal loan",
+  "download": "Download",
+  "contract": "Contract",
+  "backToHome": "Back to Home"
 }

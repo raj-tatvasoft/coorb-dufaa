@@ -560,6 +560,10 @@ body[dir="rtl"] {
   @media (max-width: 599px) {
     height: calc(100vh - 56px);
   }
+
+  &:has(.congratsMessageContainer) {
+    padding-top: 0px;
+  }
 }
 
 .more-fund-title {
@@ -989,32 +993,101 @@ body[dir="rtl"] {
     }
   }
 
-  .congratulationContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-
-    .congratsMessageContainer {
+  &.congratulationGroup {
+    .congratulationContainer {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 10px;
-      align-items: center;
-      text-align: center;
+      gap: 28px;
 
-      .congratsMessage {
-        font-weight: 500;
-        font-size: 14px;
-        color: var(--pitchBrown);
+      .congratsMessageContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        align-items: center;
+        text-align: center;
+        padding-top: 20px;
+
+        background: url(/public/images/CongratulationBG.svg);
+        background-repeat: no-repeat;
+        background-position-x: calc(50% + 15px);
+        background-position-y: -30px;
+        background-size: 200px;
+
+        .congratsMessage {
+          font-weight: 500;
+          font-size: 14px;
+          color: var(--pitchBrown);
+        }
+
+        .loanAmount {
+          font-weight: 700;
+          font-size: 28px;
+          color: var(--pitchBrown);
+        }
       }
 
-      .loanAmount {
-        font-weight: 700;
-        font-size: 28px;
-        color: var(--pitchBrown);
+      .activateInfoCard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: var(--pitchBrown);
+        padding: 28px 24px;
+        border-radius: 22px;
+        gap: 10px;
+
+        .activateInfo {
+          font-weight: 500;
+          font-size: 16px;
+          color: var(--goldenOrange);
+        }
       }
+
+      .loanDetailWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-inline: 12px;
+
+        > div {
+          display: flex;
+          justify-content: space-between;
+          gap: 4px;
+          color: var(--goldenBrown);
+          > p {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+            align-self: center;
+
+            &.label {
+              text-align: start;
+              width: inherit;
+            }
+
+            &.value {
+              text-wrap: nowrap;
+              text-align: end;
+            }
+
+            &.download {
+              display: flex;
+              gap: 5px;
+              font-weight: 600;
+              font-size: 16px;
+              color: var(--warmOrange);
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    .stepperContainer {
+      padding-top: 0;
     }
   }
 }
