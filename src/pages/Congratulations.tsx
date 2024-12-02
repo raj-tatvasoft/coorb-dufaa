@@ -73,7 +73,6 @@ export const Congratulations = () => {
                   variant="contained"
                   fullWidth
                   size="large"
-                  endIcon={<img src="/images/ForwardArrow.svg" />}
                   className="nextButton"
                 >
                   {t("backToHome")}
