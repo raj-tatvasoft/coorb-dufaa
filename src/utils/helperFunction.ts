@@ -75,3 +75,13 @@ export const handleGenericButtonClick = (
 export const camelToPascal = (str: string) => {
   return str.replace(/^./, (match) => match.toUpperCase());
 };
+
+export const formatWithCommaAndFractionDigits = (
+  value: number,
+  digits: number = 2
+) => {
+  return value.toLocaleString(undefined, {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  });
+};

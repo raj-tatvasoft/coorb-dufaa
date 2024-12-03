@@ -9,21 +9,29 @@ import Welcome, { WelcomeFields } from "./Welcome";
 import { OTPFields, OTPModal } from "../../components/dialog/OTPModal";
 import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
 import { Products } from "../Products";
-import { ResponsibleLending } from "../ResponsibleLending";
+import {
+  ResponsibleLending,
+  ResponsibleLendingFields,
+} from "../ResponsibleLending";
+import { TailorLoan, TailorLoanFields } from "../TailorLoan";
+import { ReviewLoan } from "../ReviewLoan";
 
 export type HomeStep =
   | "welcome"
   | "otp"
   | "userEnrollment"
   | "product"
-  | "responsibleLending";
+  | "responsibleLending"
+  | "tailorLoan"
+  | "reviewLoan"
+  | "signContract";
 
 export const Home = () => {
   const { t } = useTranslation();
 
   const formRef = useRef<FormikProps<IObject>>(null);
 
-  const [step, setStep] = useState<HomeStep>("responsibleLending");
+  const [step, setStep] = useState<HomeStep>("welcome");
   const [initValues, setInitValues] = useState<IObject>({});
 
   const welcomeValidationSchema = yup.object().shape({
@@ -75,6 +83,24 @@ export const Home = () => {
       .required(
         `${t(UserEnrollmentFields.confirmPassword)} ${t("isRequired")}`
       ),
+  });
+
+  const responsibleLendingSchema = yup.object().shape(
+    Object.keys(ResponsibleLendingFields).reduce((acc: IObject, key) => {
+      if (
+        (ResponsibleLendingFields as IObject)[key] !==
+        ResponsibleLendingFields.btnContinue
+      ) {
+        acc[key] = yup.string().required(`${t(key)} ${t("isRequired")}`);
+      }
+      return acc;
+    }, {})
+  );
+
+  const loanTailorSchema = yup.object().shape({
+    [TailorLoanFields.loanTenor]: yup
+      .string()
+      .required(`${t(TailorLoanFields.loanTenor)} ${t("isRequired")}`),
   });
 
   useEffect(() => {
@@ -145,11 +171,32 @@ export const Home = () => {
           //     });
           //   }
           // });
-
-          if (step === "welcome") setStep("otp");
-          else if (step === "otp") setStep("userEnrollment");
-          else if (step === "userEnrollment") setStep("product");
-          else if (step === "product") setStep("responsibleLending");
+          switch (step) {
+            case "welcome":
+              setStep("otp");
+              break;
+            case "otp":
+              setStep("userEnrollment");
+              break;
+            case "userEnrollment":
+              setStep("product");
+              break;
+            case "product":
+              setStep("responsibleLending");
+              break;
+            case "responsibleLending":
+              setStep("tailorLoan");
+              break;
+            case "tailorLoan":
+              setStep("reviewLoan");
+              break;
+            case "reviewLoan":
+              setStep("signContract");
+              break;
+            default:
+              setStep("welcome");
+              break;
+          }
         }
       });
     }
@@ -176,7 +223,13 @@ export const Home = () => {
       case "product":
         return <Products handleButtonClick={handleButtonClick} />;
       case "responsibleLending":
-        return <ResponsibleLending />;
+        return <ResponsibleLending handleButtonClick={handleButtonClick} />;
+      case "tailorLoan":
+        return <TailorLoan handleButtonClick={handleButtonClick} />;
+      case "reviewLoan":
+        return <ReviewLoan handleButtonClick={handleButtonClick} />;
+      case "signContract":
+        return <>Sign in contract</>;
       default:
         <></>;
         break;
@@ -195,14 +248,20 @@ export const Home = () => {
             ? otpValidationSchema
             : step === "userEnrollment"
             ? userEnrollmentValidationSchema
-            : {}
+            : step === "responsibleLending"
+            ? responsibleLendingSchema
+            : step === "tailorLoan"
+            ? loanTailorSchema
+            : null
         }
         enableReinitialize
         innerRef={formRef}
       >
-        {() => {
+        {({ handleSubmit }) => {
           return (
-            <form className="workflowDetailWrapper">{renderStepContent}</form>
+            <form className="workflowDetailWrapper" onSubmit={handleSubmit}>
+              {renderStepContent}
+            </form>
           );
         }}
       </Formik>

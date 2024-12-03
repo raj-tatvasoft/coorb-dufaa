@@ -61,7 +61,7 @@ const CheckboxField: FC<IGenericFieldProps> = (props) => {
               }
             />
 
-            <FormHelperText>
+            <FormHelperText className="pl-4">
               {meta.touched && meta.error ? meta.error : undefined}
             </FormHelperText>
           </FormControl>

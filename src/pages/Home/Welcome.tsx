@@ -71,6 +71,7 @@ const Welcome = ({
               name={WelcomeFields.buttonNext}
               endIcon="RightBtnArrow.svg"
               variableStyle={{
+                size: "large",
                 bgColor: "var(--btnDarkGreyBg)",
               }}
             />
