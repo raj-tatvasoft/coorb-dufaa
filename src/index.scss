@@ -848,13 +848,12 @@ body[dir="rtl"] {
       line-height: 20px;
       color: var(--darkBrown);
     }
-
-    .monthLabel {
-      font-weight: 400;
-      font-size: 12px;
-      padding-bottom: 8px;
-      color: var(--goldenBrown);
-    }
+  }
+  .sliderSubLbl {
+    font-weight: 400;
+    font-size: 12px;
+    padding-bottom: 8px;
+    color: var(--goldenBrown);
   }
 
   .divider {

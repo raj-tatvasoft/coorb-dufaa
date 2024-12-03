@@ -22,7 +22,7 @@ import { DynamicForm } from "./pages/DynamicHome.tsx";
 // import { ReviewLoan } from "./pages/ReviewLoan.tsx";
 // import { Congratulations } from "./pages/Congratulations.tsx";
 // import { PreviewContract } from "./pages/PreviewContract.tsx";
-import { Products } from "./pages/Products.tsx";
+// import { Products } from "./pages/Products.tsx";
 
 function App() {
   const { i18n } = useTranslation();
@@ -43,7 +43,6 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<DynamicForm />} />
-                <Route path="/products" element={<Products />} />
                 {/* <Route path="/tailor-loan" element={<TailorLoan />} />
                 <Route path="/review-loan" element={<ReviewLoan />} />
                 <Route path="/preview-contract" element={<PreviewContract />} />
