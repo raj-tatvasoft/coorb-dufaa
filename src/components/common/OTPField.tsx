@@ -107,7 +107,7 @@ const OTPInput: React.FC<OTPInputProps> = ({
           />
         ))}
       </Box>
-      {error && <span className="errorText font-bold">{error}</span>}
+      {error && <span className="errorText lightError font-bold">{error}</span>}
     </>
   );
 };

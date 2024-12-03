@@ -19,9 +19,13 @@
       background-color: transparent;
     }
 
-    .headerLogo {
-      width: 32px;
-      margin-inline-start: 8px;
+    .logoButton {
+      padding-block: 4px 2px;
+      .headerLogo {
+        width: auto;
+        max-height: 58px;
+        margin-inline-start: 8px;
+      }
     }
 
     .headerName {
@@ -33,7 +37,7 @@
 
     @media (max-width: 600px) {
       .headerLogo {
-        width: 32px;
+        max-height: 50px;
         margin-inline-start: 8px;
       }
     }

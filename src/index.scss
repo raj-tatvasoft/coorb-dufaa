@@ -50,6 +50,12 @@ body[dir="rtl"] {
   margin-left: 14px;
   margin-right: 14px;
   white-space: normal;
+
+  &.lightError {
+    color: var(--lightError);
+    font-size: 1rem;
+    text-shadow: 0 0 8px var(--black);
+  }
 }
 
 .errorBorderDashed {

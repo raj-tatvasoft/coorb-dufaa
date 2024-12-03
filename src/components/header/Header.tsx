@@ -1,11 +1,9 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import "./Header.scss";
 import i18n from "../../translation/i18n";
 import { useTranslation } from "react-i18next";
 
 export const Header = () => {
-  const { t } = useTranslation();
-
   return (
     <AppBar position="fixed" component={"div"} className="headerAppBar">
       <Toolbar className="headerToolBar">
@@ -18,11 +16,9 @@ export const Header = () => {
               i18n.changeLanguage("en");
               document.body.dir = "ltr";
             }}
+            className="logoButton"
           >
-            <img src="/images/logo.svg" alt="logo" className="headerLogo" />
-            <Typography className="headerName" variant="body2">
-              {t("duffa")}
-            </Typography>
+            <img src="/images/logo.png" alt="logo" className="headerLogo" />
           </IconButton>
         </Box>
         {/* <Box className="headerBox">
