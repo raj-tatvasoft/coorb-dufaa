@@ -58,6 +58,7 @@ const theme = createTheme({
           "--goldenOrange": "#f19d00",
           "--burntOrange": "#ed6700",
           "--goldenPeach": "#ffd17a",
+          "--lightError": "#ff6060",
         },
       },
     },

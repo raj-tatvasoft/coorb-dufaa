@@ -1,7 +1,6 @@
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import "./Header.scss";
 import i18n from "../../translation/i18n";
-import { useTranslation } from "react-i18next";
 
 export const Header = () => {
   return (
