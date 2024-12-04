@@ -45,6 +45,7 @@ const UserEnrollment = ({
           name={UserEnrollmentFields.registerBtn}
           variableStyle={{
             bgColor: "var(--btnDarkGreyBg)",
+            size: "large",
           }}
         />
       </Grid2>

@@ -15,6 +15,8 @@ import {
 } from "../ResponsibleLending";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import { ReviewLoan } from "../ReviewLoan";
+import { PreviewContract } from "../PreviewContract";
+import { Congratulations } from "../Congratulations";
 
 export type HomeStep =
   | "welcome"
@@ -24,7 +26,8 @@ export type HomeStep =
   | "responsibleLending"
   | "tailorLoan"
   | "reviewLoan"
-  | "signContract";
+  | "previewContract"
+  | "congratulation";
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -191,7 +194,10 @@ export const Home = () => {
               setStep("reviewLoan");
               break;
             case "reviewLoan":
-              setStep("signContract");
+              setStep("previewContract");
+              break;
+            case "previewContract":
+              setStep("congratulation");
               break;
             default:
               setStep("welcome");
@@ -228,8 +234,10 @@ export const Home = () => {
         return <TailorLoan handleButtonClick={handleButtonClick} />;
       case "reviewLoan":
         return <ReviewLoan handleButtonClick={handleButtonClick} />;
-      case "signContract":
-        return <>Sign in contract</>;
+      case "previewContract":
+        return <PreviewContract handleButtonClick={handleButtonClick} />;
+      case "congratulation":
+        return <Congratulations handleButtonClick={handleButtonClick} />;
       default:
         <></>;
         break;
