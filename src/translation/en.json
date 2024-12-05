@@ -108,7 +108,7 @@
   "invalidSaudiMobileNumber": "Invalid Saudi Mobile Number",
   "pleaseTickThis": "Please Tick This",
   "duffa": "Duffa",
-  "readT&C": "I have read the terms & conditions",
+  "readT&C": "<div>I have read the <a href=\"google.vom\" target=\"_blank\" style=\"color:#C65600\">terms & conditions</a></div>",
   "wantToReceiveMarketingMails": "I want to receive marketing emails",
   "codeSentToYourMobileNumber": "A code was sent to your mobile number",
   "enterReceiveNumber": "Please enter the number you received",

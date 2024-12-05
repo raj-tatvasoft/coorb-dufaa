@@ -56,7 +56,10 @@ const Welcome = ({
             />
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <CheckboxField name={WelcomeFields.readTAndC} lbl={t("readT&C")} />
+            <CheckboxField
+              name={WelcomeFields.readTAndC}
+              variableStyle={{ htmlLabel: t("readT&C") }}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <CheckboxField
