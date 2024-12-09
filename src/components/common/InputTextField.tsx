@@ -47,7 +47,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
   }, [field.value]);
 
   const handleSetFieldVal = (newVal = val) => {
-    if (field.value !== val) setFieldTouched(name, true, true);
+    // if (field.value !== val) setFieldTouched(name, true, true);
     setFieldValue(name, newVal, true);
   };
 

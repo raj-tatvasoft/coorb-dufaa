@@ -80,7 +80,7 @@ export const formatWithCommaAndFractionDigits = (
   value: number,
   digits: number = 2
 ) => {
-  return value.toLocaleString(undefined, {
+  return value?.toLocaleString(undefined, {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   });

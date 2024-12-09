@@ -100,7 +100,7 @@ const ButtonField: FC<
         fullWidth
         className={"genericBtn " + className?.toString()}
         style={{
-          backgroundColor: variableStyle?.bgColor,
+          backgroundColor: readOnly === 1 ? null : variableStyle?.bgColor,
           color: variableStyle?.color,
           fontWeight: variableStyle?.fontWeight,
           justifyContent: variableStyle?.justifyContent,
