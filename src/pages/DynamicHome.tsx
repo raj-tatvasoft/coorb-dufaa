@@ -1,11 +1,10 @@
-import { Box, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Box, Dialog, DialogContent } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { Formik, FormikErrors, FormikProps, FormikTouched } from "formik";
+import { Formik, FormikProps } from "formik";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { ObjectSchema } from "yup";
-import { errorToast } from "../components/common/ToastMsg";
 import WorkflowFormField from "../components/common/WorkflowFormField";
 import { IObject, ISelectOpt, Variable } from "../service/commonModel";
 import { ITaskDetail } from "../service/task/TaskModel";
@@ -37,7 +36,7 @@ export const DynamicForm = () => {
   });
   const [groupedVariables, setGroupedVariables] = useState<IObject>({});
   const [currentStep, setCurrentStep] = useState(0);
-  const [commitStatus, setCommitStatus] = useState<ISelectOpt[]>([]);
+  const [, setCommitStatus] = useState<ISelectOpt[]>([]);
 
   const requestInitiated = useRef(false);
 
@@ -197,28 +196,28 @@ export const DynamicForm = () => {
     setInitialValues(newInitialValues);
   };
 
-  const isFormValid = (
-    values: IObject,
-    validateForm: (values?: any) => Promise<FormikErrors<IObject>>,
-    setTouched: (
-      touched: FormikTouched<IObject>,
-      shouldValidate?: boolean
-    ) => Promise<void | FormikErrors<IObject>>,
-    callBack: any
-  ) => {
-    return validateForm(values).then((errors: IObject) => {
-      if (errors?.formField) {
-        const touchedFields: IObject = { formField: {} };
-        Object.keys(errors.formField).forEach((field) => {
-          touchedFields.formField[field] = true;
-        });
-        setTouched(touchedFields);
-        errorToast(t("commonValidationMsg"));
-      } else {
-        callBack();
-      }
-    });
-  };
+  // const isFormValid = (
+  //   values: IObject,
+  //   validateForm: (values?: any) => Promise<FormikErrors<IObject>>,
+  //   setTouched: (
+  //     touched: FormikTouched<IObject>,
+  //     shouldValidate?: boolean
+  //   ) => Promise<void | FormikErrors<IObject>>,
+  //   callBack: any
+  // ) => {
+  //   return validateForm(values).then((errors: IObject) => {
+  //     if (errors?.formField) {
+  //       const touchedFields: IObject = { formField: {} };
+  //       Object.keys(errors.formField).forEach((field) => {
+  //         touchedFields.formField[field] = true;
+  //       });
+  //       setTouched(touchedFields);
+  //       errorToast(t("commonValidationMsg"));
+  //     } else {
+  //       callBack();
+  //     }
+  //   });
+  // };
   const groupNames = Object.keys(groupedVariables);
 
   return (
