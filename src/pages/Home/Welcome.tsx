@@ -7,10 +7,10 @@ import InputTextField from "../../components/common/InputTextField";
 export const WelcomeFields = {
   nationalId: "national_id_iqama_text",
   saudiMobNo: "saudi_mobile_number_text",
-  agreeToShare: "are_you_a_bab_customer_tick",
+  agreeToShare: "t_and_c_text",
   readTAndC: "t_an_c_tick",
   marketingTick: "marketing_tick",
-  buttonNext: "button_go_next",
+  buttonNext: "send_otp_button",
 };
 
 const Welcome = ({
@@ -35,39 +35,39 @@ const Welcome = ({
           size={{ xs: 12 }}
           alignItems={"start"}
         >
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12 }}>
             <InputTextField
               name={WelcomeFields.nationalId}
               placeholder={t("NationalIDorIqama")}
               startIcon={"ID.svg"}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12 }}>
             <InputTextField
               name={WelcomeFields.saudiMobNo}
               placeholder={"saudi_mobile_number_text"}
               startIcon={"SmartPhone.svg"}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12 }}>
             <CheckboxField
               name={WelcomeFields.agreeToShare}
               lbl={WelcomeFields.agreeToShare}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12 }}>
             <CheckboxField
               name={WelcomeFields.readTAndC}
               variableStyle={{ htmlLabel: t("readT&C") }}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12 }}>
             <CheckboxField
               name={WelcomeFields.marketingTick}
               lbl={"wantToReceiveMarketingMails"}
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid size={{ xs: 12 }}>
             <ButtonField
               lbl={"next"}
               handleClick={() => handleButtonClick(WelcomeFields.buttonNext)}

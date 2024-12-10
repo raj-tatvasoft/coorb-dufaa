@@ -77,7 +77,7 @@ export const camelToPascal = (str: string) => {
 };
 
 export const formatWithCommaAndFractionDigits = (
-  value: number,
+  value: number | string,
   digits: number = 2
 ) => {
   return value?.toLocaleString(undefined, {

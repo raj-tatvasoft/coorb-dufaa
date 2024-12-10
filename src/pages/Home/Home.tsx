@@ -101,9 +101,12 @@ export const Home = () => {
   );
 
   const loanTailorSchema = yup.object().shape({
-    [TailorLoanFields.loanTenor]: yup
+    [TailorLoanFields.loanPrincipal]: yup
       .string()
-      .required(`${t(TailorLoanFields.loanTenor)} ${t("isRequired")}`),
+      .required(`${t("amountToBorrow")} ${t("isRequired")}`),
+    [TailorLoanFields.loanTenure]: yup
+      .string()
+      .required(`${t(TailorLoanFields.loanTenure)} ${t("isRequired")}`),
   });
 
   useEffect(() => {
