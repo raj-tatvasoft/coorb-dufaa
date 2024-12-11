@@ -244,6 +244,22 @@ body[dir="rtl"] {
 
   .genericBtn {
     height: max-content;
+
+    img {
+      transition: all 0.2s linear;
+    }
+
+    &:hover {
+      opacity: 0.9;
+      size: 1rem;
+
+      .startIcon {
+        margin-right: 7px;
+      }
+      .endIcon {
+        margin-left: 7px;
+      }
+    }
   }
 }
 .fullGrid {

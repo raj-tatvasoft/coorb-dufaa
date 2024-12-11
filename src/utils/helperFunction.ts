@@ -21,7 +21,10 @@ export const transferTaskObjectForPayload = (data: IObject) => {
     const formFieldVal = data[variable.i18nName];
     if (formFieldVal?.toString()) {
       if (variable.jdbcType === JDBC_TYPE.Checkbox) {
-        newData.variables[key].numericValue = formFieldVal ? "1" : "0";
+        newData.variables[variable.id].numericValue =
+          formFieldVal?.toString() === "true" ? 1 : 0;
+        newData.variables[variable.id].textValue =
+          formFieldVal?.toString() === "true" ? "true" : "false";
       } else if (
         variable.jdbcType === JDBC_TYPE.IntegerInput &&
         variable.comboListName &&

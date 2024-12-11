@@ -24,7 +24,7 @@ export interface Variable {
   exitClassDataId: string;
   instanceId: string;
   textValue: string;
-  numericValue: string;
+  numericValue: string | number;
   displayOrder: number;
 
   variableStyle?: any;

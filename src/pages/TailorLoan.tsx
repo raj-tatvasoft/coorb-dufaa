@@ -1,27 +1,25 @@
-import { Slider, SliderThumb } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useTranslation } from "react-i18next";
-import { ToggleButtonGroupField } from "../components/common/ToggleButtonGroupField";
 import ButtonField from "../components/common/ButtonField";
 import { formatWithCommaAndFractionDigits } from "../utils/helperFunction";
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ThumbComponentProps extends React.HTMLAttributes<unknown> {}
-
-const Thumb = (props: ThumbComponentProps) => {
-  const { children, ...other } = props;
-  return (
-    <SliderThumb {...other}>
-      {children}
-      <span>
-        <img src="/images/SliderThumb.svg" alt="" />
-      </span>
-    </SliderThumb>
-  );
-};
+import SliderField from "../components/common/SliderField";
+import { useEffect, useRef, useState } from "react";
+import { IObject } from "../service/commonModel";
+import { Skeleton, Typography } from "@mui/material";
+import { FormikContextType, useFormikContext } from "formik";
 
 export const TailorLoanFields = {
-  loanTenor: "loanTenor",
+  loanPrincipalMin: "loan_principal_min",
+  loanPrincipalMax: "loan_principal_max",
+  loanPrincipal: "loan_principal",
+  loanTenureMin: "loan_tenure_min",
+  loanTenureMax: "loan_tenure_max",
+  loanTenure: "loan_tenure",
+  monthlyPayment: "monthly_payment",
+  firstInstallmentDate: "first_installment_date",
+  lastInstallmentDate: "last_installment_date",
+  applyForLoanBtn: "apply_for_loan_button",
+  simulateLoanBtn: "simulate_button",
 };
 
 export const TailorLoan = ({
@@ -30,12 +28,64 @@ export const TailorLoan = ({
   handleButtonClick: (btnName: string) => void;
 }) => {
   const { t } = useTranslation();
-  {
-    console.log(
-      " formatWithCommaAndFractionDigits(val)",
-      formatWithCommaAndFractionDigits(200)
+  const { values }: FormikContextType<IObject> = useFormikContext();
+
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  const [simulateLoan, setSimulateLoan] = useState<{
+    isLoading: boolean;
+    details: IObject;
+  }>({
+    isLoading: false,
+    details: {},
+  });
+
+  useEffect(() => {
+    if (simulateLoan.isLoading && bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [simulateLoan.isLoading]);
+
+  const handleSimulateLoan = () => {
+    setSimulateLoan({ isLoading: true, details: {} });
+    setTimeout(() => {
+      setSimulateLoan({
+        isLoading: false,
+        details: {
+          totalAmount: 20000,
+          [TailorLoanFields.monthlyPayment]: 20000,
+          [TailorLoanFields.loanTenure]: 12,
+          [TailorLoanFields.firstInstallmentDate]: "09/12/2024",
+          [TailorLoanFields.lastInstallmentDate]: "09/12/2034",
+        },
+      });
+    }, 5000);
+    // handleButtonClick(TailorLoanFields.simulateLoanBtn);
+  };
+
+  const renderLoanDetails = (fieldName: string, renderVal?: string) => {
+    return (
+      <div>
+        <p className="detailLabel">{t(fieldName)}</p>
+        <p className="detailValue">
+          {simulateLoan.isLoading ? (
+            <Skeleton
+              variant="text"
+              sx={{
+                fontSize: "10rem",
+                width: "100px",
+              }}
+            />
+          ) : renderVal ? (
+            renderVal
+          ) : (
+            simulateLoan.details[fieldName]
+          )}
+        </p>
+      </div>
     );
-  }
+  };
+
   return (
     <Grid
       container
@@ -73,48 +123,45 @@ export const TailorLoan = ({
         <p className="groupLabel">{t("tailorYourPersonalLoan")}</p>
 
         <div className="tailorLoanCard">
-          <div className="sliderContainer">
-            <div className="sliderLabel">
-              <p className="label">{t("amountToBorrow")}</p>
-              <p className="value">
-                {t("amountWithSAR", {
-                  amount: formatWithCommaAndFractionDigits(40000),
-                })}
-              </p>
-            </div>
-            <p className="minMax">
-              {t("fromToSAR", {
-                from: "1000",
-                to: formatWithCommaAndFractionDigits(40000),
-              })}
-            </p>
+          <SliderField
+            name={TailorLoanFields.loanPrincipal}
+            lbl={"amountToBorrow"}
+            rightLbl={t("amountWithSAR", {
+              amount: formatWithCommaAndFractionDigits(
+                Number(values?.[TailorLoanFields.loanPrincipal] ?? 0)
+              ),
+            })}
+            formatValue={formatWithCommaAndFractionDigits}
+            // min={TailorLoanFields.lanPrinicipalMin}
+            // max={TailorLoanFields.laonPrinicipalMax}
 
-            <div className="sliderWrapper">
-              <Slider
-                aria-label="Default"
-                defaultValue={2000}
-                valueLabelDisplay="auto"
-                step={1000}
-                marks
-                min={1000}
-                max={40000}
-                valueLabelFormat={(val) => {
-                  return formatWithCommaAndFractionDigits(val);
-                }}
-                className="slider"
-                slots={{ thumb: Thumb }}
-                classes={{
-                  rail: "sliderRail",
-                  thumb: "sliderThumb",
-                  track: "sliderTrack",
-                }}
-              />
-            </div>
-          </div>
+            min={0}
+            max={40000}
+            subLbl={t("fromToSAR", {
+              from: "1000",
+              to: formatWithCommaAndFractionDigits(40000),
+            })}
+            step={1000}
+          />
 
-          <ToggleButtonGroupField
-            name={TailorLoanFields.loanTenor}
-            lbl={TailorLoanFields.loanTenor}
+          <SliderField
+            name={TailorLoanFields.loanTenure}
+            lbl={TailorLoanFields.loanTenure}
+            // min={TailorLoanFields.loanTenureMin}
+            // max={TailorLoanFields.loanTenureMax}
+
+            rightLbl={t("months", {
+              months: values?.[TailorLoanFields.loanTenure],
+            })}
+            min={12}
+            max={24}
+            subLbl={"inMonths"}
+            step={1}
+          />
+
+          {/* <ToggleButtonGroupField
+            name={TailorLoanFields.loanTenure}
+            lbl={TailorLoanFields.loanTenure}
             subLbl={"inMonths"}
             options={[
               { value: "12", label: "12" },
@@ -123,54 +170,87 @@ export const TailorLoan = ({
               { value: "48", label: "48" },
               { value: "60", label: "60" },
             ]}
-          />
+          /> */}
 
           <hr className="divider" />
+          <Typography
+            component={"div"}
+            sx={{ marginTop: -2, marginBottom: 1.5 }}
+          >
+            <ButtonField
+              lbl={"simulateLoan"}
+              handleClick={handleSimulateLoan}
+              name={"simulateLoan"}
+              variableStyle={{
+                bgColor: "var(--btnDarkGreyBg)",
+                size: "large",
+              }}
+              readOnly={simulateLoan.isLoading ? 1 : 0}
+            />
+          </Typography>
+          {(simulateLoan.isLoading ||
+            simulateLoan.details?.[TailorLoanFields.firstInstallmentDate]) && (
+            <>
+              <div className="loanDetailContainer">
+                {renderLoanDetails(
+                  "totalAmount",
+                  t("amountWithSAR", {
+                    amount: formatWithCommaAndFractionDigits(
+                      simulateLoan.details["totalAmount"]
+                    ),
+                  })
+                )}
+                {renderLoanDetails(
+                  TailorLoanFields.monthlyPayment,
+                  t("amountWithSAR", {
+                    amount: formatWithCommaAndFractionDigits(
+                      simulateLoan.details[TailorLoanFields.monthlyPayment]
+                    ),
+                  })
+                )}
+                {renderLoanDetails(
+                  TailorLoanFields.loanTenure,
+                  t("months", {
+                    months: simulateLoan.details[TailorLoanFields.loanTenure],
+                  })
+                )}
+              </div>
 
-          <div className="loanDetailContainer">
-            <div>
-              <p className="detailLabel">{t("totalAmount")}</p>
-              <p className="detailValue">
-                {t("amountWithSAR", { amount: "40,000" })}
-              </p>
-            </div>
-            <div>
-              <p className="detailLabel">{t("monthlyPayment")}</p>
-              <p className="detailValue">
-                {t("amountWithSAR", { amount: "1,667" })}
-              </p>
-            </div>
-            <div>
-              <p className="detailLabel">{t("loanTenor")}</p>
-              <p className="detailValue">{t("months", { months: "24" })}</p>
-            </div>
-          </div>
-
-          <div className="installmentContainer">
-            <div>
-              <p className="detailLabel">{t("firstInstallment")}</p>
-              <p className="detailValue">01/08/2024</p>
-            </div>
-            <div>
-              <p className="detailLabel">{t("lastInstallment")}</p>
-              <p className="detailValue">01/80/2026</p>
-            </div>
-          </div>
+              <div className="installmentContainer" ref={bottomRef}>
+                {renderLoanDetails(
+                  TailorLoanFields.firstInstallmentDate,
+                  simulateLoan.details[TailorLoanFields.firstInstallmentDate]
+                )}
+                {renderLoanDetails(
+                  TailorLoanFields.lastInstallmentDate,
+                  simulateLoan.details[TailorLoanFields.lastInstallmentDate]
+                )}
+              </div>
+            </>
+          )}
         </div>
 
-        <div className="stepperContainer">
-          {/* <StepFrame stepCount={6} activeStep={3} /> */}
-          <ButtonField
-            lbl={"review"}
-            handleClick={() => handleButtonClick("review")}
-            name={"review"}
-            endIcon="RightBtnArrow.svg"
-            variableStyle={{
-              bgColor: "var(--btnDarkGreyBg)",
-              size: "large",
-            }}
-          />
-        </div>
+        {(simulateLoan.isLoading ||
+          simulateLoan.details?.[TailorLoanFields.firstInstallmentDate]) && (
+          <div className="stepperContainer">
+            {/* <StepFrame stepCount={6} activeStep={3} /> */}
+            <ButtonField
+              lbl={"review"}
+              handleClick={() => handleButtonClick("review")}
+              name={"review"}
+              endIcon="RightBtnArrow.svg"
+              variableStyle={{
+                bgColor: "var(--btnDarkGreyBg)",
+                size: "large",
+              }}
+              readOnly={
+                simulateLoan.details?.[TailorLoanFields.firstInstallmentDate]
+                  ? 0
+                  : 1
+              }
+            />
+          </div>
+        )}
       </>
     </Grid>
   );

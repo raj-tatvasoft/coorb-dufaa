@@ -108,9 +108,16 @@ const ButtonField: FC<
           borderRadius: variableStyle?.borderRadius,
         }}
       >
-        {startIcon && <img src={`images/${startIcon}`} className="mr-1" />}
+        {startIcon && (
+          <img src={`images/${startIcon}`} className="mr-1 startIcon" />
+        )}
         {lbl ? t(lbl) : ""}
-        {endIcon && <img src={`images/${endIcon}`} className="ml-1" />}
+        {endIcon && (
+          <img
+            src={`images/${endIcon}`}
+            className={`ml-1 endIcon ${readOnly ? "opacity-15" : ""}`}
+          />
+        )}
       </Button>
     </div>
   );
