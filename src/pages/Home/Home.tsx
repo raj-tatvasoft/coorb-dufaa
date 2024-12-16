@@ -17,6 +17,9 @@ import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import { ReviewLoan } from "../ReviewLoan";
 import { PreviewContract } from "../PreviewContract";
 import { Congratulations } from "../Congratulations";
+import { handleGenericButtonClick } from "../../utils/helperFunction";
+import { workflowService } from "../../service/workflow/WorkflowService";
+import { taskService } from "../../service/task/TaskService";
 
 export type HomeStep =
   | "welcome"
@@ -45,10 +48,10 @@ export const Home = () => {
       .string()
       .matches(regex.SaudiMobNo, t("invalidSaudiMobileNumber"))
       .required(`${t(WelcomeFields.saudiMobNo)} ${t("isRequired")}`),
-    [WelcomeFields.agreeToShare]: yup
-      .mixed()
-      .oneOf([true], `${t("pleaseTickThis")}`)
-      .required(t("pleaseTickThis")),
+    // [WelcomeFields.agreeToShare]: yup
+    //   .mixed()
+    //   .oneOf([true], `${t("pleaseTickThis")}`)
+    //   .required(t("pleaseTickThis")),
     [WelcomeFields.readTAndC]: yup
       .mixed()
       .oneOf([true], `${t("pleaseTickThis")}`)
@@ -66,13 +69,13 @@ export const Home = () => {
     [UserEnrollmentFields.userName]: yup
       .string()
       .required(`${t(UserEnrollmentFields.userName)} ${t("isRequired")}`),
-    [UserEnrollmentFields.name]: yup
-      .string()
-      .required(`${t(UserEnrollmentFields.name)} ${t("isRequired")}`),
-    [UserEnrollmentFields.email]: yup
-      .string()
-      .required(`${t(UserEnrollmentFields.email)} ${t("isRequired")}`)
-      .matches(regex.Email, t("validEmail")),
+    // [UserEnrollmentFields.name]: yup
+    //   .string()
+    //   .required(`${t(UserEnrollmentFields.name)} ${t("isRequired")}`),
+    // [UserEnrollmentFields.email]: yup
+    //   .string()
+    //   .required(`${t(UserEnrollmentFields.email)} ${t("isRequired")}`)
+    //   .matches(regex.Email, t("validEmail")),
     [UserEnrollmentFields.password]: yup
       .string()
       .required(`${t(UserEnrollmentFields.password)} ${t("isRequired")}`)
@@ -122,42 +125,96 @@ export const Home = () => {
         return acc;
       }, {}),
     });
-    // workflowService.getStartableWorkflows().then((res) => {
-    //   if (res?.data) {
-    //     workflowService
-    //       .instantiate(res.data[1].id, res.data[1].tokenId)
-    //       .then((subRes) => {
-    //         if (subRes?.data) {
-    //           taskService
-    //             .load(
-    //               subRes.data?.taskInstanceId,
-    //               subRes.data?.taskInstanceTokenId
-    //             )
-    //             .then((subChildRes) => {
-    //               if (subChildRes?.data) {
-    //                 setInitValues({
-    //                   initialDetails: subChildRes.data,
-    //                   ...Object.values(WelcomeFields).reduce(
-    //                     (acc: IObject, key) => {
-    //                       acc[key] = "";
-    //                       return acc;
-    //                     },
-    //                     {}
-    //                   ),
-    //                 });
-    //               }
-    //             });
-    //         }
-    //       });
-    //   }
-    // });
+    workflowService.getStartableWorkflows().then((res) => {
+      if (res?.data) {
+        workflowService
+          .instantiate(res.data[3].id, res.data[3].tokenId)
+          .then((subRes) => {
+            if (subRes?.data) {
+              taskService
+                .load(
+                  subRes.data?.taskInstanceId,
+                  subRes.data?.taskInstanceTokenId
+                )
+                .then((subChildRes) => {
+                  if (subChildRes?.data) {
+                    const statuses = subChildRes.data.statuses;
+
+                    const newInitialValues: IObject = {
+                      initialDetails: subChildRes.data,
+                      ...Object.values(WelcomeFields).reduce(
+                        (acc: IObject, key) => {
+                          acc[key] = "";
+                          return acc;
+                        },
+                        {}
+                      ),
+                    };
+                    if (subChildRes.data.selectedTaskStatus.i18nName) {
+                      newInitialValues["selectedTaskStatus"] = {
+                        ...subChildRes.data.selectedTaskStatus,
+                        value: subChildRes.data.selectedTaskStatus.id,
+                        label: t(subChildRes.data.selectedTaskStatus.i18nName),
+                      };
+                    } else if (Object.keys(statuses)?.length === 1) {
+                      const val = Object.values(statuses)[0];
+                      newInitialValues["selectedTaskStatus"] = {
+                        ...val,
+                        value: val.id,
+                        label: t(val.i18nName),
+                      };
+                    }
+
+                    setInitValues({ ...newInitialValues });
+                  }
+                });
+            }
+          });
+      }
+    });
   };
 
-  const handleButtonClick = (btnName: string) => {
+  const handleNextStep = () => {
+    switch (step) {
+      case "welcome":
+        setStep("otp");
+        break;
+      case "otp":
+        setStep("userEnrollment");
+        break;
+      case "userEnrollment":
+        setStep("product");
+        break;
+      case "product":
+        setStep("responsibleLending");
+        break;
+      case "responsibleLending":
+        setStep("tailorLoan");
+        break;
+      case "tailorLoan":
+        setStep("reviewLoan");
+        break;
+      case "reviewLoan":
+        setStep("previewContract");
+        break;
+      case "previewContract":
+        setStep("congratulation");
+        break;
+      default:
+        setStep("welcome");
+        break;
+    }
+  };
+  const handleButtonClick = (
+    btnName: string,
+    isPreventValidation = false,
+    isPreventStepChange = false,
+    callback?: any //callback function call
+  ) => {
     if (formRef.current) {
       const { validateForm, setTouched, values } = formRef.current;
       validateForm().then((res) => {
-        if (Object.keys(res)?.length) {
+        if (Object.keys(res)?.length && !isPreventValidation) {
           const touchedFields: IObject = {};
           Object.keys(res).forEach((field) => {
             touchedFields[field] = true;
@@ -165,47 +222,24 @@ export const Home = () => {
           setTouched(touchedFields);
         } else {
           console.log(btnName, values);
-          // handleGenericButtonClick(values, btnName, () => {
-          //   if (step === "welcome") {
-          //     setStep("otp");
-          //     setInitValues({
-          //       initialDetails: WORKFLOW_DETAIL,
-          //       ...Object.values(WelcomeFields).reduce((acc: IObject, key) => {
-          //         acc[key] = "";
-          //         return acc;
-          //       }, {}),
-          //     });
-          //   }
-          // });
-          switch (step) {
-            case "welcome":
-              setStep("otp");
-              break;
-            case "otp":
-              setStep("userEnrollment");
-              break;
-            case "userEnrollment":
-              setStep("product");
-              break;
-            case "product":
-              setStep("responsibleLending");
-              break;
-            case "responsibleLending":
-              setStep("tailorLoan");
-              break;
-            case "tailorLoan":
-              setStep("reviewLoan");
-              break;
-            case "reviewLoan":
-              setStep("previewContract");
-              break;
-            case "previewContract":
-              setStep("congratulation");
-              break;
-            default:
-              setStep("welcome");
-              break;
-          }
+          handleGenericButtonClick(values, btnName, () => {
+            if (!isPreventStepChange) handleNextStep();
+
+            if (callback) {
+              callback();
+            }
+
+            // if (step === "welcome") {
+            //   setStep("otp");
+            //   setInitValues({
+            //     initialDetails: WORKFLOW_DETAIL,
+            //     ...Object.values(WelcomeFields).reduce((acc: IObject, key) => {
+            //       acc[key] = "";
+            //       return acc;
+            //     }, {}),
+            //   });
+            // }
+          });
         }
       });
     }
@@ -228,7 +262,12 @@ export const Home = () => {
           </>
         );
       case "userEnrollment":
-        return <UserEnrollment handleButtonClick={handleButtonClick} />;
+        return (
+          <UserEnrollment
+            handleButtonClick={handleButtonClick}
+            handleNextStep={handleNextStep}
+          />
+        );
       case "product":
         return <Products handleButtonClick={handleButtonClick} />;
       case "responsibleLending":

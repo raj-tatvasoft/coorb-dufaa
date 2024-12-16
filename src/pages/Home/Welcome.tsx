@@ -7,10 +7,10 @@ import InputTextField from "../../components/common/InputTextField";
 export const WelcomeFields = {
   nationalId: "national_id_iqama_text",
   saudiMobNo: "saudi_mobile_number_text",
-  agreeToShare: "t_and_c_text",
+  agreeToShare: "are_you_a_bab_customer_tick",
   readTAndC: "t_an_c_tick",
   marketingTick: "marketing_tick",
-  buttonNext: "send_otp_button",
+  buttonNext: "button_go_next",
 };
 
 const Welcome = ({

@@ -1,20 +1,41 @@
 import { Grid2 } from "@mui/material";
 import InputTextField from "../../components/common/InputTextField";
 import ButtonField from "../../components/common/ButtonField";
+import { IObject } from "../../service/commonModel";
+import { taskService } from "../../service/task/TaskService";
+import { transferTaskObjectForPayload } from "../../utils/helperFunction";
+import { FormikContextType, useFormikContext } from "formik";
 
 export const UserEnrollmentFields = {
   userName: "user_name",
-  name: "name",
-  email: "email",
+  // name: "name",
+  // email: "email",
   password: "password",
   confirmPassword: "confirm_password",
   registerBtn: "register_button",
 };
 const UserEnrollment = ({
   handleButtonClick,
+  handleNextStep,
 }: {
-  handleButtonClick: (btnName: string) => void;
+  handleButtonClick: (
+    btnName: string,
+    isPreventValidation?: boolean,
+    isPreventStepChange?: boolean,
+    callback?: () => any
+  ) => void;
+  handleNextStep: () => void;
 }) => {
+  const { values }: FormikContextType<IObject> = useFormikContext();
+  const handleCommitTask = () => {
+    const payload = transferTaskObjectForPayload(values);
+    taskService.commit(payload).then((res) => {
+      if (res) {
+        handleNextStep();
+      }
+    });
+  };
+
   return (
     <Grid2 container spacing={2}>
       {Object.values(UserEnrollmentFields).map((name, i) => {
@@ -40,7 +61,14 @@ const UserEnrollment = ({
         <ButtonField
           lbl={UserEnrollmentFields.registerBtn}
           handleClick={() =>
-            handleButtonClick(UserEnrollmentFields.registerBtn)
+            handleButtonClick(
+              UserEnrollmentFields.registerBtn,
+              false,
+              true,
+              () => {
+                handleCommitTask();
+              }
+            )
           }
           name={UserEnrollmentFields.registerBtn}
           variableStyle={{

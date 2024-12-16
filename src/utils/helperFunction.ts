@@ -37,6 +37,7 @@ export const transferTaskObjectForPayload = (data: IObject) => {
       }
     }
   });
+  newData.selectedTaskStatus = { ...data.selectedTaskStatus };
 
   //removing extra fields before passing data to backend
   newData.formField = undefined;

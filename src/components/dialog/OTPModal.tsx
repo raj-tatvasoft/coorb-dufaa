@@ -15,11 +15,16 @@ import ButtonField from "../common/ButtonField";
 export const OTPFields = {
   otp: "otp",
   resendBtn: "resend_button",
+  validateBtn: "validate_button",
 };
 interface OTPModalProps {
   open: boolean;
   handleClose: () => void;
-  handleButtonClick: (btnName: string) => void;
+  handleButtonClick: (
+    btnName: string,
+    isPreventValidation?: boolean,
+    isPreventStepChange?: boolean
+  ) => void;
 }
 
 export const OTPModal = ({
@@ -85,10 +90,21 @@ export const OTPModal = ({
         >
           If you don't receive the number in 1:21 minutes, resend code
         </Typography> */}
-        <div className="mt-4">
+
+        <div className="mt-4 flex gap-2">
+          <ButtonField
+            lbl={OTPFields.validateBtn}
+            handleClick={() => handleButtonClick(OTPFields.resendBtn)}
+            name={OTPFields.validateBtn}
+            variableStyle={{
+              bgColor: "var(--btnDarkGreyBg)",
+            }}
+          />
           <ButtonField
             lbl={OTPFields.resendBtn}
-            handleClick={handleButtonClick}
+            handleClick={() =>
+              handleButtonClick(OTPFields.resendBtn, true, true)
+            }
             name={OTPFields.resendBtn}
             variableStyle={{
               bgColor: "var(--btnDarkGreyBg)",
