@@ -1,5 +1,6 @@
 import axios from "axios";
 import { errorToast } from "../components/common/ToastMsg";
+import { CONST_WORDS } from "../utils/constant";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const RequestArr: string[] = [];
@@ -12,7 +13,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     config.headers["Content-Type"] = "application/json";
 
-    const token = "Z2VvcmdlczpYWFg=";
+    const token = localStorage.getItem(CONST_WORDS.token) ?? "Z2VvcmdlczpYWFg=";
     if (token) {
       config.headers["Authorization"] = `${token}`;
     }

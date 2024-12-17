@@ -341,6 +341,7 @@ export const FORM_TYPE = {
 
 export const CONST_WORDS = {
   sessionTaskDetail: "CME_TASK_DETAIL",
+  token: "cms_token",
 };
 
 export const ALLOWED_FILE_EXTENSION = ["pdf", "jpg", "png", "jpeg", "gif"];

@@ -3,6 +3,8 @@ import { t } from "i18next";
 import ButtonField from "../../components/common/ButtonField";
 import CheckboxField from "../../components/common/CheckboxField";
 import InputTextField from "../../components/common/InputTextField";
+import { useEffect } from "react";
+import { CONST_WORDS } from "../../utils/constant";
 
 export const WelcomeFields = {
   nationalId: "national_id_iqama_text",
@@ -18,6 +20,10 @@ const Welcome = ({
 }: {
   handleButtonClick: (btnName: string) => void;
 }) => {
+  useEffect(() => {
+    localStorage.removeItem(CONST_WORDS.token);
+  }, []);
+
   return (
     <>
       <p className="more-fund-title">
