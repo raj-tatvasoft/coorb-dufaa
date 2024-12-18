@@ -15,11 +15,10 @@ export const transferTaskObjectForPayload = (data: IObject) => {
   const newData: ITaskDetail & {
     taskInstanceTokenId?: string;
   } = JSON.parse(JSON.stringify(data.initialDetails));
-
   Object.keys(newData?.variables).forEach((key: string) => {
     const variable = newData.variables[key];
     const formFieldVal = data[variable.i18nName];
-    if (formFieldVal?.toString()) {
+    if (formFieldVal?.toString() || variable.jdbcType === JDBC_TYPE.Checkbox) {
       if (variable.jdbcType === JDBC_TYPE.Checkbox) {
         newData.variables[variable.id].numericValue =
           formFieldVal?.toString() === "true" ? 1 : 0;
@@ -51,7 +50,8 @@ export const transferTaskObjectForPayload = (data: IObject) => {
 export const handleGenericButtonClick = (
   data: IObject,
   btnName: string,
-  callBack?: any
+  callBack?: any,
+  finallyCallBack?: any
 ) => {
   const newData: ITaskDetail & {
     taskInstanceTokenId?: string;
@@ -71,8 +71,11 @@ export const handleGenericButtonClick = (
     })
     .then((res) => {
       if (res?.data && callBack) {
-        callBack();
+        callBack(res.data);
       }
+    })
+    .finally(() => {
+      if (finallyCallBack) finallyCallBack();
     });
 };
 
@@ -88,4 +91,51 @@ export const formatWithCommaAndFractionDigits = (
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   });
+};
+
+export const transferTaskObjectForFormValue = (
+  values: any,
+  setGroupedVariables?: any
+) => {
+  const newGrpVariables: Record<string, Variable[]> = {};
+
+  const newValues: any = {
+    selectedTaskStatus: Object.values(values?.statuses ?? {})[0],
+    initialDetails: values,
+  };
+  if (values?.variables)
+    Object.keys(values?.variables)?.forEach((key: any) => {
+      const variable = (values.variables as any)[key];
+
+      // initial value
+      if (variable.jdbcType === JDBC_TYPE.Checkbox) {
+        newValues[variable.i18nName] =
+          variable.numericValue?.toString() === "1" ? true : false;
+      } else if (
+        variable.jdbcType === JDBC_TYPE.IntegerInput &&
+        variable.comboListName &&
+        variable.textValue &&
+        variable.numericValue
+      ) {
+        newValues[variable.i18nName] = {
+          value: variable.numericValue,
+          label: variable.textValue,
+        };
+      } else {
+        newValues[variable.i18nName] = variable.textValue;
+      }
+
+      // grouped variable
+      const group = variable.i18nGroupName;
+      newGrpVariables[group] = newGrpVariables[group] || [];
+      newGrpVariables[group].push({ ...variable });
+    });
+
+  // sort the fields based on display order
+  Object.keys(newGrpVariables).forEach((key) => {
+    return newGrpVariables[key].sort((a, b) => a.displayOrder - b.displayOrder);
+  });
+  if (setGroupedVariables) setGroupedVariables(newGrpVariables);
+
+  return newValues;
 };

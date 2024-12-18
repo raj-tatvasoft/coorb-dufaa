@@ -5,6 +5,7 @@ import { IObject } from "../../service/commonModel";
 import { taskService } from "../../service/task/TaskService";
 import { transferTaskObjectForPayload } from "../../utils/helperFunction";
 import { FormikContextType, useFormikContext } from "formik";
+import { CONST_WORDS } from "../../utils/constant";
 
 export const UserEnrollmentFields = {
   userName: "user_name",
@@ -22,18 +23,23 @@ const UserEnrollment = ({
     btnName: string,
     isPreventValidation?: boolean,
     isPreventStepChange?: boolean,
-    callback?: () => any
+    callback?: (val: any) => any
   ) => void;
   handleNextStep: () => void;
 }) => {
   const { values }: FormikContextType<IObject> = useFormikContext();
-  const handleCommitTask = () => {
-    const payload = transferTaskObjectForPayload(values);
+  const handleCommitTask = (val: any) => {
+    const payload = transferTaskObjectForPayload(val);
     taskService.commit(payload).then((res) => {
       if (res) {
+        const token = `${values[UserEnrollmentFields.userName]}:${
+          values[UserEnrollmentFields.password]
+        }`;
+        localStorage.setItem(CONST_WORDS.token, btoa(token));
         handleNextStep();
       }
     });
+    // handleNextStep();
   };
 
   return (
@@ -65,8 +71,8 @@ const UserEnrollment = ({
               UserEnrollmentFields.registerBtn,
               false,
               true,
-              () => {
-                handleCommitTask();
+              (val: any) => {
+                handleCommitTask(val);
               }
             )
           }

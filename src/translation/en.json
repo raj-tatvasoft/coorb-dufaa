@@ -231,7 +231,7 @@
   "Mobile Number": "Mobile Number",
   "credit_score": "Credit Score",
   "Customer Approved": "Customer Approved",
-  "resend_button": "Resend Button",
+  "resend_button": "Resend",
   "button_go_next": "Button Go Next",
   "Date of Birth": "Date Of Birth",
   "Additional Requirements": "Additional Requirements",
@@ -387,5 +387,6 @@
   "gender": "Gender",
   "lms_client_id": "LMS Client Id",
   "residential_address": "Residential Address",
-  "previous": "Previous"
+  "previous": "Previous",
+  "validate_button": "Validate"
 }

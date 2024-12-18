@@ -2,24 +2,28 @@ import { Box } from "@mui/material";
 import { Formik, FormikProps } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IObject } from "../../service/commonModel";
-import { WORKFLOW_DETAIL, yup } from "../../utils/constant";
-import { regex } from "../../utils/regex";
-import Welcome, { WelcomeFields } from "./Welcome";
+import { errorToast } from "../../components/common/ToastMsg";
 import { OTPFields, OTPModal } from "../../components/dialog/OTPModal";
-import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
+import { IObject } from "../../service/commonModel";
+import { taskService } from "../../service/task/TaskService";
+import { workflowService } from "../../service/workflow/WorkflowService";
+import { yup } from "../../utils/constant";
+import {
+  handleGenericButtonClick,
+  transferTaskObjectForFormValue,
+} from "../../utils/helperFunction";
+import { regex } from "../../utils/regex";
+import { Congratulations } from "../Congratulations";
+import { PreviewContract } from "../PreviewContract";
 import { Products } from "../Products";
 import {
   ResponsibleLending,
   ResponsibleLendingFields,
 } from "../ResponsibleLending";
-import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import { ReviewLoan } from "../ReviewLoan";
-import { PreviewContract } from "../PreviewContract";
-import { Congratulations } from "../Congratulations";
-import { handleGenericButtonClick } from "../../utils/helperFunction";
-import { workflowService } from "../../service/workflow/WorkflowService";
-import { taskService } from "../../service/task/TaskService";
+import { TailorLoan, TailorLoanFields } from "../TailorLoan";
+import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
+import Welcome, { WelcomeFields } from "./Welcome";
 
 export type HomeStep =
   | "welcome"
@@ -48,10 +52,10 @@ export const Home = () => {
       .string()
       .matches(regex.SaudiMobNo, t("invalidSaudiMobileNumber"))
       .required(`${t(WelcomeFields.saudiMobNo)} ${t("isRequired")}`),
-    // [WelcomeFields.agreeToShare]: yup
-    //   .mixed()
-    //   .oneOf([true], `${t("pleaseTickThis")}`)
-    //   .required(t("pleaseTickThis")),
+    [WelcomeFields.agreeToShare]: yup
+      .mixed()
+      .oneOf([true], `${t("pleaseTickThis")}`)
+      .required(t("pleaseTickThis")),
     [WelcomeFields.readTAndC]: yup
       .mixed()
       .oneOf([true], `${t("pleaseTickThis")}`)
@@ -110,6 +114,9 @@ export const Home = () => {
     [TailorLoanFields.loanTenure]: yup
       .string()
       .required(`${t(TailorLoanFields.loanTenure)} ${t("isRequired")}`),
+    [TailorLoanFields.listOfLoanProducts]: yup
+      .mixed()
+      .required(`${t(TailorLoanFields.listOfLoanProducts)} ${t("isRequired")}`),
   });
 
   useEffect(() => {
@@ -118,13 +125,6 @@ export const Home = () => {
   }, []);
 
   const getTaskDetail = () => {
-    setInitValues({
-      initialDetails: WORKFLOW_DETAIL,
-      ...Object.values(WelcomeFields).reduce((acc: IObject, key) => {
-        acc[key] = "";
-        return acc;
-      }, {}),
-    });
     workflowService.getStartableWorkflows().then((res) => {
       if (res?.data) {
         workflowService
@@ -183,7 +183,53 @@ export const Home = () => {
         setStep("userEnrollment");
         break;
       case "userEnrollment":
-        setStep("product");
+        workflowService.getpendingWorkflows().then((pendingRes) => {
+          if (pendingRes?.data) {
+            const data = pendingRes.data[0];
+            taskService
+              .release(data.taskInstanceId, data.data[5].toString())
+              .then((relRes) => {
+                if (relRes?.data) {
+                  taskService
+                    .load(data.taskInstanceId, data.data[5].toString())
+                    .then((res) => {
+                      if (res?.data) {
+                        const newValues = {
+                          ...transferTaskObjectForFormValue(res.data),
+                          selectedTaskStatus: Object.values(
+                            res.data.statuses
+                          )[0],
+                          initialDetails: res.data,
+                        };
+                        handleGenericButtonClick(
+                          newValues,
+                          TailorLoanFields.loadDataBtn,
+                          (data: any) => {
+                            const val: any = Object.values(data.statuses)[0];
+                            const selectedTaskStatus = {
+                              ...val,
+                              value: val.id,
+                              label: t(val.i18nName),
+                            };
+                            setInitValues({
+                              ...transferTaskObjectForFormValue(data),
+                              selectedTaskStatus,
+                              initialDetails: data,
+                            });
+                          }
+                        );
+
+                        // setupInitialValues(res.data, true);
+                        if (res?.data?.businessErrorMessage) {
+                          errorToast(res.data.businessErrorMessage);
+                        }
+                      }
+                    });
+                }
+              });
+          }
+        });
+        setStep("tailorLoan");
         break;
       case "product":
         setStep("responsibleLending");
@@ -222,11 +268,18 @@ export const Home = () => {
           setTouched(touchedFields);
         } else {
           console.log(btnName, values);
-          handleGenericButtonClick(values, btnName, () => {
+
+          handleGenericButtonClick(values, btnName, (data: any) => {
+            const newValues = {
+              ...transferTaskObjectForFormValue(data),
+              selectedTaskStatus: data.selectedTaskStatus,
+              initialDetails: data,
+            };
+            setInitValues(newValues);
             if (!isPreventStepChange) handleNextStep();
 
             if (callback) {
-              callback();
+              callback(newValues);
             }
 
             // if (step === "welcome") {
@@ -273,7 +326,7 @@ export const Home = () => {
       case "responsibleLending":
         return <ResponsibleLending handleButtonClick={handleButtonClick} />;
       case "tailorLoan":
-        return <TailorLoan handleButtonClick={handleButtonClick} />;
+        return <TailorLoan />;
       case "reviewLoan":
         return <ReviewLoan handleButtonClick={handleButtonClick} />;
       case "previewContract":

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import CheckboxField from "./CheckboxField";
 import InputTextField from "./InputTextField";
 import { Variable } from "../../service/workflow/WorkflowModel";
@@ -7,7 +7,8 @@ import DecimalField from "./DecimalField";
 import LabelField from "./LabelField";
 import ButtonField from "./ButtonField";
 import { regex } from "../../utils/regex";
-import { IObject } from "../../service/commonModel";
+import { IObject, ISelectOpt } from "../../service/commonModel";
+import SelectField from "./SelectField";
 
 const WorkflowFormField: FC<
   Variable & {
@@ -16,6 +17,10 @@ const WorkflowFormField: FC<
     currentStepIndex: number;
   }
 > = (props) => {
+  const [comboListOptions, setComboListOptions] = useState<{
+    [key: string]: ISelectOpt[];
+  }>({});
+
   const {
     jdbcType,
     hidden,
@@ -33,7 +38,7 @@ const WorkflowFormField: FC<
     endIcon: any;
   } = {
     ...props,
-    name: "formField." + props.i18nName,
+    name: props.i18nName,
     lbl: props.i18nName,
     startIcon: props.variableStyle?.startIcon,
     endIcon: props.variableStyle?.endIcon,
@@ -54,26 +59,24 @@ const WorkflowFormField: FC<
       return (
         <InputTextField
           {...transferredProps}
-          lbl=""
           placeholder={transferredProps.lbl}
         />
       );
 
     case JDBC_TYPE.IntegerInput:
-      //   if (transferredProps.comboListName)
-      //     return (
-      //       <SelectField
-      //         {...transferredProps}
-      //         fetchOpt={!comboListOptions[transferredProps.name]}
-      //         options={comboListOptions[transferredProps.name]}
-      //         setComboListOptions={setComboListOptions}
-      //       />
-      //     );
+      if (transferredProps.comboListName)
+        return (
+          <SelectField
+            {...transferredProps}
+            fetchOpt={!comboListOptions[transferredProps.name]}
+            options={comboListOptions[transferredProps.name]}
+            setComboListOptions={setComboListOptions}
+          />
+        );
       return (
         <InputTextField
           valRegex={regex.Integer}
           {...transferredProps}
-          lbl=""
           placeholder={transferredProps.lbl}
         />
       );
@@ -83,7 +86,6 @@ const WorkflowFormField: FC<
         <InputTextField
           fieldType="textarea"
           {...transferredProps}
-          lbl=""
           placeholder={transferredProps.lbl}
         />
       );

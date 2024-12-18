@@ -31,7 +31,7 @@ const Welcome = ({
         {t("overYourCurrentFinancing?")}
       </p>
       <p className="more-fund-description">
-        {t("getAnInstantMicrofinance")} <span> {t("2000SAR")} </span>{" "}
+        {t("getAnInstantMicrofinance")} <span> {t("5,000 SAR")} </span>{" "}
         {t("noPaperWorkFastApprovalsAndFlexibleTerms")}
       </p>
       <Grid container spacing={{ xs: 1, lg: 2 }}>
