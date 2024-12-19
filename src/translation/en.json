@@ -388,5 +388,7 @@
   "lms_client_id": "LMS Client Id",
   "residential_address": "Residential Address",
   "previous": "Previous",
-  "validate_button": "Validate"
+  "validate_button": "Validate",
+  "tryLoanSimulation": "Try our Loan Simulation",
+  "tryLoanSimulationUpTo": "Try our Loan Simulation up to"
 }
