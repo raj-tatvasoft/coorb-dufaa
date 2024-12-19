@@ -1,10 +1,11 @@
-import { InputAdornment, TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Field, FieldProps, FormikContextType, useFormikContext } from "formik";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IGenericFieldProps, IObject } from "../../service/commonModel";
 import { checkIsIcon } from "../../utils/helperFunction";
 import OTPInput from "./OTPField";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const InputTextField: FC<IGenericFieldProps> = (props) => {
   const { t } = useTranslation();
@@ -19,10 +20,12 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
     startIcon,
     endIcon,
     variableStyle,
+    className,
   } = props;
 
   const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
     useFormikContext();
+  const [showPassword, setShowPassword] = useState(false);
 
   const isTextArea = fieldType === "textarea";
   return (
@@ -39,11 +42,21 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
           <div className="fieldWrapper">
             <TextField
               size="medium"
-              classes={{ root: "input-textfield" }}
+              classes={{
+                root: `input-textfield ${className} ${
+                  Boolean(meta.touched && meta.error) ? "error" : ""
+                }`,
+              }}
               id={`textfield-${name}`}
               label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
               variant="outlined"
-              type={fieldType}
+              type={
+                fieldType === "password"
+                  ? showPassword
+                    ? "text"
+                    : "password"
+                  : fieldType
+              }
               placeholder={placeholder ? t(placeholder) : ""}
               {...field}
               value={field.value ?? ""}
@@ -70,7 +83,11 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                   startAdornment: startIcon ? (
                     <InputAdornment
                       position="start"
-                      classes={{ root: "start-adornment" }}
+                      classes={{
+                        root: `start-adornment ${className} ${
+                          Boolean(meta.touched && meta.error) ? "error" : ""
+                        }`,
+                      }}
                     >
                       {checkIsIcon(startIcon) ? (
                         <img src={`images/${startIcon}`} />
@@ -89,6 +106,22 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                       ) : (
                         endIcon
                       )}
+                    </InputAdornment>
+                  ) : fieldType === "password" ? (
+                    <InputAdornment
+                      position="end"
+                      classes={{ root: "end-adornment" }}
+                    >
+                      <IconButton
+                        size="small"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <VisibilityOff fontSize="small" />
+                        ) : (
+                          <Visibility fontSize="small" />
+                        )}
+                      </IconButton>
                     </InputAdornment>
                   ) : null,
                 },

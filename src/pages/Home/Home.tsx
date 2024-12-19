@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import { Formik, FormikProps } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { errorToast } from "../../components/common/ToastMsg";
 import { OTPFields, OTPModal } from "../../components/dialog/OTPModal";
 import { IObject } from "../../service/commonModel";
 import { taskService } from "../../service/task/TaskService";
@@ -24,6 +23,7 @@ import { ReviewLoan } from "../ReviewLoan";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
 import Welcome, { WelcomeFields } from "./Welcome";
+import { Login } from "./Login";
 
 export type HomeStep =
   | "welcome"
@@ -34,7 +34,8 @@ export type HomeStep =
   | "tailorLoan"
   | "reviewLoan"
   | "previewContract"
-  | "congratulation";
+  | "congratulation"
+  | "login";
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -183,53 +184,58 @@ export const Home = () => {
         setStep("userEnrollment");
         break;
       case "userEnrollment":
-        workflowService.getpendingWorkflows().then((pendingRes) => {
-          if (pendingRes?.data) {
-            const data = pendingRes.data[0];
-            taskService
-              .release(data.taskInstanceId, data.data[5].toString())
-              .then((relRes) => {
-                if (relRes?.data) {
-                  taskService
-                    .load(data.taskInstanceId, data.data[5].toString())
-                    .then((res) => {
-                      if (res?.data) {
-                        const newValues = {
-                          ...transferTaskObjectForFormValue(res.data),
-                          selectedTaskStatus: Object.values(
-                            res.data.statuses
-                          )[0],
-                          initialDetails: res.data,
-                        };
-                        handleGenericButtonClick(
-                          newValues,
-                          TailorLoanFields.loadDataBtn,
-                          (data: any) => {
-                            const val: any = Object.values(data.statuses)[0];
-                            const selectedTaskStatus = {
-                              ...val,
-                              value: val.id,
-                              label: t(val.i18nName),
-                            };
-                            setInitValues({
-                              ...transferTaskObjectForFormValue(data),
-                              selectedTaskStatus,
-                              initialDetails: data,
-                            });
-                          }
-                        );
+        // workflowService
+        //   .getpendingWorkflows()
+        //   .then((pendingRes) => {
+        //     if (pendingRes?.data) {
+        //       const data = pendingRes.data[0];
+        //       taskService
+        //         .release(data.taskInstanceId, data.data[5].toString())
+        //         .then((relRes) => {
+        //           if (relRes?.data) {
+        //             taskService
+        //               .load(data.taskInstanceId, data.data[5].toString())
+        //               .then((res) => {
+        //                 if (res?.data) {
+        //                   const newValues = {
+        //                     ...transferTaskObjectForFormValue(res.data),
+        //                     selectedTaskStatus: Object.values(
+        //                       res.data.statuses
+        //                     )[0],
+        //                     initialDetails: res.data,
+        //                   };
+        //                   handleGenericButtonClick(
+        //                     newValues,
+        //                     TailorLoanFields.loadDataBtn,
+        //                     (data: any) => {
+        //                       const val: any = Object.values(data.statuses)[0];
+        //                       const selectedTaskStatus = {
+        //                         ...val,
+        //                         value: val.id,
+        //                         label: t(val.i18nName),
+        //                       };
+        //                       setInitValues({
+        //                         ...transferTaskObjectForFormValue(data),
+        //                         selectedTaskStatus,
+        //                         initialDetails: data,
+        //                       });
+        //                     }
+        //                   );
 
-                        // setupInitialValues(res.data, true);
-                        if (res?.data?.businessErrorMessage) {
-                          errorToast(res.data.businessErrorMessage);
-                        }
-                      }
-                    });
-                }
-              });
-          }
-        });
-        setStep("tailorLoan");
+        //                   // setupInitialValues(res.data, true);
+        //                   if (res?.data?.businessErrorMessage) {
+        //                     errorToast(res.data.businessErrorMessage);
+        //                   }
+        //                 }
+        //               });
+        //           }
+        //         });
+        //     }
+        //   })
+        setStep("welcome");
+        break;
+      case "login":
+        setStep("product");
         break;
       case "product":
         setStep("responsibleLending");
@@ -251,6 +257,11 @@ export const Home = () => {
         break;
     }
   };
+
+  const handleLoginButtonClick = () => {
+    setStep("login");
+  };
+
   const handleButtonClick = (
     btnName: string,
     isPreventValidation = false,
@@ -304,7 +315,10 @@ export const Home = () => {
       case "otp":
         return (
           <>
-            <Welcome handleButtonClick={handleButtonClick} />
+            <Welcome
+              handleButtonClick={handleButtonClick}
+              handleLoginButtonClick={handleLoginButtonClick}
+            />
             {step === "otp" && (
               <OTPModal
                 open={true}
@@ -333,6 +347,8 @@ export const Home = () => {
         return <PreviewContract handleButtonClick={handleButtonClick} />;
       case "congratulation":
         return <Congratulations handleButtonClick={handleButtonClick} />;
+      case "login":
+        return <Login handleButtonClick={handleNextStep} />;
       default:
         <></>;
         break;

@@ -17,8 +17,10 @@ export const WelcomeFields = {
 
 const Welcome = ({
   handleButtonClick,
+  handleLoginButtonClick,
 }: {
   handleButtonClick: (btnName: string) => void;
+  handleLoginButtonClick: () => void;
 }) => {
   useEffect(() => {
     localStorage.removeItem(CONST_WORDS.token);
@@ -79,6 +81,17 @@ const Welcome = ({
               handleClick={() => handleButtonClick(WelcomeFields.buttonNext)}
               name={WelcomeFields.buttonNext}
               endIcon="RightBtnArrow.svg"
+              variableStyle={{
+                size: "large",
+                bgColor: "var(--btnDarkGreyBg)",
+              }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12 }}>
+            <ButtonField
+              lbl={"login"}
+              handleClick={handleLoginButtonClick}
+              name={WelcomeFields.buttonNext}
               variableStyle={{
                 size: "large",
                 bgColor: "var(--btnDarkGreyBg)",
