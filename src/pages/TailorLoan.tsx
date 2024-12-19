@@ -8,11 +8,14 @@ import SliderField from "../components/common/SliderField";
 import { IObject } from "../service/commonModel";
 import {
   formatWithCommaAndFractionDigits,
+  getUserName,
   handleGenericButtonClick,
   transferTaskObjectForFormValue,
+  transferTaskObjectForPayload,
 } from "../utils/helperFunction";
 import LoanTailorTabForm from "./LoanTailorTabForm";
 import SelectField from "../components/common/SelectField";
+import { taskService } from "../service/task/TaskService";
 
 export const TailorLoanFields = {
   loanPrincipalMin: "loan_principal_min",
@@ -33,10 +36,22 @@ export const TailorLoanFields = {
   listOfLoanProductsComboListName: "business.loan_products",
 };
 
-export const TailorLoan = () => {
+export const TailorLoan = ({
+  eligibleTitle,
+  hideSalaryExpense = false,
+  isCommit = false,
+}: {
+  eligibleTitle?: string;
+  hideSalaryExpense?: boolean;
+  isCommit?: boolean;
+}) => {
   const { t } = useTranslation();
-  const { values, setValues, setFieldTouched }: FormikContextType<IObject> =
-    useFormikContext();
+  const {
+    values,
+    setValues,
+    setFieldTouched,
+    setFieldValue,
+  }: FormikContextType<IObject> = useFormikContext();
   const [groupedVariables, setGroupedVariables] = useState<IObject>({});
   const [showGroupedFields, setShowGroupedFields] = useState<boolean>(false);
 
@@ -59,6 +74,19 @@ export const TailorLoan = () => {
   useEffect(() => {
     setSimulateLoan({ isLoading: false, details: {} });
   }, []);
+
+  useEffect(() => {
+    if (values?.[TailorLoanFields.loanPrincipalMin]) {
+      setFieldValue(
+        TailorLoanFields.loanPrincipal,
+        values?.[TailorLoanFields.loanPrincipalMin]
+      );
+      setFieldValue(
+        TailorLoanFields.loanTenure,
+        values?.[TailorLoanFields.loanTenureMin]
+      );
+    }
+  }, [values?.[TailorLoanFields.loanPrincipalMin]]);
 
   const renderLoanDetails = (fieldName: string, renderVal?: string) => {
     return (
@@ -121,6 +149,15 @@ export const TailorLoan = () => {
       () => setSimulateLoan({ isLoading: false, details: {} })
     );
   };
+
+  const handleCommitTask = () => {
+    const payload = transferTaskObjectForPayload(values);
+    taskService.commit(payload).then((res) => {
+      if (res) {
+        alert("committed");
+      }
+    });
+  };
   return (
     <Grid
       container
@@ -134,29 +171,33 @@ export const TailorLoan = () => {
         <>
           <div className="userCard">
             <p className="helloUser">
-              {t("helloUser", { user: values[TailorLoanFields.employeeName] })}
+              {t("helloUser", { user: getUserName() })}
             </p>
-            <div className="salaryExpensesContainer">
-              <div className="label">
-                <p>{t("yourSalaryIs")} </p>
-                <span>
-                  {t("amountWithSAR", {
-                    amount: values[TailorLoanFields.gosi_salary],
-                  })}
-                </span>
-              </div>
+            {!hideSalaryExpense && (
+              <div className="salaryExpensesContainer">
+                <div className="label">
+                  <p>{t("yourSalaryIs")} </p>
+                  <span>
+                    {t("amountWithSAR", {
+                      amount: values[TailorLoanFields.gosi_salary],
+                    })}
+                  </span>
+                </div>
 
-              <div className="label">
-                <p> {t("expenses")} </p>
-                <span> {t("amountWithSAR", { amount: "60,000" })} </span>
+                <div className="label">
+                  <p> {t("expenses")} </p>
+                  <span> {t("amountWithSAR", { amount: "60,000" })} </span>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="tailorLoanEligibleLabel">
               <img src="/images/Celebration.svg" alt="" />
               <div>
                 <p className="label">
-                  {t("You'reEligibleForPersonalLoanUpTo")}
+                  {eligibleTitle
+                    ? eligibleTitle
+                    : t("You'reEligibleForPersonalLoanUpTo")}
                 </p>
                 <p className="maxLoanAmount">
                   {t("amountWithSAR", {
@@ -171,6 +212,7 @@ export const TailorLoan = () => {
           <p className="groupLabel">{t("tailorYourPersonalLoan")}</p>
 
           <div className="tailorLoanCard">
+            {console.log("values", values)}
             <SliderField
               name={TailorLoanFields.loanPrincipal}
               lbl={"amountToBorrow"}
@@ -303,9 +345,10 @@ export const TailorLoan = () => {
               <ButtonField
                 lbl={"next"}
                 handleClick={() => {
-                  if (values[TailorLoanFields.listOfLoanProducts])
-                    setShowGroupedFields(true);
-                  else
+                  if (values[TailorLoanFields.listOfLoanProducts]) {
+                    if (isCommit) handleCommitTask();
+                    else setShowGroupedFields(true);
+                  } else
                     setFieldTouched(
                       TailorLoanFields.listOfLoanProducts,
                       true,

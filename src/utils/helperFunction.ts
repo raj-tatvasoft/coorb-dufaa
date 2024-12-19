@@ -1,7 +1,11 @@
+import { AxiosResponse } from "axios";
+import { errorToast } from "../components/common/ToastMsg";
 import { IObject, Variable } from "../service/commonModel";
 import { ITaskDetail } from "../service/task/TaskModel";
 import { taskService } from "../service/task/TaskService";
-import { JDBC_TYPE } from "./constant";
+import { workflowService } from "../service/workflow/WorkflowService";
+import { CONST_WORDS, JDBC_TYPE } from "./constant";
+import { t } from "i18next";
 
 export const checkIsIcon = (imagePath: string) => {
   const extenstion = imagePath.split(".")?.pop()?.toLowerCase();
@@ -138,4 +142,66 @@ export const transferTaskObjectForFormValue = (
   if (setGroupedVariables) setGroupedVariables(newGrpVariables);
 
   return newValues;
+};
+
+export const getFirstPendingWorkflowDetail = (): Promise<
+  AxiosResponse<ITaskDetail, any> | undefined
+> => {
+  return workflowService.getpendingWorkflows().then((pendingRes) => {
+    if (pendingRes?.data) {
+      const data = pendingRes.data[0];
+      return taskService
+        .release(data.taskInstanceId, data.data[5].toString())
+        .then((relRes) => {
+          if (relRes?.data) {
+            return taskService
+              .load(data.taskInstanceId, data.data[5].toString())
+              .then((res) => {
+                if (res?.data) {
+                  if (res.data.businessErrorMessage) {
+                    errorToast(res.data.businessErrorMessage);
+                  }
+                  return res; // Return the response of type AxiosResponse<ITaskDetail, any>
+                }
+              });
+          }
+        });
+    }
+    return Promise.reject("No pending workflows found");
+  });
+};
+
+export const getFirstPendingWorkflowDetailAndBtnLoadClick = (
+  btnName: string,
+  getValue: (data: IObject) => void
+) => {
+  return getFirstPendingWorkflowDetail().then((res) => {
+    if (res) {
+      const newValues = {
+        ...transferTaskObjectForFormValue(res.data),
+        selectedTaskStatus: Object.values(res.data.statuses)[0],
+        initialDetails: res.data,
+      };
+      handleGenericButtonClick(newValues, btnName, (data: any) => {
+        const val: any = Object.values(data.statuses)[0];
+        const selectedTaskStatus = {
+          ...val,
+          value: val.id,
+          label: t(val.i18nName),
+        };
+        getValue({
+          ...transferTaskObjectForFormValue(data),
+          selectedTaskStatus,
+          initialDetails: data,
+        });
+      });
+    }
+  });
+};
+
+let storageUserName = "";
+export const getUserName = () => {
+  if (!storageUserName)
+    storageUserName = localStorage.getItem(CONST_WORDS.username) ?? "";
+  return storageUserName;
 };

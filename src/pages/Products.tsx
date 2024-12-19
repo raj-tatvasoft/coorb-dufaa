@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid2";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { camelToPascal } from "../utils/helperFunction";
+import { camelToPascal, getUserName } from "../utils/helperFunction";
 import ButtonField from "../components/common/ButtonField";
 
 const ProductBtnName = {
@@ -11,9 +11,13 @@ const ProductBtnName = {
   retailFinance: "retailFinance",
 };
 export const Products = ({
-  handleButtonClick,
+  handleNextStep,
+  eligibleTitle = "",
+  hideSalary = false,
 }: {
-  handleButtonClick: (btnName: string) => void;
+  handleNextStep: (btnName: string) => void;
+  eligibleTitle?: string;
+  hideSalary?: boolean;
 }) => {
   const [selectedProduct, setSelectedProduct] = useState<
     keyof typeof ProductBtnName | ""
@@ -27,15 +31,17 @@ export const Products = ({
     <div className="groupContainer whiteHeader">
       <div className="userCard">
         <p className="helloUser">
-          {t("hello")} {t("Mansour")},
+          {t("hello")} {getUserName()},
         </p>
-        <div className="salaryLabel">
-          <p>{t("yourSalaryIs")}:</p>
-          <p className="salary">20,000 SAR</p>
-        </div>
+        {!hideSalary && (
+          <div className="salaryLabel">
+            <p>{t("yourSalaryIs")}:</p>
+            <p className="salary">20,000 SAR</p>
+          </div>
+        )}
         <div className="eligibleLabel">
           <img src="/images/Check.svg" alt="" />
-          <p>{t("You'reEligibleForLoan")}</p>
+          <p>{eligibleTitle ? eligibleTitle : t("You'reEligibleForLoan")}</p>
         </div>
       </div>
       <div className="groupLabelContainer">
@@ -54,7 +60,7 @@ export const Products = ({
                 lbl={btnName}
                 handleClick={() => {
                   handleProductSelect(btnName as any);
-                  handleButtonClick(btnName);
+                  handleNextStep(btnName);
                 }}
                 readOnly={i > 0 ? 1 : 0}
                 name={btnName}
