@@ -87,7 +87,7 @@ const Welcome = ({
               }}
             />
           </Grid>
-          <Grid size={{ xs: 12 }}>
+          <Grid size={"auto"} className="loginButton">
             <ButtonField
               lbl={"login"}
               handleClick={handleLoginButtonClick}

@@ -535,12 +535,7 @@ body[dir="rtl"] {
     width: auto;
 
     &.loginField {
-      // border-right: 1px solid var(--textColor);
       width: auto;
-
-      // &.error {
-      //   border-right: 1px solid var(--error);
-      // }
     }
 
     img {
@@ -581,18 +576,6 @@ body[dir="rtl"] {
       border: 0;
       padding: 0;
     }
-
-    // &.loginField {
-    //   fieldset {
-    //     border: 1px solid var(--textColor);
-    //   }
-
-    //   &.error {
-    //     fieldset {
-    //       border: 1px solid var(--error);
-    //     }
-    //   }
-    // }
   }
 
   .checkboxFormField {
@@ -1287,4 +1270,11 @@ body[dir="rtl"] {
       }
     }
   }
+}
+
+.loginButton {
+  position: fixed;
+  top: 12px;
+  right: 24px;
+  z-index: 1200;
 }
