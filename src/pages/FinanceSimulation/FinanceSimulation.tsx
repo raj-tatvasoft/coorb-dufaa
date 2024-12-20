@@ -4,18 +4,22 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IObject } from "../../service/commonModel";
 import { yup } from "../../utils/constant";
-import { getFirstPendingWorkflowDetailAndBtnLoadClick } from "../../utils/helperFunction";
+import {
+  getFirstPendingWorkflowDetailAndBtnLoadClick,
+  transferTaskObjectForPayload,
+} from "../../utils/helperFunction";
 import { Products } from "../Products";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
+import { taskService } from "../../service/task/TaskService";
 
-export type HomeStep = "product" | "tailorLoan";
+export type FinanceSimulationStep = "product" | "tailorLoan";
 
 export const FinanceSimulation = () => {
   const { t } = useTranslation();
 
   const formRef = useRef<FormikProps<IObject>>(null);
 
-  const [step, setStep] = useState<HomeStep>("product");
+  const [step, setStep] = useState<FinanceSimulationStep>("product");
   const [initValues, setInitValues] = useState<IObject>({});
 
   const loanTailorSchema = yup.object().shape({
@@ -51,6 +55,17 @@ export const FinanceSimulation = () => {
     }
   };
 
+  const handleCommitTask = () => {
+    const payload = transferTaskObjectForPayload(
+      formRef.current?.values as IObject
+    );
+    taskService.commit(payload).then((res) => {
+      if (res) {
+        alert("committed");
+      }
+    });
+  };
+
   const renderStepContent = useMemo(() => {
     switch (step) {
       case "product":
@@ -66,7 +81,7 @@ export const FinanceSimulation = () => {
           <TailorLoan
             eligibleTitle={t("tryLoanSimulationUpTo")}
             hideSalaryExpense
-            isCommit
+            handleBtnClick={handleCommitTask}
           />
         );
       default:

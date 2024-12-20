@@ -18,6 +18,7 @@ import { Home } from "./pages/Home/Home.tsx";
 import { Layout } from "./components/layout/Layout.tsx";
 import { FinanceSimulation } from "./pages/FinanceSimulation/FinanceSimulation.tsx";
 import { Login } from "./pages/Home/Login.tsx";
+import FinanceRequest from "./pages/FinanceRequest/FinanceRequest.tsx";
 // import { DynamicForm } from "./pages/DynamicHome.tsx";
 // import { ResponsibleLending } from "./pages/ResponsibleLending.tsx";
 // import { TailorLoan } from "./pages/TailorLoan.tsx";
@@ -50,6 +51,8 @@ function App() {
                   path="/finance-simulation"
                   element={<FinanceSimulation />}
                 />
+                {/* New Finance Request flow 20-Dec-2024 */}
+                <Route path="/finance-request" element={<FinanceRequest />} />
                 {/* <Route path="/home" element={<DynamicForm />} /> */}
                 {/* <Route path="/tailor-loan" element={<TailorLoan />} />
                 <Route path="/review-loan" element={<ReviewLoan />} />

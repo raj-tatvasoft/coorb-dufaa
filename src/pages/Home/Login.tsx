@@ -30,7 +30,11 @@ export const Login = () => {
       .then((res) => {
         if (res?.data) {
           localStorage.setItem(CONST_WORDS.username, values.userName);
-          navigate("/finance-simulation");
+          if (res.data[0]?.statusInDesc?.toLowerCase() === "submit") {
+            navigate("/finance-simulation");
+          } else {
+            navigate("/finance-request");
+          }
         }
       })
       .catch(() => {

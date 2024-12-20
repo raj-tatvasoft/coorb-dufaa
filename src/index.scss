@@ -200,7 +200,7 @@ body[dir="rtl"] {
 
   .fileUploadLabel {
     padding: 10px;
-    border: 1px dashed var(--gray);
+    border: 1px dashed rgb(54, 54, 54);
     border-radius: 4px;
     display: block;
     width: 100%;
@@ -208,6 +208,8 @@ body[dir="rtl"] {
     transition: all 0.3s ease;
 
     svg {
+      height: 1.2rem;
+      width: 1.2rem;
       transition: all 0.3s ease;
     }
 
@@ -225,6 +227,7 @@ body[dir="rtl"] {
       margin-top: 10px;
       text-align: center;
       margin-bottom: 0px;
+      opacity: 0.9;
     }
 
     &:hover {
