@@ -1,6 +1,13 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { Field, FieldProps, useFormikContext } from "formik";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import {
   IGenericFieldProps,
@@ -14,6 +21,7 @@ type Props = IGenericFieldProps &
     setComboListOptions?: Dispatch<
       SetStateAction<{ [key: string]: ISelectOpt[] }>
     >;
+    isSetDefaultFirst?: boolean;
   };
 
 const SelectField: FC<Props> = ({
@@ -28,20 +36,25 @@ const SelectField: FC<Props> = ({
   lbl,
   hideHelp = false,
   setComboListOptions,
+  isSetDefaultFirst = false,
 }) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
   const [localOptions, setLocalOptions] = useState<ISelectOpt[]>([]);
+
+  const isPreventComboApiCall = useRef<any>(null);
   useEffect(() => {
     if (Array.isArray(options)) setLocalOptions(options);
   }, [options]);
 
   useEffect(() => {
-    if (fetchOpt && comboListName) getOptions();
+    if (fetchOpt && comboListName && !isPreventComboApiCall.current)
+      getOptions();
   }, [fetchOpt, comboListName]);
 
   const getOptions = () => {
+    isPreventComboApiCall.current = true;
     listService.getListOptions(comboListName).then((res) => {
       if (res?.data) {
         const newOpts: ISelectOpt[] = [];
@@ -49,6 +62,7 @@ const SelectField: FC<Props> = ({
           newOpts.push({ label: res.data[key], value: key });
         });
         setLocalOptions(newOpts);
+        if (isSetDefaultFirst) setFieldValue(name, newOpts[0]);
         if (setComboListOptions)
           setComboListOptions((prev) => ({
             ...prev,

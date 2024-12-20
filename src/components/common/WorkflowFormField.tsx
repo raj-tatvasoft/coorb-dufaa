@@ -9,12 +9,15 @@ import ButtonField from "./ButtonField";
 import { regex } from "../../utils/regex";
 import { IObject, ISelectOpt } from "../../service/commonModel";
 import SelectField from "./SelectField";
+import FileUploadField from "./FileUpload/FileUploadField";
+import DatePickerField from "./DatePickerField";
 
 const WorkflowFormField: FC<
   Variable & {
     handleBtnClick: (data: any) => void;
     groupedVariables: IObject;
     currentStepIndex: number;
+    hideFieldNames?: string[];
   }
 > = (props) => {
   const [comboListOptions, setComboListOptions] = useState<{
@@ -25,11 +28,13 @@ const WorkflowFormField: FC<
     jdbcType,
     hidden,
     handleBtnClick,
+    i18nName,
     groupedVariables,
     currentStepIndex,
+    hideFieldNames,
   } = props;
 
-  if (hidden) return <></>;
+  if (hidden || hideFieldNames?.find((x) => x === i18nName)) return <></>;
 
   const transferredProps: Variable & {
     name: string;
@@ -93,8 +98,14 @@ const WorkflowFormField: FC<
     case JDBC_TYPE.Checkbox:
       return <CheckboxField {...transferredProps} />;
 
+    case JDBC_TYPE.DatePicker:
+      return <DatePickerField {...transferredProps} />;
+
     case JDBC_TYPE.Label:
       return <LabelField {...transferredProps} />;
+
+    case JDBC_TYPE.UploadDocument:
+      return <FileUploadField {...transferredProps} isServerUpload />;
 
     case JDBC_TYPE.DecimalInput:
       return (

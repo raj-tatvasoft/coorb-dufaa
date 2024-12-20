@@ -11,11 +11,9 @@ import {
   getUserName,
   handleGenericButtonClick,
   transferTaskObjectForFormValue,
-  transferTaskObjectForPayload,
 } from "../utils/helperFunction";
 import LoanTailorTabForm from "./LoanTailorTabForm";
 import SelectField from "../components/common/SelectField";
-import { taskService } from "../service/task/TaskService";
 
 export const TailorLoanFields = {
   loanPrincipalMin: "loan_principal_min",
@@ -39,11 +37,11 @@ export const TailorLoanFields = {
 export const TailorLoan = ({
   eligibleTitle,
   hideSalaryExpense = false,
-  isCommit = false,
+  handleBtnClick,
 }: {
   eligibleTitle?: string;
   hideSalaryExpense?: boolean;
-  isCommit?: boolean;
+  handleBtnClick?: () => void;
 }) => {
   const { t } = useTranslation();
   const {
@@ -150,14 +148,6 @@ export const TailorLoan = ({
     );
   };
 
-  const handleCommitTask = () => {
-    const payload = transferTaskObjectForPayload(values);
-    taskService.commit(payload).then((res) => {
-      if (res) {
-        alert("committed");
-      }
-    });
-  };
   return (
     <Grid
       container
@@ -332,6 +322,7 @@ export const TailorLoan = ({
                   }
                   fetchOpt
                   hideClr
+                  isSetDefaultFirst
                 />
               </>
             )}
@@ -345,7 +336,7 @@ export const TailorLoan = ({
                 lbl={"next"}
                 handleClick={() => {
                   if (values[TailorLoanFields.listOfLoanProducts]) {
-                    if (isCommit) handleCommitTask();
+                    if (handleBtnClick) handleBtnClick();
                     else setShowGroupedFields(true);
                   } else
                     setFieldTouched(

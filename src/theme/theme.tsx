@@ -24,6 +24,7 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         "*": {
+          "--gray": "#808080",
           "--white": "#fff",
           "--textColor": "#1f1f1f",
           "--black": "#000",
