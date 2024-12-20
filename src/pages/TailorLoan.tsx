@@ -212,7 +212,6 @@ export const TailorLoan = ({
           <p className="groupLabel">{t("tailorYourPersonalLoan")}</p>
 
           <div className="tailorLoanCard">
-            {console.log("values", values)}
             <SliderField
               name={TailorLoanFields.loanPrincipal}
               lbl={"amountToBorrow"}

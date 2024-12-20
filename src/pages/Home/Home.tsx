@@ -23,7 +23,6 @@ import { ReviewLoan } from "../ReviewLoan";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
 import Welcome, { WelcomeFields } from "./Welcome";
-import { Login } from "./Login";
 
 export type HomeStep =
   | "welcome"
@@ -34,8 +33,7 @@ export type HomeStep =
   | "tailorLoan"
   | "reviewLoan"
   | "previewContract"
-  | "congratulation"
-  | "login";
+  | "congratulation";
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -232,10 +230,8 @@ export const Home = () => {
         //         });
         //     }
         //   })
+        getTaskDetail();
         setStep("welcome");
-        break;
-      case "login":
-        setStep("product");
         break;
       case "product":
         setStep("responsibleLending");
@@ -258,10 +254,6 @@ export const Home = () => {
     }
   };
 
-  const handleLoginButtonClick = () => {
-    setStep("login");
-  };
-
   const handleButtonClick = (
     btnName: string,
     isPreventValidation = false,
@@ -278,8 +270,6 @@ export const Home = () => {
           });
           setTouched(touchedFields);
         } else {
-          console.log(btnName, values);
-
           handleGenericButtonClick(values, btnName, (data: any) => {
             const newValues = {
               ...transferTaskObjectForFormValue(data),
@@ -315,10 +305,7 @@ export const Home = () => {
       case "otp":
         return (
           <>
-            <Welcome
-              handleButtonClick={handleButtonClick}
-              handleLoginButtonClick={handleLoginButtonClick}
-            />
+            <Welcome handleButtonClick={handleButtonClick} />
             {step === "otp" && (
               <OTPModal
                 open={true}
@@ -347,8 +334,6 @@ export const Home = () => {
         return <PreviewContract handleButtonClick={handleButtonClick} />;
       case "congratulation":
         return <Congratulations handleButtonClick={handleButtonClick} />;
-      case "login":
-        return <Login handleButtonClick={handleNextStep} />;
       default:
         <></>;
         break;

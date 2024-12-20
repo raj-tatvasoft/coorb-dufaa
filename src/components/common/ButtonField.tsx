@@ -18,6 +18,7 @@ const ButtonField: FC<
     handleClick: (data?: any) => void;
     groupedVariables?: IObject;
     currentStepIndex?: number;
+    buttonType?: "button" | "submit";
   }
 > = (props) => {
   const { t } = useTranslation();
@@ -33,6 +34,7 @@ const ButtonField: FC<
     currentStepIndex,
     className,
     readOnly,
+    buttonType = "button",
   } = props;
   const {
     values,
@@ -86,7 +88,7 @@ const ButtonField: FC<
   return (
     <div className="fieldWrapper w-full">
       <Button
-        type="button"
+        type={buttonType}
         variant={variant}
         size={variableStyle?.size || "medium"}
         onClick={() => {

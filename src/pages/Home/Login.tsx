@@ -1,22 +1,20 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useTranslation } from "react-i18next";
 import { Formik } from "formik";
-import { CONST_WORDS, yup } from "../../utils/constant";
-import InputTextField from "../../components/common/InputTextField";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import ButtonField from "../../components/common/ButtonField";
+import InputTextField from "../../components/common/InputTextField";
 import { workflowService } from "../../service/workflow/WorkflowService";
+import { CONST_WORDS, yup } from "../../utils/constant";
 
 export interface Login {
   userName: string;
   password: string;
 }
 
-export const Login = ({
-  handleButtonClick,
-}: {
-  handleButtonClick: (btnName: string) => void;
-}) => {
+export const Login = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const schema = yup.object().shape({
@@ -31,7 +29,8 @@ export const Login = ({
       .getpendingWorkflows()
       .then((res) => {
         if (res?.data) {
-          handleButtonClick("nextButton");
+          localStorage.setItem(CONST_WORDS.username, values.userName);
+          navigate("/finance-simulation");
         }
       })
       .catch(() => {
@@ -44,7 +43,6 @@ export const Login = ({
       <Card className="loginCard">
         <div className="loginLabelWrapper">
           <Typography>{t("loginTo")}</Typography>
-          {/* <img src="/logo2.png" alt="" /> */}
         </div>
         <Formik
           initialValues={{
@@ -73,34 +71,38 @@ export const Login = ({
                   hideHelp
                   className="loginField"
                 />
-                <Grid container spacing={2} size={12} width={"100%"}>
-                  <Grid size={6}>
-                    <ButtonField
-                      variant="contained"
-                      handleClick={() => {
-                        resetForm();
-                      }}
-                      lbl={t("reset")}
-                      name={t("reset")}
-                      variableStyle={{
-                        color: "white",
-                        bgColor: "black",
-                        size: "large",
-                      }}
-                    />
+                <div className="mt-4">
+                  <Grid container spacing={2} size={12} width={"100%"}>
+                    <Grid size={6}>
+                      <ButtonField
+                        variant="contained"
+                        className="secondaryBtn"
+                        handleClick={() => {
+                          resetForm();
+                        }}
+                        lbl={t("reset")}
+                        name={t("reset")}
+                        variableStyle={{
+                          size: "large",
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={6}>
+                      <ButtonField
+                        handleClick={() => {}}
+                        variant="contained"
+                        buttonType="submit"
+                        lbl={"login"}
+                        name={"login"}
+                        variableStyle={{
+                          color: "white",
+                          bgColor: "black",
+                          size: "large",
+                        }}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid size={6}>
-                    <Button
-                      type="button"
-                      size="large"
-                      onClick={() => handleSubmit()}
-                      fullWidth
-                      variant="contained"
-                    >
-                      {t("login")}
-                    </Button>
-                  </Grid>
-                </Grid>
+                </div>
               </form>
             );
           }}

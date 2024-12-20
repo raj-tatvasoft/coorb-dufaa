@@ -1,11 +1,8 @@
 import { Grid2 } from "@mui/material";
-import InputTextField from "../../components/common/InputTextField";
 import ButtonField from "../../components/common/ButtonField";
-import { IObject } from "../../service/commonModel";
+import InputTextField from "../../components/common/InputTextField";
 import { taskService } from "../../service/task/TaskService";
 import { transferTaskObjectForPayload } from "../../utils/helperFunction";
-import { FormikContextType, useFormikContext } from "formik";
-import { CONST_WORDS } from "../../utils/constant";
 
 export const UserEnrollmentFields = {
   userName: "user_name",
@@ -27,15 +24,10 @@ const UserEnrollment = ({
   ) => void;
   handleNextStep: () => void;
 }) => {
-  const { values }: FormikContextType<IObject> = useFormikContext();
   const handleCommitTask = (val: any) => {
     const payload = transferTaskObjectForPayload(val);
     taskService.commit(payload).then((res) => {
       if (res) {
-        const token = `${values[UserEnrollmentFields.userName]}:${
-          values[UserEnrollmentFields.password]
-        }`;
-        localStorage.setItem(CONST_WORDS.token, btoa(token));
         handleNextStep();
       }
     });

@@ -44,7 +44,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
               size="medium"
               classes={{
                 root: `input-textfield ${className} ${
-                  Boolean(meta.touched && meta.error) ? "error" : ""
+                  meta.touched && meta.error ? "error" : ""
                 }`,
               }}
               id={`textfield-${name}`}
@@ -85,7 +85,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                       position="start"
                       classes={{
                         root: `start-adornment ${className} ${
-                          Boolean(meta.touched && meta.error) ? "error" : ""
+                          meta.touched && meta.error ? "error" : ""
                         }`,
                       }}
                     >
@@ -113,13 +113,14 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                       classes={{ root: "end-adornment" }}
                     >
                       <IconButton
-                        size="small"
+                        size="large"
+                        className="visibility-icon"
                         onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
-                          <VisibilityOff fontSize="small" />
+                          <VisibilityOff fontSize="large" />
                         ) : (
-                          <Visibility fontSize="small" />
+                          <Visibility fontSize="large" />
                         )}
                       </IconButton>
                     </InputAdornment>

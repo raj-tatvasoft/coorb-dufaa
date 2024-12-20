@@ -19,6 +19,17 @@ body {
       .headerAppBar {
         display: none;
       }
+
+      .MuiToolbar-root {
+        display: none;
+      }
+
+      .layout-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }
@@ -248,6 +259,12 @@ body[dir="rtl"] {
     label {
       cursor: pointer;
     }
+  }
+
+  .secondaryBtn {
+    background-color: transparent;
+    color: var(--textColor);
+    border: 2px solid var(--textColor);
   }
 
   .genericBtn {
@@ -556,6 +573,12 @@ body[dir="rtl"] {
     }
   }
 
+  .visibility-icon {
+    svg {
+      height: 1.4em !important;
+      width: 1.4em !important;
+    }
+  }
   .end-adornment {
     background-color: var(--white);
     min-width: 52px;
@@ -1223,7 +1246,7 @@ body[dir="rtl"] {
     padding-bottom: 40px;
     margin: 20px;
     border-radius: 6px;
-    box-shadow: 0px 0px 6px 0px white;
+    box-shadow: 0px 0px 20px 3px #f6b435;
 
     .loginField {
       grid-template-columns: 9fr;

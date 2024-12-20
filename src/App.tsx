@@ -17,6 +17,7 @@ import Loader from "./components/common/Loader.tsx";
 import { Home } from "./pages/Home/Home.tsx";
 import { Layout } from "./components/layout/Layout.tsx";
 import { FinanceSimulation } from "./pages/FinanceSimulation/FinanceSimulation.tsx";
+import { Login } from "./pages/Home/Login.tsx";
 // import { DynamicForm } from "./pages/DynamicHome.tsx";
 // import { ResponsibleLending } from "./pages/ResponsibleLending.tsx";
 // import { TailorLoan } from "./pages/TailorLoan.tsx";
@@ -43,6 +44,7 @@ function App() {
             <Layout>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
                 {/* New Finance Simulation flow 19-Dec-2024 */}
                 <Route
                   path="/finance-simulation"

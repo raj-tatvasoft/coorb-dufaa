@@ -5,6 +5,7 @@ import CheckboxField from "../../components/common/CheckboxField";
 import InputTextField from "../../components/common/InputTextField";
 import { useEffect } from "react";
 import { CONST_WORDS } from "../../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 export const WelcomeFields = {
   nationalId: "national_id_iqama_text",
@@ -17,13 +18,14 @@ export const WelcomeFields = {
 
 const Welcome = ({
   handleButtonClick,
-  handleLoginButtonClick,
 }: {
   handleButtonClick: (btnName: string) => void;
-  handleLoginButtonClick: () => void;
 }) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     localStorage.removeItem(CONST_WORDS.token);
+    localStorage.removeItem(CONST_WORDS.username);
   }, []);
 
   return (
@@ -90,7 +92,7 @@ const Welcome = ({
           <Grid size={{ xs: 12 }}>
             <ButtonField
               lbl={"login"}
-              handleClick={handleLoginButtonClick}
+              handleClick={() => navigate("/login")}
               name={WelcomeFields.buttonNext}
               variableStyle={{
                 size: "large",
