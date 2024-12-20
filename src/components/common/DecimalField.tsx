@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Field, FieldProps, useFormikContext } from "formik";
 import { NumericFormat } from "react-number-format";
 import { IGenericFieldProps } from "../../service/commonModel";
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, InputLabel, TextField } from "@mui/material";
 import { checkIsIcon } from "../../utils/helperFunction";
 
 interface IDecimalFieldProps extends IGenericFieldProps {
@@ -44,12 +44,20 @@ const DecimalField: FC<IDecimalFieldProps> = ({
     <Field name={name}>
       {({ field, meta }: FieldProps) => (
         <div className="fieldWrapper">
+          {lbl && (
+            <InputLabel
+              htmlFor={`textfield-${name}`}
+              className="inputLabel"
+              error={Boolean(meta.touched && meta.error)}
+            >
+              {`${t(lbl)} ${required ? "*" : ""}`}
+            </InputLabel>
+          )}
           <NumericFormat
             customInput={TextField}
             classes={{ root: "input-textfield" }}
             size="medium"
             id={`decimalField-${name}`}
-            label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
             variant="outlined"
             type="text"
             placeholder={placeholder}

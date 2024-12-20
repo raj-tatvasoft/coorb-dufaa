@@ -51,6 +51,10 @@
       }
     }
 
+    .logoutButton {
+      background-color: var(--textColor);
+    }
+
     @media (max-width: 600px) {
       .menuIcon {
         > svg {

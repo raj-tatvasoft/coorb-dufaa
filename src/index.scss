@@ -162,8 +162,6 @@ body[dir="rtl"] {
 .fieldWrapper {
   height: 100%;
   display: grid;
-  // grid-template-columns: 9fr 1fr;
-  gap: 8px;
 
   .helperIcon {
     color: var(--secondaryBackground);
@@ -607,6 +605,13 @@ body[dir="rtl"] {
       font-weight: 400;
       font-size: 14px;
     }
+  }
+
+  .inputLabel {
+    color: var(--checkboxText);
+    margin-left: 5px;
+    margin-bottom: 3px;
+    font-size: 14px;
   }
 }
 

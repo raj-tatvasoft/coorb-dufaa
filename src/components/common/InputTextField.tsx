@@ -1,4 +1,9 @@
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  InputLabel,
+} from "@mui/material";
 import { Field, FieldProps, FormikContextType, useFormikContext } from "formik";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +25,6 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
     startIcon,
     endIcon,
     variableStyle,
-    className,
   } = props;
 
   const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
@@ -40,15 +44,21 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
           />
         ) : (
           <div className="fieldWrapper">
+            {lbl && (
+              <InputLabel
+                htmlFor={`textfield-${name}`}
+                className="inputLabel"
+                error={Boolean(meta.touched && meta.error)}
+              >
+                {`${t(lbl)} ${required ? "*" : ""}`}
+              </InputLabel>
+            )}
             <TextField
               size="medium"
               classes={{
-                root: `input-textfield ${className} ${
-                  meta.touched && meta.error ? "error" : ""
-                }`,
+                root: "input-textfield",
               }}
               id={`textfield-${name}`}
-              label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
               variant="outlined"
               type={
                 fieldType === "password"
@@ -84,9 +94,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                     <InputAdornment
                       position="start"
                       classes={{
-                        root: `start-adornment ${className} ${
-                          meta.touched && meta.error ? "error" : ""
-                        }`,
+                        root: "start-adornment",
                       }}
                     >
                       {checkIsIcon(startIcon) ? (

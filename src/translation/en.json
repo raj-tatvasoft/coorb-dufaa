@@ -390,5 +390,7 @@
   "previous": "Previous",
   "validate_button": "Validate",
   "tryLoanSimulation": "Try our Loan Simulation",
-  "tryLoanSimulationUpTo": "Try our Loan Simulation up to"
+  "tryLoanSimulationUpTo": "Try our Loan Simulation up to",
+
+  "logout": "Log out"
 }
