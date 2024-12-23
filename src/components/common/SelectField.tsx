@@ -89,7 +89,12 @@ const SelectField: FC<Props> = ({
           <Autocomplete
             disablePortal
             options={localOptions}
-            size="small"
+            classes={{
+              inputRoot: "selectBaseInput",
+              endAdornment: "selectEndAdornment",
+              popper: "selectListWrapper",
+            }}
+            size="medium"
             getOptionLabel={(x) => x.label?.toString()}
             value={
               localOptions?.find(
@@ -102,8 +107,14 @@ const SelectField: FC<Props> = ({
             disableClearable={hideClr || required ? true : false}
             renderInput={(params) => (
               <TextField
+                classes={{
+                  root: "input-textfield",
+                }}
                 {...params}
-                label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : null}
+                // label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : null}
+                placeholder={
+                  lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined
+                }
                 error={Boolean(meta.touched && meta.error)}
                 helperText={meta.touched && meta.error ? meta.error : undefined}
                 disabled={readOnly === 1}

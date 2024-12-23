@@ -60,6 +60,7 @@ const theme = createTheme({
           "--burntOrange": "#ed6700",
           "--goldenPeach": "#ffd17a",
           "--lightError": "#ff6060",
+          "--disabledField": "#e7e7e7",
         },
       },
     },

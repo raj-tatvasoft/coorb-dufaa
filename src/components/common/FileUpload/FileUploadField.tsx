@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Field, FieldProps, FormikContextType, useFormikContext } from "formik";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -112,28 +112,29 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
                 // onClick={() => setFieldTouched(name, true, true)}
                 htmlFor={readOnly === 1 ? "" : `upload-button-${name}`}
               >
-                <div className="labelWrapper">
+                <div className="svgWrapper">
                   <UploadFile />
-                  {t(lbl ? lbl : `uploadFile`)} {required ? "*" : ""}
                 </div>
-                <p>{t("uploadFileDesc")}</p>
+                <div className="labelWrapper">
+                  <span>
+                    {t(lbl ? lbl : `uploadFile`) + (required ? "*" : "")}
+                  </span>
+                  <p>{t("uploadFileDesc")}</p>
+                </div>
+                {field.value && (
+                  <IconButton
+                    title={t("viewFile")}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setViewFileDetail({ ...viewFileDetail, show: true });
+                    }}
+                    className="viewFileButton"
+                  >
+                    <Visibility fontSize={"small"} />
+                  </IconButton>
+                )}
               </label>
 
-              {field.value && (
-                <Button
-                  variant="outlined"
-                  type="button"
-                  size="small"
-                  className="fileViewButton"
-                  title={t("viewFile")}
-                  onClick={() => {
-                    setViewFileDetail({ ...viewFileDetail, show: true });
-                  }}
-                >
-                  <Visibility fontSize={"small"} />
-                  {t("viewFile")}
-                </Button>
-              )}
               {meta.touched && meta.error && (
                 <div className="errorText">{meta.error}</div>
               )}

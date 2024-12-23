@@ -72,6 +72,7 @@ const ViewUploadedFile: FC<Props> = (props) => {
       fullWidth={
         viewFileDetail.fileType === "pdf" || viewFileDetail.fileType === "txt"
       }
+      classes={{ paper: "viewUploadFileModal" }}
     >
       <DialogTitle>{t("viewFile")}</DialogTitle>
       <IconButton

@@ -56,7 +56,9 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
             <TextField
               size="medium"
               classes={{
-                root: "input-textfield",
+                root: `input-textfield ${
+                  !field.value && Boolean(readOnly) ? "disabledWithNoValue" : ""
+                }`,
               }}
               id={`textfield-${name}`}
               variant="outlined"

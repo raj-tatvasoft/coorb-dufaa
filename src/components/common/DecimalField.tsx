@@ -55,7 +55,11 @@ const DecimalField: FC<IDecimalFieldProps> = ({
           )}
           <NumericFormat
             customInput={TextField}
-            classes={{ root: "input-textfield" }}
+            classes={{
+              root: `input-textfield ${
+                !field.value && Boolean(readOnly) ? "disabledWithNoValue" : ""
+              }`,
+            }}
             size="medium"
             id={`decimalField-${name}`}
             variant="outlined"

@@ -35,12 +35,21 @@ const DatePickerField: FC<IGenericFieldProps> = (props) => {
               <DatePicker
                 isClearable
                 popperClassName="custom-datepicker"
+                popperPlacement="bottom-start"
+                placeholderText={
+                  lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined
+                }
                 customInput={
                   <TextField
-                    size="small"
+                    size="medium"
                     variant="outlined"
+                    classes={{
+                      root: `datePickerTextfield input-textfield ${
+                        !field.value && readOnly ? "disabledWithNoValue" : ""
+                      }`,
+                    }}
                     fullWidth
-                    label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
+                    // label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined}
                     error={Boolean(meta.touched && meta.error)}
                     helperText={
                       meta.touched && meta.error ? meta.error : undefined
@@ -50,7 +59,14 @@ const DatePickerField: FC<IGenericFieldProps> = (props) => {
                       input: {
                         readOnly: true,
                         endAdornment: (!field.value || !isValidValue) && (
-                          <InputAdornment position="end">
+                          <InputAdornment
+                            position="end"
+                            classes={{
+                              root: `datePickerIcon ${
+                                readOnly === 1 ? "disabledIcon" : ""
+                              }`,
+                            }}
+                          >
                             <CalendarMonth />
                           </InputAdornment>
                         ),
