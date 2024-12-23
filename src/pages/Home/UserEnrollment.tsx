@@ -49,7 +49,12 @@ const UserEnrollment = ({
                     ? "password"
                     : "text"
                 }
-                startIcon={"SmartPhone.svg"}
+                startIcon={
+                  name === UserEnrollmentFields.confirmPassword ||
+                  name === UserEnrollmentFields.password
+                    ? "Password.svg"
+                    : "ID.svg"
+                }
               />
             </Grid2>
           )

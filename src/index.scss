@@ -696,6 +696,10 @@ body[dir="rtl"] {
       border: 0;
     }
 
+    .datePickerCloseButton {
+      display: none;
+    }
+
     .datePickerIcon {
       margin-right: 8px;
       cursor: pointer;
