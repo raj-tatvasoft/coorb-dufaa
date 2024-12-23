@@ -14,7 +14,7 @@ body {
     background: var(--linearBg);
 
     &:has(.loginContainer) {
-      background: var(--linearWhiteGoldBg);
+      background: var(--linearLoginBg);
 
       .headerAppBar {
         display: none;
@@ -1337,7 +1337,7 @@ body[dir="rtl"] {
     padding-bottom: 40px;
     margin: 20px;
     border-radius: 6px;
-    box-shadow: 0px 0px 20px 3px #f6b435;
+    box-shadow: 0px 0px 20px 3px var(--endromentColor);
 
     .loginField {
       grid-template-columns: 9fr;

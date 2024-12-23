@@ -61,6 +61,8 @@ const theme = createTheme({
           "--goldenPeach": "#ffd17a",
           "--lightError": "#ff6060",
           "--disabledField": "#e7e7e7",
+          "--linearLoginBg":
+            "linear-gradient(#F9C666 0%, #FFFAF1 50%, #F9C666 100%)",
         },
       },
     },
