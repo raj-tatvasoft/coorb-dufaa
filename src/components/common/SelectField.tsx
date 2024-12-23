@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, InputLabel, TextField } from "@mui/material";
 import { Field, FieldProps, useFormikContext } from "formik";
 import {
   Dispatch,
@@ -86,6 +86,15 @@ const SelectField: FC<Props> = ({
     <Field name={name}>
       {({ field, meta }: FieldProps) => (
         <div className={`fieldWrapper ${hideHelp ? "fullGrid" : ""}`}>
+          {lbl && (
+            <InputLabel
+              htmlFor={`textfield-${name}`}
+              className="inputLabel"
+              error={Boolean(meta.touched && meta.error)}
+            >
+              {`${t(lbl)} ${required ? "*" : ""}`}
+            </InputLabel>
+          )}
           <Autocomplete
             disablePortal
             options={localOptions}

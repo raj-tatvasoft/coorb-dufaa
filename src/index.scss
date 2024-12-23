@@ -217,15 +217,6 @@ body[dir="rtl"] {
     padding-left: 0px;
     overflow: hidden;
 
-    svg {
-      height: 1.2rem;
-      width: 1.2rem;
-      transition: all 0.3s ease;
-      height: 28px;
-      width: 28px;
-      color: var(--endromentColor);
-    }
-
     .labelWrapper {
       display: flex;
       flex-direction: column;
@@ -244,6 +235,15 @@ body[dir="rtl"] {
       display: flex;
       justify-content: center;
       align-items: center;
+
+      svg {
+        height: 1.2rem;
+        width: 1.2rem;
+        transition: all 0.3s ease;
+        height: 28px;
+        width: 28px;
+        color: var(--endromentColor);
+      }
     }
 
     p {
@@ -288,8 +288,14 @@ body[dir="rtl"] {
     }
 
     .viewFileButton {
-      padding: 5px 15px 5px 15px;
-      width: 52px;
+      padding: 0 10px;
+      margin: 10px 5px 10px 0;
+
+      svg {
+        width: 22px;
+        height: 22px;
+        color: var(--endromentColor);
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, InputLabel } from "@mui/material";
 import { Field, FieldProps, FormikContextType, useFormikContext } from "formik";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -96,6 +96,15 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
       <Field name={name}>
         {({ meta, field }: FieldProps) => (
           <div className="fieldWrapper">
+            {lbl && (
+              <InputLabel
+                htmlFor={`textfield-${name}`}
+                className="inputLabel"
+                error={Boolean(meta.touched && meta.error)}
+              >
+                {`${t(lbl)} ${required ? "*" : ""}`}
+              </InputLabel>
+            )}
             <input
               id={`upload-button-${name}`}
               type="file"
