@@ -142,9 +142,7 @@ export const TailorLoan = ({
                 newValues[TailorLoanFields.firstInstallmentDate],
               [TailorLoanFields.lastInstallmentDate]:
                 newValues[TailorLoanFields.lastInstallmentDate],
-              [TailorLoanFields.apr]: formatWithCommaAndFractionDigits(
-                Number(newValues[TailorLoanFields.apr])
-              ),
+              [TailorLoanFields.apr]: Number(newValues[TailorLoanFields.apr]),
               [TailorLoanFields.firstLoanRepaymentAmt]:
                 formatWithCommaAndFractionDigits(
                   Number(newValues[TailorLoanFields.firstLoanRepaymentAmt])
@@ -152,10 +150,10 @@ export const TailorLoan = ({
             },
           });
         }, 0);
-      },
-      () => setSimulateLoan({ isLoading: false, details: {} })
+      }
     );
   };
+
   return (
     <Grid
       container
@@ -281,69 +279,62 @@ export const TailorLoan = ({
                 TailorLoanFields.firstInstallmentDate
               ]) && (
               <>
-                <>
-                  <div className="loanDetailContainer">
-                    {renderLoanDetails(
-                      "totalAmount",
-                      t("amountWithSAR", {
-                        amount: formatWithCommaAndFractionDigits(
-                          simulateLoan.details["totalAmount"]
-                        ),
-                      })
-                    )}
-                    {renderLoanDetails(
-                      TailorLoanFields.monthlyPayment,
-                      t("amountWithSAR", {
-                        amount: formatWithCommaAndFractionDigits(
-                          simulateLoan.details[TailorLoanFields.monthlyPayment]
-                        ),
-                      })
-                    )}
-                    {renderLoanDetails(
-                      TailorLoanFields.loanTenure,
-                      t("months", {
-                        months:
-                          simulateLoan.details[TailorLoanFields.loanTenure],
-                      })
-                    )}
-                    {renderLoanDetails(
-                      "totalAmount",
-                      t("amountWithSAR", {
-                        amount: formatWithCommaAndFractionDigits(
-                          simulateLoan.details["totalAmount"]
-                        ),
-                      })
-                    )}
-                    {renderLoanDetails(
-                      TailorLoanFields.apr,
-                      t("amountWithSAR", {
-                        amount: simulateLoan.details[TailorLoanFields.apr],
-                      })
-                    )}
-                    {renderLoanDetails(
-                      TailorLoanFields.firstLoanRepaymentAmt,
-                      t("amountWithSAR", {
-                        amount:
-                          simulateLoan.details[
-                            TailorLoanFields.firstLoanRepaymentAmt
-                          ],
-                      })
-                    )}
-                  </div>
+                <div className="loanDetailContainer">
+                  {renderLoanDetails(
+                    "totalAmount",
+                    t("amountWithSAR", {
+                      amount: formatWithCommaAndFractionDigits(
+                        simulateLoan.details["totalAmount"]
+                      ),
+                    })
+                  )}
+                  {renderLoanDetails(
+                    TailorLoanFields.monthlyPayment,
+                    t("amountWithSAR", {
+                      amount: formatWithCommaAndFractionDigits(
+                        simulateLoan.details[TailorLoanFields.monthlyPayment]
+                      ),
+                    })
+                  )}
+                  {renderLoanDetails(
+                    TailorLoanFields.loanTenure,
+                    t("months", {
+                      months: simulateLoan.details[TailorLoanFields.loanTenure],
+                    })
+                  )}
+                  {renderLoanDetails(
+                    "totalAmount",
+                    t("amountWithSAR", {
+                      amount: formatWithCommaAndFractionDigits(
+                        simulateLoan.details["totalAmount"]
+                      ),
+                    })
+                  )}
+                  {renderLoanDetails(
+                    TailorLoanFields.apr,
+                    simulateLoan.details[TailorLoanFields.apr] + " %"
+                  )}
+                  {renderLoanDetails(
+                    TailorLoanFields.firstLoanRepaymentAmt,
+                    t("amountWithSAR", {
+                      amount:
+                        simulateLoan.details[
+                          TailorLoanFields.firstLoanRepaymentAmt
+                        ],
+                    })
+                  )}
+                </div>
 
-                  <div className="installmentContainer" ref={bottomRef}>
-                    {renderLoanDetails(
-                      TailorLoanFields.firstInstallmentDate,
-                      simulateLoan.details[
-                        TailorLoanFields.firstInstallmentDate
-                      ]
-                    )}
-                    {renderLoanDetails(
-                      TailorLoanFields.lastInstallmentDate,
-                      simulateLoan.details[TailorLoanFields.lastInstallmentDate]
-                    )}
-                  </div>
-                </>
+                <div className="installmentContainer" ref={bottomRef}>
+                  {renderLoanDetails(
+                    TailorLoanFields.firstInstallmentDate,
+                    simulateLoan.details[TailorLoanFields.firstInstallmentDate]
+                  )}
+                  {renderLoanDetails(
+                    TailorLoanFields.lastInstallmentDate,
+                    simulateLoan.details[TailorLoanFields.lastInstallmentDate]
+                  )}
+                </div>
                 <hr className="divider" />
                 <SelectField
                   name={TailorLoanFields.listOfLoanProducts}
@@ -351,7 +342,13 @@ export const TailorLoan = ({
                   comboListName={
                     TailorLoanFields.listOfLoanProductsComboListName
                   }
-                  fetchOpt
+                  fetchOpt={
+                    simulateLoan.details?.[
+                      TailorLoanFields.firstInstallmentDate
+                    ]
+                      ? true
+                      : false
+                  }
                   hideClr
                   isSetDefaultFirst
                 />

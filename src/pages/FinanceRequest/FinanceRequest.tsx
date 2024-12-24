@@ -16,6 +16,7 @@ import { t } from "i18next";
 import { taskService } from "../../service/task/TaskService";
 import InputTextField from "../../components/common/InputTextField";
 import { useNavigate } from "react-router-dom";
+import { successToast } from "../../components/common/ToastMsg";
 
 export type FinanceRequestStep =
   | "Work Information"
@@ -125,6 +126,7 @@ const FinanceRequest = () => {
           const payload = transferTaskObjectForPayload(val);
           taskService.commit(payload).then((res) => {
             if (res) {
+              successToast(t("financeRequestCommitSuccess"));
               handleNextStep();
             }
           });
@@ -203,7 +205,7 @@ const FinanceRequest = () => {
                           handleClick={() => {
                             handleBtnClick(
                               FinanceRequestFields.commodityPurchaseBtn,
-                              true,
+                              false,
                               true
                             );
                           }}
@@ -218,7 +220,7 @@ const FinanceRequest = () => {
                           handleClick={() => {
                             handleBtnClick(
                               FinanceRequestFields.validateDocSigningOtpBtn,
-                              true,
+                              false,
                               true
                             );
                           }}

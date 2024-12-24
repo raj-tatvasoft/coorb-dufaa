@@ -12,6 +12,7 @@ import { Products } from "../Products";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import { taskService } from "../../service/task/TaskService";
 import { useNavigate } from "react-router-dom";
+import { successToast } from "../../components/common/ToastMsg";
 
 export type FinanceSimulationStep = "product" | "tailorLoan";
 
@@ -63,6 +64,7 @@ export const FinanceSimulation = () => {
     );
     taskService.commit(payload).then((res) => {
       if (res) {
+        successToast(t("financeSimulationCommitSuccess"));
         navigate("/login");
       }
     });

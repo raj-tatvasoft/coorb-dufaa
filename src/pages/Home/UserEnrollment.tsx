@@ -3,6 +3,8 @@ import ButtonField from "../../components/common/ButtonField";
 import InputTextField from "../../components/common/InputTextField";
 import { taskService } from "../../service/task/TaskService";
 import { transferTaskObjectForPayload } from "../../utils/helperFunction";
+import { successToast } from "../../components/common/ToastMsg";
+import { t } from "i18next";
 
 export const UserEnrollmentFields = {
   userName: "user_name",
@@ -28,6 +30,7 @@ const UserEnrollment = ({
     const payload = transferTaskObjectForPayload(val);
     taskService.commit(payload).then((res) => {
       if (res) {
+        successToast(t("userEnrollmentSuccess"));
         handleNextStep();
       }
     });
