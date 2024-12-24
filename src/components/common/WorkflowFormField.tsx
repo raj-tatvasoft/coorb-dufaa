@@ -18,6 +18,7 @@ const WorkflowFormField: FC<
     groupedVariables: IObject;
     currentStepIndex: number;
     hideFieldNames?: string[];
+    showLbl?: boolean;
   }
 > = (props) => {
   const [comboListOptions, setComboListOptions] = useState<{
@@ -32,6 +33,7 @@ const WorkflowFormField: FC<
     groupedVariables,
     currentStepIndex,
     hideFieldNames,
+    showLbl,
   } = props;
 
   if (hidden || hideFieldNames?.find((x) => x === i18nName)) return <></>;
@@ -65,6 +67,8 @@ const WorkflowFormField: FC<
         <InputTextField
           {...transferredProps}
           placeholder={transferredProps.lbl}
+          showLbl={showLbl ?? false}
+          lbl={showLbl ? transferredProps.lbl : ""}
         />
       );
 
@@ -83,6 +87,8 @@ const WorkflowFormField: FC<
           valRegex={regex.Integer}
           {...transferredProps}
           placeholder={transferredProps.lbl}
+          showLbl={showLbl ?? false}
+          lbl={showLbl ? transferredProps.lbl : ""}
         />
       );
 
@@ -92,6 +98,8 @@ const WorkflowFormField: FC<
           fieldType="textarea"
           {...transferredProps}
           placeholder={transferredProps.lbl}
+          showLbl={showLbl ?? false}
+          lbl={showLbl ? transferredProps.lbl : ""}
         />
       );
 
@@ -105,13 +113,20 @@ const WorkflowFormField: FC<
       return <LabelField {...transferredProps} />;
 
     case JDBC_TYPE.UploadDocument:
-      return <FileUploadField {...transferredProps} isServerUpload />;
+      return (
+        <FileUploadField
+          {...transferredProps}
+          isServerUpload
+          showLbl={showLbl ?? false}
+        />
+      );
 
     case JDBC_TYPE.DecimalInput:
       return (
         <DecimalField
           {...transferredProps}
-          lbl=""
+          showLbl={showLbl ?? false}
+          lbl={showLbl ? transferredProps.lbl : ""}
           placeholder={transferredProps.lbl}
         />
       );

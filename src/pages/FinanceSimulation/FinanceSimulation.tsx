@@ -11,11 +11,13 @@ import {
 import { Products } from "../Products";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import { taskService } from "../../service/task/TaskService";
+import { useNavigate } from "react-router-dom";
 
 export type FinanceSimulationStep = "product" | "tailorLoan";
 
 export const FinanceSimulation = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const formRef = useRef<FormikProps<IObject>>(null);
 
@@ -61,7 +63,7 @@ export const FinanceSimulation = () => {
     );
     taskService.commit(payload).then((res) => {
       if (res) {
-        alert("committed");
+        navigate("/login");
       }
     });
   };

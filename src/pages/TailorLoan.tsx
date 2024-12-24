@@ -32,6 +32,8 @@ export const TailorLoanFields = {
   simulateLoanBtn: "simulate_loan_button",
   listOfLoanProducts: "list_of_loan_products",
   listOfLoanProductsComboListName: "business.loan_products",
+  firstLoanRepaymentAmt: "first_loan_repayment_amount",
+  apr: "apr",
 };
 
 export const TailorLoan = ({
@@ -140,6 +142,13 @@ export const TailorLoan = ({
                 newValues[TailorLoanFields.firstInstallmentDate],
               [TailorLoanFields.lastInstallmentDate]:
                 newValues[TailorLoanFields.lastInstallmentDate],
+              [TailorLoanFields.apr]: formatWithCommaAndFractionDigits(
+                Number(newValues[TailorLoanFields.apr])
+              ),
+              [TailorLoanFields.firstLoanRepaymentAmt]:
+                formatWithCommaAndFractionDigits(
+                  Number(newValues[TailorLoanFields.firstLoanRepaymentAmt])
+                ),
             },
           });
         }, 0);
@@ -147,7 +156,6 @@ export const TailorLoan = ({
       () => setSimulateLoan({ isLoading: false, details: {} })
     );
   };
-
   return (
     <Grid
       container
@@ -296,6 +304,29 @@ export const TailorLoan = ({
                       t("months", {
                         months:
                           simulateLoan.details[TailorLoanFields.loanTenure],
+                      })
+                    )}
+                    {renderLoanDetails(
+                      "totalAmount",
+                      t("amountWithSAR", {
+                        amount: formatWithCommaAndFractionDigits(
+                          simulateLoan.details["totalAmount"]
+                        ),
+                      })
+                    )}
+                    {renderLoanDetails(
+                      TailorLoanFields.apr,
+                      t("amountWithSAR", {
+                        amount: simulateLoan.details[TailorLoanFields.apr],
+                      })
+                    )}
+                    {renderLoanDetails(
+                      TailorLoanFields.firstLoanRepaymentAmt,
+                      t("amountWithSAR", {
+                        amount:
+                          simulateLoan.details[
+                            TailorLoanFields.firstLoanRepaymentAmt
+                          ],
                       })
                     )}
                   </div>

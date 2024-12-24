@@ -4,12 +4,18 @@ import {
   getFirstPendingWorkflowDetail,
   handleGenericButtonClick,
   transferTaskObjectForFormValue,
+  transferTaskObjectForPayload,
 } from "../../utils/helperFunction";
 import WorkflowFormField from "../../components/common/WorkflowFormField";
 import { Formik, FormikProps } from "formik";
 import { Box } from "@mui/material";
 import ButtonField from "../../components/common/ButtonField";
 import { TailorLoan } from "../TailorLoan";
+import { yup } from "../../utils/constant";
+import { t } from "i18next";
+import { taskService } from "../../service/task/TaskService";
+import InputTextField from "../../components/common/InputTextField";
+import { useNavigate } from "react-router-dom";
 
 export type FinanceRequestStep =
   | "Work Information"
@@ -18,8 +24,14 @@ export type FinanceRequestStep =
 
 export const FinanceRequestFields = {
   sendToQararBtn: "send_to_qarar_button",
+  commodityType: "commodity_type",
+  commodityPurchaseBtn: "commidity_purchase_button",
+  validateDocSigningOtpBtn: "validate_doc_signing_otp",
+  docSigningOtp: "doc_signing_otp",
 };
 const FinanceRequest = () => {
+  const navigate = useNavigate();
+
   const [groupedVariables, setGroupedVariables] = useState<IObject>({});
   const [step, setStep] = useState<FinanceRequestStep>("Work Information");
   const [initValues, setInitValues] = useState<IObject>({});
@@ -41,6 +53,12 @@ const FinanceRequest = () => {
       }
     });
   };
+
+  const validationSchema = yup.object().shape({
+    [FinanceRequestFields.commodityType]: yup
+      .mixed()
+      .required(t(FinanceRequestFields.commodityType) + " " + t("isRequired")),
+  });
 
   const handleBtnClick = (
     btnName: string,
@@ -84,21 +102,48 @@ const FinanceRequest = () => {
       case "Simulation":
         setStep("Loan Request");
         break;
+      case "Loan Request":
+        navigate("/login");
+        break;
       default:
         setStep("Work Information");
         break;
     }
   };
 
+  const handleCommitTask = (val: any) => {
+    if (formRef.current) {
+      const { validateForm, setTouched } = formRef.current;
+      validateForm().then((res) => {
+        if (Object.keys(res)?.length) {
+          const touchedFields: IObject = {};
+          Object.keys(res).forEach((field) => {
+            touchedFields[field] = true;
+          });
+          setTouched(touchedFields);
+        } else {
+          const payload = transferTaskObjectForPayload(val);
+          taskService.commit(payload).then((res) => {
+            if (res) {
+              handleNextStep();
+            }
+          });
+        }
+      });
+    }
+
+    // handleNextStep();
+  };
   return (
     <Box className="wrapper">
       <Formik
+        validationSchema={validationSchema}
         initialValues={initValues}
         onSubmit={() => {}}
         enableReinitialize
         innerRef={formRef}
       >
-        {({ handleSubmit }) => {
+        {({ handleSubmit, values }) => {
           return (
             <form className="workflowDetailWrapper" onSubmit={handleSubmit}>
               {step !== "Simulation" ? (
@@ -117,26 +162,85 @@ const FinanceRequest = () => {
                             currentStepIndex={0}
                             hideFieldNames={[
                               FinanceRequestFields.sendToQararBtn,
+                              FinanceRequestFields.commodityPurchaseBtn,
+                              FinanceRequestFields.validateDocSigningOtpBtn,
+                              FinanceRequestFields.docSigningOtp,
                             ]}
+                            showLbl
                           />
                         </div>
                       );
                     }
                   )}
                   <div className="mt-4">
-                    <ButtonField
-                      lbl={"next"}
-                      handleClick={() => {
-                        if (step === "Work Information")
-                          handleBtnClick(FinanceRequestFields.sendToQararBtn);
-                      }}
-                      name={FinanceRequestFields.sendToQararBtn}
-                      endIcon="RightBtnArrow.svg"
-                      variableStyle={{
-                        size: "large",
-                        bgColor: "var(--btnDarkGreyBg)",
-                      }}
-                    />
+                    {step === "Work Information" ? (
+                      <ButtonField
+                        lbl={"next"}
+                        handleClick={() => {
+                          handleBtnClick(
+                            FinanceRequestFields.sendToQararBtn,
+                            true
+                          );
+                        }}
+                        name={FinanceRequestFields.sendToQararBtn}
+                        endIcon="RightBtnArrow.svg"
+                        variableStyle={{
+                          size: "large",
+                          bgColor: "var(--btnDarkGreyBg)",
+                        }}
+                      />
+                    ) : (
+                      <div className="flex flex-col gap-2">
+                        <InputTextField
+                          // {...transferredProps}
+                          name={FinanceRequestFields.docSigningOtp}
+                          placeholder={FinanceRequestFields.docSigningOtp}
+                          showLbl={true}
+                          lbl={FinanceRequestFields.docSigningOtp}
+                        />
+                        <ButtonField
+                          lbl={FinanceRequestFields.commodityPurchaseBtn}
+                          handleClick={() => {
+                            handleBtnClick(
+                              FinanceRequestFields.commodityPurchaseBtn,
+                              true,
+                              true
+                            );
+                          }}
+                          name={FinanceRequestFields.commodityPurchaseBtn}
+                          variableStyle={{
+                            size: "large",
+                            bgColor: "var(--btnDarkGreyBg)",
+                          }}
+                        />{" "}
+                        <ButtonField
+                          lbl={FinanceRequestFields.validateDocSigningOtpBtn}
+                          handleClick={() => {
+                            handleBtnClick(
+                              FinanceRequestFields.validateDocSigningOtpBtn,
+                              true,
+                              true
+                            );
+                          }}
+                          name={FinanceRequestFields.validateDocSigningOtpBtn}
+                          variableStyle={{
+                            size: "large",
+                            bgColor: "var(--btnDarkGreyBg)",
+                          }}
+                        />
+                        <ButtonField
+                          lbl={"commit"}
+                          handleClick={() => {
+                            handleCommitTask(values);
+                          }}
+                          name={"commit"}
+                          variableStyle={{
+                            size: "large",
+                            bgColor: "var(--btnDarkGreyBg)",
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </>
               ) : (
