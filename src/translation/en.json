@@ -369,7 +369,7 @@
   "Welcome Screen": "Welcome Screen",
   "Verify Data": "Verify Data",
   "Rejected": "Rejected",
-  "register_button": "Register Button",
+  "register_button": "Register",
   "date_of_birth": "Date Of Birth",
   "Other Loans": "Other Finances",
   "Medical Expenses": "Medical Expenses",
@@ -394,5 +394,9 @@
   "qarar_score": "Qarar Score",
   "logout": "Log out",
   "first_loan_repayment_amount": "First Loan Repayment Amount",
-  "apr": "APR"
+  "apr": "APR",
+  "lms_full_account_number": "Finance Account Number",
+  "financeSimulationCommitSuccess": "Thank you, your request is saved. We will get back to you.",
+  "financeRequestCommitSuccess": "Thank you, your request is saved. We will get back to you.",
+  "userEnrollmentSuccess": "User enrolled successfully"
 }
