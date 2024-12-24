@@ -242,7 +242,7 @@
   "purpose_of_the_account": "Purpose Of The Account",
   "street_name": "Street Name",
   "date_of_joining_employer": "Date Of Joining Employer",
-  "commidity_purchase_button": "Commidity Purchase Button",
+  "commidity_purchase_button": "Commodity Purchase Button",
   "label_sub_title": "Label Sub Title",
   "Identification Details": "Identification Details",
   "User Enrollment": "User Enrollment",
@@ -392,6 +392,7 @@
   "tryLoanSimulation": "Try our Loan Simulation",
   "tryLoanSimulationUpTo": "Try our Loan Simulation up to",
   "qarar_score": "Qarar Score",
-
-  "logout": "Log out"
+  "logout": "Log out",
+  "first_loan_repayment_amount": "First Loan Repayment Amount",
+  "apr": "APR"
 }

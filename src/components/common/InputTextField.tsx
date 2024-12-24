@@ -25,6 +25,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
     startIcon,
     endIcon,
     variableStyle,
+    showLbl = false,
   } = props;
 
   const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
@@ -44,7 +45,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
           />
         ) : (
           <div className="fieldWrapper">
-            {lbl && (
+            {lbl && showLbl && (
               <InputLabel
                 htmlFor={`textfield-${name}`}
                 className="inputLabel"

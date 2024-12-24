@@ -19,7 +19,14 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
   props
 ) => {
   const { t } = useTranslation();
-  const { name, required, readOnly, lbl, isServerUpload = false } = props;
+  const {
+    name,
+    required,
+    readOnly,
+    lbl,
+    isServerUpload = false,
+    showLbl = false,
+  } = props;
   const { setFieldValue, values, setValues }: FormikContextType<IObject> =
     useFormikContext();
 
@@ -96,7 +103,7 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
       <Field name={name}>
         {({ meta, field }: FieldProps) => (
           <div className="fieldWrapper">
-            {lbl && (
+            {lbl && showLbl && (
               <InputLabel
                 htmlFor={`textfield-${name}`}
                 className="inputLabel"

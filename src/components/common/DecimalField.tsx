@@ -19,6 +19,7 @@ const DecimalField: FC<IDecimalFieldProps> = ({
   fractionDigits = 2,
   startIcon,
   endIcon,
+  showLbl = false,
 }) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched } = useFormikContext();
@@ -44,7 +45,7 @@ const DecimalField: FC<IDecimalFieldProps> = ({
     <Field name={name}>
       {({ field, meta }: FieldProps) => (
         <div className="fieldWrapper">
-          {lbl && (
+          {lbl && showLbl && (
             <InputLabel
               htmlFor={`textfield-${name}`}
               className="inputLabel"
@@ -64,8 +65,8 @@ const DecimalField: FC<IDecimalFieldProps> = ({
             id={`decimalField-${name}`}
             variant="outlined"
             type="text"
-            placeholder={placeholder}
             {...field}
+            placeholder={placeholder ? t(placeholder) : undefined}
             value={field.value || ""}
             onChange={handleValueChange}
             decimalScale={fractionDigits}
