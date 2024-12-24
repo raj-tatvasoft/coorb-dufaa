@@ -26,6 +26,13 @@
         max-height: 58px;
         margin-inline-start: 8px;
       }
+
+      @media (max-width: 600px) {
+        .headerLogo {
+          max-height: 50px;
+          margin-inline-start: 8px;
+        }
+      }
     }
 
     .headerName {
@@ -33,13 +40,6 @@
       font-size: 20px;
       line-height: 40px;
       margin-inline-start: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .headerLogo {
-        max-height: 50px;
-        margin-inline-start: 8px;
-      }
     }
   }
 

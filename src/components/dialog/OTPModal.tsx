@@ -56,6 +56,7 @@ export const OTPModal = ({
           fontWeight={700}
           fontSize={24}
           paddingBlock={"5px"}
+          textAlign={"center"}
         >
           {t("codeSentToYourMobileNumber")}
         </Typography>
@@ -64,6 +65,7 @@ export const OTPModal = ({
           fontWeight={400}
           fontSize={16}
           paddingBlock={"5px"}
+          textAlign={"center"}
         >
           {t("enterReceiveNumber")}
         </Typography>

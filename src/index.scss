@@ -74,6 +74,7 @@ body[dir="rtl"] {
     color: var(--lightError);
     font-size: 1rem;
     text-shadow: 0 0 8px var(--black);
+    text-align: center;
   }
 }
 
@@ -227,6 +228,20 @@ body[dir="rtl"] {
       padding: 10px;
       padding-left: 0;
       color: var(--mediumGray);
+      overflow: hidden;
+      max-width: calc(100vw - 92px);
+
+      &.fieldWithViewIcon {
+        max-width: calc(100vw - 134px);
+      }
+
+      span,
+      p {
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     .svgWrapper {
@@ -635,6 +650,7 @@ body[dir="rtl"] {
     input {
       background: var(--white);
       padding-inline: 10px;
+      text-overflow: ellipsis;
     }
 
     .Mui-disabled {
@@ -772,6 +788,16 @@ body[dir="rtl"] {
       width: inherit;
       font-size: 24px;
       font-weight: 600;
+    }
+
+    @media (max-width: 375px) {
+      width: 50px;
+      height: 50px;
+
+      .inputField {
+        font-size: 20px;
+        font-weight: 600;
+      }
     }
   }
 }
@@ -911,6 +937,18 @@ body[dir="rtl"] {
         line-height: 22px;
         color: var(--white);
       }
+      @media (max-width: 320px) {
+        padding-inline: 16px;
+
+        .maxLoanAmount {
+          font-weight: 600;
+          font-size: 16px;
+        }
+      }
+    }
+
+    @media (max-width: 320px) {
+      padding: 16px 20px 20px 20px;
     }
   }
 
@@ -1035,6 +1073,7 @@ body[dir="rtl"] {
     > div {
       display: flex;
       justify-content: space-between;
+      gap: 5px;
       line-height: 20px;
 
       > p {
@@ -1047,6 +1086,7 @@ body[dir="rtl"] {
 
         &.detailValue {
           color: var(--blackBrown);
+          text-align: end;
         }
       }
     }
@@ -1268,6 +1308,7 @@ body[dir="rtl"] {
   .sliderLabel {
     display: flex;
     justify-content: space-between;
+    gap: 5px;
 
     .label {
       font-weight: 600;
@@ -1279,6 +1320,21 @@ body[dir="rtl"] {
       font-size: 14px;
       color: var(--warmOrange);
       border-bottom: 1px solid var(--fadedWarmOrange);
+      height: fit-content;
+    }
+
+    @media (max-width: 375px) {
+      flex-direction: column;
+
+      .label {
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .value {
+        width: fit-content;
+        margin-bottom: 5px;
+      }
     }
   }
 
@@ -1412,4 +1468,10 @@ body[dir="rtl"] {
   top: 12px;
   right: 24px;
   z-index: 1200;
+}
+
+.wrapper > .workflowDetailWrapper > div {
+  &:first-child {
+    margin-top: 0;
+  }
 }
