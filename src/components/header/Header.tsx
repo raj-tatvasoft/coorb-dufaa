@@ -2,7 +2,6 @@ import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import "./Header.scss";
 import i18n from "../../translation/i18n";
 import { useTranslation } from "react-i18next";
-import { CONST_WORDS } from "../../utils/constant";
 import { useNavigate } from "react-router-dom";
 import { getUserName } from "../../utils/helperFunction";
 import { useEffect, useState } from "react";
@@ -57,8 +56,7 @@ export const Header = () => {
               className="logoutButton"
               size="large"
               onClick={() => {
-                localStorage.removeItem(CONST_WORDS.username);
-                localStorage.removeItem(CONST_WORDS.token);
+                localStorage.clear();
                 navigate("/login");
               }}
             >
