@@ -131,7 +131,11 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
                 <div className="svgWrapper">
                   <UploadFile />
                 </div>
-                <div className="labelWrapper">
+                <div
+                  className={`labelWrapper ${
+                    field.value ? "fieldWithViewIcon" : ""
+                  }`}
+                >
                   <span>
                     {t(lbl ? lbl : `uploadFile`) + (required ? "*" : "")}
                   </span>
