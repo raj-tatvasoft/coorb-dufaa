@@ -34,6 +34,8 @@ export const TailorLoanFields = {
   listOfLoanProductsComboListName: "business.loan_products",
   firstLoanRepaymentAmt: "first_loan_repayment_amount",
   apr: "apr",
+  qararScore: "qarar_score",
+  totalExpenses: "total_expenses",
 };
 
 export const TailorLoan = ({
@@ -181,8 +183,19 @@ export const TailorLoan = ({
                 </div>
 
                 <div className="label">
+                  <p> {t("creditScore")} </p>
+                  <span>{values[TailorLoanFields.qararScore]}</span>
+                </div>
+
+                <div className="label">
                   <p> {t("expenses")} </p>
-                  <span> {t("amountWithSAR", { amount: "60,000" })} </span>
+                  <span>
+                    {t("amountWithSAR", {
+                      amount: formatWithCommaAndFractionDigits(
+                        Number(values[TailorLoanFields.totalExpenses])
+                      ),
+                    })}
+                  </span>
                 </div>
               </div>
             )}
