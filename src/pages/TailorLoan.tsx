@@ -175,7 +175,9 @@ export const TailorLoan = ({
                   <p>{t("yourSalaryIs")} </p>
                   <span>
                     {t("amountWithSAR", {
-                      amount: values[TailorLoanFields.gosi_salary],
+                      amount: formatWithCommaAndFractionDigits(
+                        Number(values[TailorLoanFields.gosi_salary])
+                      ),
                     })}
                   </span>
                 </div>
@@ -300,14 +302,6 @@ export const TailorLoan = ({
                     TailorLoanFields.loanTenure,
                     t("months", {
                       months: simulateLoan.details[TailorLoanFields.loanTenure],
-                    })
-                  )}
-                  {renderLoanDetails(
-                    "totalAmount",
-                    t("amountWithSAR", {
-                      amount: formatWithCommaAndFractionDigits(
-                        simulateLoan.details["totalAmount"]
-                      ),
                     })
                   )}
                   {renderLoanDetails(
