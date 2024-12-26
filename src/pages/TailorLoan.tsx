@@ -87,7 +87,6 @@ export const TailorLoan = ({
       );
     }
   }, [values?.[TailorLoanFields.loanPrincipalMin]]);
-
   const renderLoanDetails = (fieldName: string, renderVal?: string) => {
     return (
       <div>
@@ -329,7 +328,7 @@ export const TailorLoan = ({
                     simulateLoan.details[TailorLoanFields.lastInstallmentDate]
                   )}
                 </div>
-                <hr className="divider" />
+                {/* <hr className="divider" /> */}
                 <SelectField
                   name={TailorLoanFields.listOfLoanProducts}
                   lbl={TailorLoanFields.listOfLoanProducts}
@@ -344,6 +343,7 @@ export const TailorLoan = ({
                       : false
                   }
                   hideClr
+                  hidden={1}
                   isSetDefaultFirst
                 />
               </>
@@ -355,7 +355,7 @@ export const TailorLoan = ({
             <div className="stepperContainer">
               {/* <StepFrame stepCount={6} activeStep={3} /> */}
               <ButtonField
-                lbl={"next"}
+                lbl={"apply_for_loan_btn"}
                 handleClick={() => {
                   if (values[TailorLoanFields.listOfLoanProducts]) {
                     if (handleBtnClick) handleBtnClick();
@@ -368,7 +368,6 @@ export const TailorLoan = ({
                     );
                 }}
                 name={"next"}
-                endIcon="RightBtnArrow.svg"
                 variableStyle={{
                   bgColor: "var(--btnDarkGreyBg)",
                   size: "large",

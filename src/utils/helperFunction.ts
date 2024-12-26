@@ -205,3 +205,8 @@ export const getUserName = () => {
     storageUserName = localStorage.getItem(CONST_WORDS.username) ?? "";
   return storageUserName;
 };
+
+export const setUserName = (userName: string) => {
+  localStorage.setItem(CONST_WORDS.username, userName);
+  storageUserName = userName;
+};

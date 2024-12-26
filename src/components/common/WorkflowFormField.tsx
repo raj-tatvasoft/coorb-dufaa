@@ -19,6 +19,7 @@ const WorkflowFormField: FC<
     currentStepIndex: number;
     hideFieldNames?: string[];
     showLbl?: boolean;
+    renamedLbl?: IObject;
   }
 > = (props) => {
   const [comboListOptions, setComboListOptions] = useState<{
@@ -34,6 +35,7 @@ const WorkflowFormField: FC<
     currentStepIndex,
     hideFieldNames,
     showLbl,
+    renamedLbl,
   } = props;
 
   if (hidden || hideFieldNames?.find((x) => x === i18nName)) return <></>;
@@ -46,7 +48,9 @@ const WorkflowFormField: FC<
   } = {
     ...props,
     name: props.i18nName,
-    lbl: props.i18nName,
+    lbl: renamedLbl?.[props.i18nName]
+      ? renamedLbl[props.i18nName]
+      : props.i18nName,
     startIcon: props.variableStyle?.startIcon,
     endIcon: props.variableStyle?.endIcon,
   };

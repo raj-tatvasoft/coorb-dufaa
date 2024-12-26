@@ -84,7 +84,10 @@ const FinanceRequest = () => {
               initialDetails: data,
             };
             setInitValues(newValues);
-            if (!isPreventStepChange) handleNextStep();
+            if (!isPreventStepChange)
+              setTimeout(() => {
+                handleNextStep();
+              }, 0);
 
             if (callback) {
               callback(newValues);
@@ -168,6 +171,10 @@ const FinanceRequest = () => {
                               FinanceRequestFields.validateDocSigningOtpBtn,
                               FinanceRequestFields.docSigningOtp,
                             ]}
+                            renamedLbl={{
+                              [FinanceRequestFields.commodityType]:
+                                "chooseCommodity",
+                            }}
                             showLbl
                           />
                         </div>

@@ -5,6 +5,7 @@ import { taskService } from "../../service/task/TaskService";
 import { transferTaskObjectForPayload } from "../../utils/helperFunction";
 import { successToast } from "../../components/common/ToastMsg";
 import { t } from "i18next";
+import { useNavigate } from "react-router-dom";
 
 export const UserEnrollmentFields = {
   userName: "user_name",
@@ -16,7 +17,6 @@ export const UserEnrollmentFields = {
 };
 const UserEnrollment = ({
   handleButtonClick,
-  handleNextStep,
 }: {
   handleButtonClick: (
     btnName: string,
@@ -26,12 +26,13 @@ const UserEnrollment = ({
   ) => void;
   handleNextStep: () => void;
 }) => {
+  const navigate = useNavigate();
   const handleCommitTask = (val: any) => {
     const payload = transferTaskObjectForPayload(val);
     taskService.commit(payload).then((res) => {
       if (res) {
         successToast(t("userEnrollmentSuccess"));
-        handleNextStep();
+        navigate("/login");
       }
     });
     // handleNextStep();

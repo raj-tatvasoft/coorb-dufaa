@@ -37,6 +37,7 @@ const SelectField: FC<Props> = ({
   hideHelp = false,
   setComboListOptions,
   isSetDefaultFirst = false,
+  hidden = false,
 }) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched } = useFormikContext();
@@ -83,58 +84,62 @@ const SelectField: FC<Props> = ({
   };
 
   return (
-    <Field name={name}>
-      {({ field, meta }: FieldProps) => (
-        <div className={`fieldWrapper ${hideHelp ? "fullGrid" : ""}`}>
-          {lbl && (
-            <InputLabel
-              htmlFor={`textfield-${name}`}
-              className="inputLabel"
-              error={Boolean(meta.touched && meta.error)}
-            >
-              {`${t(lbl)} ${required ? "*" : ""}`}
-            </InputLabel>
-          )}
-          <Autocomplete
-            disablePortal
-            options={localOptions}
-            classes={{
-              inputRoot: "selectBaseInput",
-              endAdornment: "selectEndAdornment",
-              popper: "selectListWrapper",
-            }}
-            size="medium"
-            getOptionLabel={(x) => x.label?.toString()}
-            value={
-              localOptions?.find(
-                (x) => x.value?.toString() === field.value?.value?.toString()
-              ) || null
-            }
-            onChange={handleChange}
-            noOptionsText={t("noOptionsAvailable")}
-            disabled={readOnly === 1}
-            disableClearable={hideClr || required ? true : false}
-            renderInput={(params) => (
-              <TextField
-                classes={{
-                  root: "input-textfield",
-                }}
-                {...params}
-                // label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : null}
-                placeholder={
-                  lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined
-                }
+    !hidden && (
+      <Field name={name}>
+        {({ field, meta }: FieldProps) => (
+          <div className={`fieldWrapper ${hideHelp ? "fullGrid" : ""}`}>
+            {lbl && (
+              <InputLabel
+                htmlFor={`textfield-${name}`}
+                className="inputLabel"
                 error={Boolean(meta.touched && meta.error)}
-                helperText={meta.touched && meta.error ? meta.error : undefined}
-                disabled={readOnly === 1}
-              />
+              >
+                {`${t(lbl)} ${required ? "*" : ""}`}
+              </InputLabel>
             )}
-            onClose={() => setFieldTouched(name, true, true)}
-            onBlur={() => setFieldTouched(name, true, true)}
-          />
-        </div>
-      )}
-    </Field>
+            <Autocomplete
+              disablePortal
+              options={localOptions}
+              classes={{
+                inputRoot: "selectBaseInput",
+                endAdornment: "selectEndAdornment",
+                popper: "selectListWrapper",
+              }}
+              size="medium"
+              getOptionLabel={(x) => x.label?.toString()}
+              value={
+                localOptions?.find(
+                  (x) => x.value?.toString() === field.value?.value?.toString()
+                ) || null
+              }
+              onChange={handleChange}
+              noOptionsText={t("noOptionsAvailable")}
+              disabled={readOnly === 1}
+              disableClearable={hideClr || required ? true : false}
+              renderInput={(params) => (
+                <TextField
+                  classes={{
+                    root: "input-textfield",
+                  }}
+                  {...params}
+                  // label={lbl ? `${t(lbl)} ${required ? "*" : ""}` : null}
+                  placeholder={
+                    lbl ? `${t(lbl)} ${required ? "*" : ""}` : undefined
+                  }
+                  error={Boolean(meta.touched && meta.error)}
+                  helperText={
+                    meta.touched && meta.error ? meta.error : undefined
+                  }
+                  disabled={readOnly === 1}
+                />
+              )}
+              onClose={() => setFieldTouched(name, true, true)}
+              onBlur={() => setFieldTouched(name, true, true)}
+            />
+          </div>
+        )}
+      </Field>
+    )
   );
 };
 

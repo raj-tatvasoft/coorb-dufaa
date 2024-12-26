@@ -7,6 +7,7 @@ import ButtonField from "../../components/common/ButtonField";
 import InputTextField from "../../components/common/InputTextField";
 import { workflowService } from "../../service/workflow/WorkflowService";
 import { CONST_WORDS, yup } from "../../utils/constant";
+import { setUserName } from "../../utils/helperFunction";
 
 export interface Login {
   userName: string;
@@ -29,7 +30,7 @@ export const Login = () => {
       .getpendingWorkflows()
       .then((res) => {
         if (res?.data) {
-          localStorage.setItem(CONST_WORDS.username, values.userName);
+          setUserName(values.userName);
           if (res.data[0]?.statusInDesc?.toLowerCase() === "submit") {
             navigate("/finance-simulation");
           } else {
