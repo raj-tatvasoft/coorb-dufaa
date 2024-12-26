@@ -8,7 +8,7 @@ import {
 } from "../../utils/helperFunction";
 import WorkflowFormField from "../../components/common/WorkflowFormField";
 import { Formik, FormikProps } from "formik";
-import { Box } from "@mui/material";
+import { Box, Grid2 } from "@mui/material";
 import ButtonField from "../../components/common/ButtonField";
 import { TailorLoan } from "../TailorLoan";
 import { yup } from "../../utils/constant";
@@ -141,6 +141,16 @@ const FinanceRequest = () => {
   };
   return (
     <Box className="wrapper">
+      {step !== "Simulation" && (
+        <Grid2 size={{ xs: 12 }} className="stepLabel">
+          <p className="stepTitle">
+            {step === "Loan Request"
+              ? t("loanRequest")
+              : t("salaryAndExpenses")}
+          </p>
+        </Grid2>
+      )}
+
       <Formik
         validationSchema={validationSchema}
         initialValues={initValues}
@@ -238,11 +248,11 @@ const FinanceRequest = () => {
                           }}
                         />
                         <ButtonField
-                          lbl={"commit"}
+                          lbl={"Submit"}
                           handleClick={() => {
                             handleCommitTask(values);
                           }}
-                          name={"commit"}
+                          name={"Submit"}
                           variableStyle={{
                             size: "large",
                             bgColor: "var(--btnDarkGreyBg)",

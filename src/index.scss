@@ -1470,8 +1470,40 @@ body[dir="rtl"] {
   z-index: 1200;
 }
 
-.wrapper > .workflowDetailWrapper > div {
-  &:first-child {
-    margin-top: 0;
+.wrapper {
+  .stepLabel {
+    margin-bottom: 15px;
+
+    .stepTitle {
+      font-weight: 700;
+      font-size: 36px;
+
+      @media (max-width: 415px) {
+        font-size: 28px;
+      }
+
+      @media (max-width: 350px) {
+        font-size: 22px;
+      }
+    }
+  }
+
+  > .workflowDetailWrapper > div {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.userRegistrationTitle {
+  font-weight: 700;
+  font-size: 36px;
+
+  @media (max-width: 375px) {
+    font-size: 26px;
+  }
+
+  @media (max-width: 300px) {
+    font-size: 24px;
   }
 }

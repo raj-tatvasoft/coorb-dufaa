@@ -146,7 +146,7 @@
 
   "hello": "Hello",
   "helloUser": "Hello {{user}},",
-  "yourSalaryIs": "Your salary is",
+  "yourSalaryIs": "Your salary:",
   "You'reEligibleForLoan": "You're eligible for a personal finance!",
   "chooseYourProduct": "Choose your product",
   "loanCalculator": "Finance calculator",
@@ -157,7 +157,8 @@
   "Mansour": "Mansour",
   "continue": "Continue",
   "responsibleLending": "Responsible lending",
-  "expenses": "Expenses:",
+  "expenses": "Your Total Expenses:",
+  "creditScore": "Your Credit Score:",
   "SAR": "SAR",
 
   "numberOfDependents": "Number of dependents",
@@ -242,7 +243,7 @@
   "purpose_of_the_account": "Purpose Of The Account",
   "street_name": "Street Name",
   "date_of_joining_employer": "Date Of Joining Employer",
-  "commidity_purchase_button": "Commodity Purchase Button",
+  "commidity_purchase_button": "Purchase Commodity",
   "label_sub_title": "Label Sub Title",
   "Identification Details": "Identification Details",
   "User Enrollment": "User Enrollment",
@@ -384,7 +385,7 @@
   "mail_street_name": "Street Name",
   "mail_quarter": "Villa/Appartment",
   "otp": "OTP",
-  "validate_doc_signing_otp": "Validate Doc Signing Otp",
+  "validate_doc_signing_otp": "Sign Documents",
   "nafath_login_code": "Nafath Login Code",
   "gender": "Gender",
   "lms_client_id": "LMS Client Id",
@@ -399,7 +400,10 @@
   "apr": "APR",
   "lms_full_account_number": "Finance Account Number",
   "financeSimulationCommitSuccess": "Thank you! Your request has been submitted, we'll respond to you soon.",
-  "financeRequestCommitSuccess": "You will receive a call from the Customer Service Center to finalize your loan.",
   "userEnrollmentSuccess": "The user has been successfully enrolled.",
-  "chooseCommodity": "Choose a commodity"
+  "chooseCommodity": "Choose a commodity",
+  "financeRequestCommitSuccess": "Thank you! Your request has been submitted, we'll respond to you soon.",
+  "userRegistration": "User Registration",
+  "salaryAndExpenses": "Salary and Expenses",
+  "loanRequest": "Loan Request "
 }
