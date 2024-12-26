@@ -18,10 +18,7 @@ import InputTextField from "../../components/common/InputTextField";
 import { useNavigate } from "react-router-dom";
 import { successToast } from "../../components/common/ToastMsg";
 
-export type FinanceRequestStep =
-  | "Work Information"
-  | "Simulation"
-  | "Loan Request";
+export type FinanceRequestStep = "Work Information" | "Simulation" | "Loan Request";
 
 export const FinanceRequestFields = {
   sendToQararBtn: "send_to_qarar_button",
@@ -29,6 +26,8 @@ export const FinanceRequestFields = {
   commodityPurchaseBtn: "commidity_purchase_button",
   validateDocSigningOtpBtn: "validate_doc_signing_otp",
   docSigningOtp: "doc_signing_otp",
+  qararScore: "qarar_score",
+  totalExpenses: "total_expenses",
 };
 const FinanceRequest = () => {
   const navigate = useNavigate();
@@ -48,9 +47,7 @@ const FinanceRequest = () => {
     isApiFetch.current = true;
     getFirstPendingWorkflowDetail().then((res) => {
       if (res?.data) {
-        setInitValues(
-          transferTaskObjectForFormValue(res.data, setGroupedVariables)
-        );
+        setInitValues(transferTaskObjectForFormValue(res.data, setGroupedVariables));
       }
     });
   };
@@ -144,9 +141,7 @@ const FinanceRequest = () => {
       {step !== "Simulation" && (
         <Grid2 size={{ xs: 12 }} className="stepLabel">
           <p className="stepTitle">
-            {step === "Loan Request"
-              ? t("loanRequest")
-              : t("salaryAndExpenses")}
+            {step === "Loan Request" ? t("loanRequest") : t("salaryAndExpenses")}
           </p>
         </Grid2>
       )}
@@ -163,43 +158,36 @@ const FinanceRequest = () => {
             <form className="workflowDetailWrapper" onSubmit={handleSubmit}>
               {step !== "Simulation" ? (
                 <>
-                  {groupedVariables[step]?.map(
-                    (variable: Variable, i: number) => {
-                      return (
-                        <div
-                          className="mt-4"
-                          key={`finance-request-field-${i}`}
-                        >
-                          <WorkflowFormField
-                            {...variable}
-                            groupedVariables={groupedVariables}
-                            handleBtnClick={() => {}}
-                            currentStepIndex={0}
-                            hideFieldNames={[
-                              FinanceRequestFields.sendToQararBtn,
-                              FinanceRequestFields.commodityPurchaseBtn,
-                              FinanceRequestFields.validateDocSigningOtpBtn,
-                              FinanceRequestFields.docSigningOtp,
-                            ]}
-                            renamedLbl={{
-                              [FinanceRequestFields.commodityType]:
-                                "chooseCommodity",
-                            }}
-                            showLbl
-                          />
-                        </div>
-                      );
-                    }
-                  )}
+                  {groupedVariables[step]?.map((variable: Variable, i: number) => {
+                    return (
+                      <div className="mt-4" key={`finance-request-field-${i}`}>
+                        <WorkflowFormField
+                          {...variable}
+                          groupedVariables={groupedVariables}
+                          handleBtnClick={() => {}}
+                          currentStepIndex={0}
+                          hideFieldNames={[
+                            FinanceRequestFields.sendToQararBtn,
+                            FinanceRequestFields.commodityPurchaseBtn,
+                            FinanceRequestFields.validateDocSigningOtpBtn,
+                            FinanceRequestFields.docSigningOtp,
+                            FinanceRequestFields.qararScore,
+                            FinanceRequestFields.totalExpenses,
+                          ]}
+                          renamedLbl={{
+                            [FinanceRequestFields.commodityType]: "chooseCommodity",
+                          }}
+                          showLbl
+                        />
+                      </div>
+                    );
+                  })}
                   <div className="mt-4">
                     {step === "Work Information" ? (
                       <ButtonField
                         lbl={"next"}
                         handleClick={() => {
-                          handleBtnClick(
-                            FinanceRequestFields.sendToQararBtn,
-                            true
-                          );
+                          handleBtnClick(FinanceRequestFields.sendToQararBtn, true);
                         }}
                         name={FinanceRequestFields.sendToQararBtn}
                         endIcon="RightBtnArrow.svg"
@@ -220,11 +208,7 @@ const FinanceRequest = () => {
                         <ButtonField
                           lbl={FinanceRequestFields.commodityPurchaseBtn}
                           handleClick={() => {
-                            handleBtnClick(
-                              FinanceRequestFields.commodityPurchaseBtn,
-                              false,
-                              true
-                            );
+                            handleBtnClick(FinanceRequestFields.commodityPurchaseBtn, false, true);
                           }}
                           name={FinanceRequestFields.commodityPurchaseBtn}
                           variableStyle={{
