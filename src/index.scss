@@ -31,6 +31,25 @@ body {
         justify-content: center;
       }
     }
+
+    &:has(.formikComponent) {
+      background: var(--linearQualityBg);
+
+      .headerAppBar {
+        display: none;
+      }
+
+      .MuiToolbar-root {
+        display: none;
+      }
+
+      .layout-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 }
 
@@ -171,6 +190,10 @@ body[dir="rtl"] {
 .fieldWrapper {
   height: 100%;
   display: grid;
+
+  &:has(.tailorYourFinanceButton) {
+    height: auto;
+  }
 
   .helperIcon {
     color: var(--secondaryBackground);
@@ -741,7 +764,12 @@ body[dir="rtl"] {
 .main-content {
   padding: 20px;
   height: calc(100vh - 64px);
+  width: 100%;
   overflow: auto;
+
+  &:has(.formikComponent) {
+    height: 100%;
+  }
 
   @media (max-width: 599px) {
     height: calc(100vh - 56px);
@@ -1505,5 +1533,70 @@ body[dir="rtl"] {
 
   @media (max-width: 300px) {
     font-size: 24px;
+  }
+}
+
+.simahContent {
+  .simahContentWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+    gap: 14px;
+    padding: 30px;
+    border-radius: 16px;
+
+    .checkboxFormField {
+      span.MuiTypography-root {
+        color: var(--textColor);
+      }
+    }
+  }
+}
+
+.qualifyStep {
+  text-align: center;
+  .qualifyLabel {
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--goldenOrange);
+  }
+
+  .eligibleLabel {
+    font-size: 20px;
+    color: var(--textColor);
+  }
+
+  .eligibleAmount {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--blackBrown);
+  }
+}
+
+.formikComponent {
+  height: 100%;
+
+  .qualifyForm {
+    height: 100%;
+  }
+
+  .tailorYourFinanceContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex-direction: column;
+
+    img {
+      width: 100px;
+      height: auto;
+    }
+
+    .tailorYourFinanceButton {
+      height: fit-content;
+    }
   }
 }

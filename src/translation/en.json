@@ -120,7 +120,8 @@
   "codeSentToYourMobileNumber": "A code was sent to your mobile number",
   "enterReceiveNumber": "Please enter the number you received",
   "verifyWithNafath": "Verify With Nafath",
-  "verificationText": "Open your Nafath app and select this code to complete your verification.",
+  "verificationText": "Please help us authenticate you through Nafath.",
+  "verificationText2": "Open your Nafath app and select this code to complete your verification.",
   "workingOnEligibilityChecking": "We're working on checking your eligibility...",
   "thisMightTakeMoment": "This might take a moment, please do not leave this page",
   "national_id_iqama_text": "National ID or Iqama",
@@ -405,5 +406,11 @@
   "financeRequestCommitSuccess": "You will receive a call from the Customer Service Center to finalize your loan.",
   "userRegistration": "User Registration",
   "salaryAndExpenses": "Salary and Expenses",
-  "loanRequest": "Loan Request "
+  "loanRequest": "Loan Request",
+  "requestNafathCode": "Request Nafath Code",
+  "simahAuthorization": "SIMAH Authorization",
+  "simahCheckboxLabel": "I consider to fetch my credit report by SIMAH",
+  "youQualify": "You Qualify!",
+  "eligibleMessage": "You are eligible for top-up of up to",
+  "tailorYourFinance": "Tailor Your Finance"
 }
