@@ -332,7 +332,7 @@
   "Credit Score": "Credit Score",
   "Allow the Bank to Sell on Behalf?": "Allow The Bank To Sell On Behalf?",
   "date_of_issue": "Date Of Issue",
-  "user_entered_salary": "User Entered Salary",
+  "user_entered_salary": "If Different, Enter Your Salary",
   "Contracts": "Contracts",
   "loan_schedule_document": "Finance Schedule Document",
   "dbr": "Dbr",
@@ -412,5 +412,6 @@
   "simahCheckboxLabel": "I consider to fetch my credit report by SIMAH",
   "youQualify": "You Qualify!",
   "eligibleMessage": "You are eligible for top-up of up to",
-  "tailorYourFinance": "Tailor Your Finance"
+  "tailorYourFinance": "Tailor Your Finance",
+  "loan_charges": "Admin Fees"
 }

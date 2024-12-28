@@ -13,30 +13,34 @@ import ButtonField from "../common/ButtonField";
 
 interface Props {
   open: boolean;
-  handleNextStep: (btnName: string) => void;
+  handleClose: (btnName: string) => void;
+  handleVerifyCode: () => void;
 }
 
-export const NafathVerifyModal = ({ open, handleNextStep }: Props) => {
+export const NafathVerifyModal = ({
+  open,
+  handleClose,
+  handleVerifyCode,
+}: Props) => {
   const { t } = useTranslation();
-  const [timer, setTimer] = useState<number | null>(60);
+  const [timer, setTimer] = useState<number>(60);
 
   useEffect(() => {
-    if (!open) {
-      setTimer(60);
-      return;
-    }
-
-    if (timer! <= 0) {
-      setTimer(null);
-      return;
-    }
-
-    const intervalId = setInterval(() => {
-      setTimer((prevTimer) => prevTimer! - 1);
+    const timeInterval = setInterval(() => {
+      setTimer((prev) => {
+        if (prev - 1 >= 0) {
+          return prev - 1;
+        } else {
+          clearInterval(timeInterval);
+          return prev;
+        }
+      });
     }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, [open, timer]);
+    setTimeout(() => {
+      handleVerifyCode();
+    }, 5000);
+  }, []);
 
   return (
     <Dialog
@@ -105,7 +109,7 @@ export const NafathVerifyModal = ({ open, handleNextStep }: Props) => {
         <Button
           type="button"
           variant="text"
-          onClick={() => handleNextStep("nafath")}
+          onClick={() => handleClose("nafath")}
         >
           <CloseIcon />
           <p>{t("close")}</p>

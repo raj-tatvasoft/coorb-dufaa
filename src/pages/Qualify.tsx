@@ -2,6 +2,9 @@ import Grid from "@mui/material/Grid2";
 import { useTranslation } from "react-i18next";
 import { formatWithCommaAndFractionDigits } from "../utils/helperFunction";
 import ButtonField from "../components/common/ButtonField";
+import { FormikContextType, useFormikContext } from "formik";
+import { TailorLoanFields } from "./TailorLoan";
+import { IObject } from "../service/commonModel";
 
 export const Qualify = ({
   handleButtonClick,
@@ -9,6 +12,8 @@ export const Qualify = ({
   handleButtonClick: (btnName: string) => void;
 }) => {
   const { t } = useTranslation();
+
+  const { values }: FormikContextType<IObject> = useFormikContext();
 
   return (
     <Grid
@@ -29,7 +34,9 @@ export const Qualify = ({
         <p className="eligibleMessage">{t("eligibleMessage")}</p>
         <p className="eligibleAmount">
           {t("amountWithSAR", {
-            amount: formatWithCommaAndFractionDigits(2000, 0),
+            amount: formatWithCommaAndFractionDigits(
+              Number(values[TailorLoanFields.loanPrincipalMax])
+            ),
           })}
         </p>
       </div>

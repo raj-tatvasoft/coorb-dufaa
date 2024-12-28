@@ -20,6 +20,7 @@ import { FinanceSimulation } from "./pages/FinanceSimulation/FinanceSimulation.t
 import { Login } from "./pages/Home/Login.tsx";
 import FinanceRequest from "./pages/FinanceRequest/FinanceRequest.tsx";
 import { FormikComponent } from "./pages/FormikComponent.tsx";
+import FinanceRequestSimulation from "./pages/FinanceRequestSimulation/FinanceRequestSimulation.tsx";
 // import { DynamicForm } from "./pages/DynamicHome.tsx";
 // import { ResponsibleLending } from "./pages/ResponsibleLending.tsx";
 // import { TailorLoan } from "./pages/TailorLoan.tsx";
@@ -55,6 +56,13 @@ function App() {
                 />
                 {/* New Finance Request flow 20-Dec-2024 */}
                 <Route path="/finance-request" element={<FinanceRequest />} />
+
+                {/* New Finance Request flow 27-Dec-2024 */}
+                <Route
+                  path="/finance-request-simulation"
+                  element={<FinanceRequestSimulation />}
+                />
+
                 {/* <Route path="/home" element={<DynamicForm />} /> */}
                 {/* <Route path="/tailor-loan" element={<TailorLoan />} />
                 <Route path="/review-loan" element={<ReviewLoan />} />

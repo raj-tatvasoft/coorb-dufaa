@@ -31,11 +31,12 @@ export const Login = () => {
       .then((res) => {
         if (res?.data) {
           setUserName(values.userName);
-          if (res.data[0]?.statusInDesc?.toLowerCase() === "submit") {
-            navigate("/finance-simulation");
-          } else {
-            navigate("/finance-request");
-          }
+          // if (res.data[0]?.statusInDesc?.toLowerCase() === "submit") {
+          //   navigate("/finance-simulation");
+          // } else {
+          //   navigate("/finance-request");
+          // }
+          navigate("/finance-request-simulation");
         }
       })
       .catch(() => {

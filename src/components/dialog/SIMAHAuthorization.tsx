@@ -8,27 +8,45 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import CloseIcon from "@mui/icons-material/Close";
-import { Dispatch, SetStateAction } from "react";
 import CheckboxField from "../common/CheckboxField";
 import ButtonField from "../common/ButtonField";
+import { useFormikContext } from "formik";
+import { IObject } from "../../service/commonModel";
 
 interface Props {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  handleClose: () => void;
+  handleContinue: () => void;
 }
 
-export const SIMAHAuthorization = ({ open, setOpen }: Props) => {
+export const SimahAuthModalFields = {
+  SIMAHCheckbox: "SIMAHCheckbox",
+};
+export const SIMAHAuthorization = ({
+  open,
+  handleClose,
+  handleContinue,
+}: Props) => {
   const { t } = useTranslation();
+  const { validateForm, setTouched } = useFormikContext();
 
+  const onContinue = () => {
+    validateForm().then((res) => {
+      if (Object.keys(res)?.length) {
+        const touchedFields: IObject = {};
+        Object.keys(res).forEach((field) => {
+          touchedFields[field] = true;
+        });
+        setTouched(touchedFields);
+      } else {
+        handleContinue();
+      }
+    });
+  };
   return (
     <Dialog open={open} fullScreen classes={{ paper: "transparentDialog" }}>
       <DialogContent classes={{ root: "transparentContent simahContent" }}>
         <Box className="simahContentWrapper">
-          {/* <img
-            src="/images/nafath.png"
-            alt=""
-            style={{ height: "auto", width: "125px" }}
-          /> */}
           <Typography fontWeight={700} fontSize={32} color="info">
             {t("SIMAH")}
           </Typography>
@@ -36,14 +54,14 @@ export const SIMAHAuthorization = ({ open, setOpen }: Props) => {
             {t("simahAuthorization")}
           </Typography>
           <CheckboxField
-            name={"SIMAHCheckbox"}
+            name={SimahAuthModalFields.SIMAHCheckbox}
             lbl={t("simahCheckboxLabel")}
             className="simahCheckbox"
           />
           <ButtonField
             name="requestNafathCode"
             lbl={t("continue")}
-            handleClick={() => {}}
+            handleClick={onContinue}
             endIcon="ForwardArrow.svg"
             variableStyle={{
               bgColor: "var(--darkBrown)",
@@ -54,7 +72,7 @@ export const SIMAHAuthorization = ({ open, setOpen }: Props) => {
         </Box>
       </DialogContent>
       <DialogActions classes={{ root: "transparentActionButton" }}>
-        <Button type="button" variant="text" onClick={() => setOpen(false)}>
+        <Button type="button" variant="text" onClick={handleClose}>
           <CloseIcon />
           <p>{t("close")}</p>
         </Button>

@@ -78,6 +78,7 @@ export const FinanceSimulation = () => {
             handleNextStep={handleNextStep}
             eligibleTitle={t("tryLoanSimulation")}
             hideSalary
+            onClickFinanceCalc={() => {}}
           />
         );
       case "tailorLoan":

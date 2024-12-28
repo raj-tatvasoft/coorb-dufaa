@@ -323,7 +323,12 @@ export const Home = () => {
           />
         );
       case "product":
-        return <Products handleNextStep={handleButtonClick} />;
+        return (
+          <Products
+            handleNextStep={handleButtonClick}
+            onClickFinanceCalc={() => {}}
+          />
+        );
       case "responsibleLending":
         return <ResponsibleLending handleButtonClick={handleButtonClick} />;
       case "tailorLoan":

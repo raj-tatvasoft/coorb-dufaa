@@ -36,16 +36,19 @@ export const TailorLoanFields = {
   apr: "apr",
   qararScore: "qarar_score",
   totalExpenses: "total_expenses",
+  loanCharges: "loan_charges",
 };
 
 export const TailorLoan = ({
   eligibleTitle,
   hideSalaryExpense = false,
   handleBtnClick,
+  hideApplyBtn = false,
 }: {
   eligibleTitle?: string;
   hideSalaryExpense?: boolean;
   handleBtnClick?: () => void;
+  hideApplyBtn?: boolean;
 }) => {
   const { t } = useTranslation();
   const {
@@ -148,6 +151,9 @@ export const TailorLoan = ({
                 formatWithCommaAndFractionDigits(
                   Number(newValues[TailorLoanFields.firstLoanRepaymentAmt])
                 ),
+              [TailorLoanFields.loanCharges]: formatWithCommaAndFractionDigits(
+                Number(newValues[TailorLoanFields.loanCharges])
+              ),
             },
           });
         }, 0);
@@ -329,6 +335,13 @@ export const TailorLoan = ({
                         ],
                     })
                   )}
+                  {renderLoanDetails(
+                    TailorLoanFields.loanCharges,
+                    t("amountWithSAR", {
+                      amount:
+                        simulateLoan.details[TailorLoanFields.loanCharges],
+                    })
+                  )}
                 </div>
 
                 <div className="installmentContainer" ref={bottomRef}>
@@ -364,34 +377,50 @@ export const TailorLoan = ({
           </div>
 
           {(simulateLoan.isLoading ||
-            simulateLoan.details?.[TailorLoanFields.firstInstallmentDate]) && (
-            <div className="stepperContainer">
-              {/* <StepFrame stepCount={6} activeStep={3} /> */}
-              <ButtonField
-                lbl={"apply_for_loan_btn"}
-                handleClick={() => {
-                  if (values[TailorLoanFields.listOfLoanProducts]) {
-                    if (handleBtnClick) handleBtnClick();
-                    else setShowGroupedFields(true);
-                  } else
-                    setFieldTouched(
-                      TailorLoanFields.listOfLoanProducts,
-                      true,
-                      true
-                    );
-                }}
-                name={"next"}
-                variableStyle={{
-                  bgColor: "var(--btnDarkGreyBg)",
-                  size: "large",
-                }}
-                readOnly={
-                  simulateLoan.details?.[TailorLoanFields.firstInstallmentDate]
-                    ? 0
-                    : 1
-                }
-              />
-            </div>
+            simulateLoan.details?.[TailorLoanFields.firstInstallmentDate]) &&
+            !hideApplyBtn && (
+              <div className="stepperContainer">
+                {/* <StepFrame stepCount={6} activeStep={3} /> */}
+                <ButtonField
+                  lbl={"apply_for_loan_btn"}
+                  handleClick={() => {
+                    if (values[TailorLoanFields.listOfLoanProducts]) {
+                      if (handleBtnClick) handleBtnClick();
+                      else setShowGroupedFields(true);
+                    } else
+                      setFieldTouched(
+                        TailorLoanFields.listOfLoanProducts,
+                        true,
+                        true
+                      );
+                  }}
+                  name={"next"}
+                  variableStyle={{
+                    bgColor: "var(--btnDarkGreyBg)",
+                    size: "large",
+                  }}
+                  readOnly={
+                    simulateLoan.details?.[
+                      TailorLoanFields.firstInstallmentDate
+                    ]
+                      ? 0
+                      : 1
+                  }
+                />
+              </div>
+            )}
+          {hideApplyBtn && (
+            <ButtonField
+              lbl={"back"}
+              handleClick={() => {
+                if (handleBtnClick) handleBtnClick();
+              }}
+              name={"back"}
+              variableStyle={{
+                bgColor: "var(--btnDarkGreyBg)",
+                size: "large",
+              }}
+            />
           )}
         </>
       ) : (

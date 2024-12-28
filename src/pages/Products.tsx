@@ -1,8 +1,15 @@
 import Grid from "@mui/material/Grid2";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { camelToPascal, getUserName } from "../utils/helperFunction";
+import {
+  camelToPascal,
+  formatWithCommaAndFractionDigits,
+  getUserName,
+} from "../utils/helperFunction";
 import ButtonField from "../components/common/ButtonField";
+import { TailorLoanFields } from "./TailorLoan";
+import { FormikContextType, useFormikContext } from "formik";
+import { IObject } from "../service/commonModel";
 
 const ProductBtnName = {
   personalLoan: "personalLoan",
@@ -14,11 +21,14 @@ export const Products = ({
   handleNextStep,
   eligibleTitle = "",
   hideSalary = false,
+  onClickFinanceCalc,
 }: {
   handleNextStep: (btnName: string) => void;
   eligibleTitle?: string;
   hideSalary?: boolean;
+  onClickFinanceCalc: () => void;
 }) => {
+  const { values }: FormikContextType<IObject> = useFormikContext();
   const [selectedProduct, setSelectedProduct] = useState<
     keyof typeof ProductBtnName | ""
   >("");
@@ -36,7 +46,13 @@ export const Products = ({
         {!hideSalary && (
           <div className="salaryLabel">
             <p>{t("yourSalaryIs")}:</p>
-            <p className="salary">20,000 SAR</p>
+            <p className="salary">
+              {t("amountWithSAR", {
+                amount: formatWithCommaAndFractionDigits(
+                  Number(values[TailorLoanFields.gosi_salary])
+                ),
+              })}
+            </p>
           </div>
         )}
         <div className="eligibleLabel">
@@ -46,7 +62,7 @@ export const Products = ({
       </div>
       <div className="groupLabelContainer">
         <p className="groupLabel">{t("chooseYourProduct")}</p>
-        <div className="loanCalculator">
+        <div className="loanCalculator" onClick={onClickFinanceCalc}>
           <img src="/images/Calculator.svg" alt="" />
           <p>{t("loanCalculator")}</p>
         </div>

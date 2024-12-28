@@ -10,8 +10,8 @@ export type Component = "SIMAH" | "nafath" | "qualify";
 
 export const FormikComponent = () => {
   const formRef = useRef<FormikProps<IObject>>(null);
-  const [step, setStep] = useState<Component>("qualify");
-  const [initValues, setInitValues] = useState<IObject>({});
+  const [step, setStep] = useState<Component>("nafath");
+  const [initValues] = useState<IObject>({});
 
   const handleNextStep = () => {
     switch (step) {
@@ -36,10 +36,18 @@ export const FormikComponent = () => {
           <>
             <Qualify handleButtonClick={handleNextStep} />
             {step === "nafath" && (
-              <NafathVerifyModal open={true} handleNextStep={handleNextStep} />
+              <NafathVerifyModal
+                open={true}
+                handleClose={handleNextStep}
+                handleVerifyCode={() => {}}
+              />
             )}
             {step === "SIMAH" && (
-              <SIMAHAuthorization open={true} setOpen={handleNextStep} />
+              <SIMAHAuthorization
+                open={true}
+                handleClose={handleNextStep}
+                handleContinue={() => {}}
+              />
             )}
           </>
         );
