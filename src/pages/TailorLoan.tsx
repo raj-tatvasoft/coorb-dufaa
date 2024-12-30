@@ -163,7 +163,8 @@ export const TailorLoan = ({
             },
           });
         }, 0);
-      }
+      },
+      () => setSimulateLoan({ isLoading: false, details: {} })
     );
   };
 

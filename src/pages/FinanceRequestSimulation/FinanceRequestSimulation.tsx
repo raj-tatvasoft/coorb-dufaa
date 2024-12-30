@@ -50,7 +50,7 @@ const FinanceRequestSimulation = () => {
   const [initValues, setInitValues] = useState<IObject>({});
   const [step, setStep] = useState<FinanceRequestSimulationStep>("Product");
   const [groupedVariables, setGroupedVariables] = useState<IObject>({});
-  const [loanSimulatorCount, setLoanSimulatorCount] = useState(0);
+  const [loanSimulatorCount, setLoanSimulatorCount] = useState(1);
   const [currentFlow, setCurrentFlow] = useState<
     "simulateOnly" | "simulateAndRequest" | ""
   >("");
