@@ -41,7 +41,7 @@ export const ApplyLoanSuccess = ({
         <p className="eligibleAmount">
           {t("amountWithSAR", {
             amount: formatWithCommaAndFractionDigits(
-              Number(values[TailorLoanFields.loanPrincipalMax])
+              Number(values[TailorLoanFields.loanPrincipal])
             ),
           })}
         </p>

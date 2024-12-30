@@ -49,7 +49,9 @@ const SliderField: FC<
           <div className="sliderWrapper">
             <Slider
               aria-label="Default"
-              value={Number(field.value) >= 0 ? Number(field.value) : undefined}
+              value={
+                Number(field.value) >= 0 ? Number(field.value) : (null as any)
+              }
               valueLabelDisplay="auto"
               step={step}
               marks
