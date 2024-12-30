@@ -7,7 +7,7 @@ import {
 } from "../../utils/helperFunction";
 import { IObject, Variable } from "../../service/commonModel";
 import { Formik, FormikProps } from "formik";
-import { Box } from "@mui/material";
+import { Box, Grid2 } from "@mui/material";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import { taskService } from "../../service/task/TaskService";
 import { successToast } from "../../components/common/ToastMsg";
@@ -33,7 +33,8 @@ export type FinanceRequestSimulationStep =
   | "SimahAuthSuccess"
   | "Commodity"
   | "Documents"
-  | "financeCalculator";
+  | "financeCalculator"
+  | "Update Salary";
 
 export const FinanceRequestSimulationFields = {
   sendToQararBtn: "send_to_qarar_button",
@@ -175,6 +176,7 @@ const FinanceRequestSimulation = () => {
         else setStep("Commodity");
         break;
       case "Salary Review":
+      case "Update Salary":
         setStep("Expenses");
         break;
       case "Expenses":
@@ -197,7 +199,8 @@ const FinanceRequestSimulation = () => {
     btnName: string,
     isPreventValidation = false,
     isPreventStepChange = false,
-    callback?: any //callback function call
+    callback?: any, //callback function call
+    defaultSetValues?: IObject // values which you need to set to default formik values
   ) => {
     if (formRef.current) {
       const { validateForm, setTouched, values } = formRef.current;
@@ -210,11 +213,13 @@ const FinanceRequestSimulation = () => {
           setTouched(touchedFields);
         } else {
           handleGenericButtonClick(values, btnName, (data: any) => {
-            const newValues = {
+            let newValues = {
               ...transferTaskObjectForFormValue(data),
               selectedTaskStatus: data.selectedTaskStatus,
               initialDetails: data,
             };
+            if (defaultSetValues)
+              newValues = { ...newValues, ...defaultSetValues };
             setInitValues(newValues);
             if (!isPreventStepChange)
               setTimeout(() => {
@@ -263,8 +268,13 @@ const FinanceRequestSimulation = () => {
       case "financeCalculator":
         return (
           <TailorLoan
-            eligibleTitle={t("tryLoanSimulationUpTo")}
+            eligibleTitle={
+              loanSimulatorCount === 1
+                ? t("tryLoanSimulationUpTo")
+                : t("eligibleLoanMessage")
+            }
             hideSalaryExpense={loanSimulatorCount !== 2}
+            isDefaultTenureToMaxLoan={loanSimulatorCount === 2}
             handleBtnClick={() => {
               if (step === "financeCalculator") {
                 setStep("Product");
@@ -286,7 +296,41 @@ const FinanceRequestSimulation = () => {
           />
         );
       case "Salary Review":
+        return (
+          <>
+            {renderGroupedDetails()}
+            <div className="mt-4">
+              <ButtonField
+                lbl={"iAmOkWithSalary"}
+                handleClick={() => {
+                  handleNextStep();
+                }}
+                name={"iAmOkWithSalary"}
+                endIcon="RightBtnArrow.svg"
+                variableStyle={{
+                  size: "large",
+                  bgColor: "var(--btnDarkGreyBg)",
+                }}
+              />
+            </div>
+            <div className="mt-2">
+              <ButtonField
+                lbl={"iAmNotOkWithSalary"}
+                handleClick={() => {
+                  setStep("Update Salary");
+                }}
+                name={"iAmNotOkWithSalary"}
+                endIcon="RightBtnArrow.svg"
+                variableStyle={{
+                  size: "large",
+                  bgColor: "var(--btnDarkGreyBg)",
+                }}
+              />
+            </div>
+          </>
+        );
       case "Expenses":
+      case "Update Salary":
         return (
           <>
             {renderGroupedDetails()}
@@ -295,18 +339,35 @@ const FinanceRequestSimulation = () => {
                 lbl={"next"}
                 handleClick={() => {
                   if (step === "Expenses") {
-                    setModalDetail({ isFor: "simah" });
                     handleBtnClick(
                       FinanceRequestSimulationFields.sendToQararBtn,
                       true,
-                      true
+                      true,
+                      null,
+                      {
+                        [SimahAuthModalFields.SIMAHCheckbox]: true,
+                      }
                     );
+                    setModalDetail({ isFor: "simah" });
                   } else {
                     handleNextStep();
                   }
                 }}
                 name={FinanceRequestSimulationFields.sendToQararBtn}
                 endIcon="RightBtnArrow.svg"
+                variableStyle={{
+                  size: "large",
+                  bgColor: "var(--btnDarkGreyBg)",
+                }}
+              />
+            </div>
+            <div className="mt-2">
+              <ButtonField
+                lbl={"back"}
+                handleClick={() => {
+                  setStep("Salary Review");
+                }}
+                name={"Back"}
                 variableStyle={{
                   size: "large",
                   bgColor: "var(--btnDarkGreyBg)",
@@ -407,38 +468,41 @@ const FinanceRequestSimulation = () => {
     setModalDetail({ isFor: "" });
   };
 
-  // const renderPageTitle = () => {
-  //   let pageTitle = "";
-  //   switch (step) {
-  //     case "Salary Review":
-  //       pageTitle = "Salary Review";
-  //       break;
+  const renderPageTitle = () => {
+    let pageTitle = "";
+    switch (step) {
+      case "Salary Review":
+      case "Update Salary":
+      case "Expenses":
+      case "Commodity":
+      case "Documents":
+        pageTitle = step;
+        break;
 
-  //     default:
-  //       break;
-  //   }
-  //   return (
-  //     <Grid2 size={{ xs: 12 }} className="stepLabel">
-  //       <p className="stepTitle">{step}</p>
-  //     </Grid2>
-  //   );
-  // };
+      default:
+        break;
+    }
+    return pageTitle ? (
+      <Grid2 size={{ xs: 12 }} className="stepLabel">
+        <p className="stepTitle">{pageTitle}</p>
+      </Grid2>
+    ) : (
+      <></>
+    );
+  };
 
   return (
     <Box className="wrapper">
-      {/* {renderPageTitle()} */}
+      {renderPageTitle()}
       <Formik
         initialValues={initValues}
         validationSchema={
-          // eslint-disable-next-line no-constant-condition
-          false
-            ? modalDetail.isFor === "simah"
-              ? simahLoanSchema
-              : step === "Tailor Loan"
-              ? loanTailorSchema
-              : step === "Commodity"
-              ? commodityValidationSchema
-              : null
+          modalDetail.isFor === "simah"
+            ? simahLoanSchema
+            : step === "Tailor Loan"
+            ? loanTailorSchema
+            : step === "Commodity"
+            ? commodityValidationSchema
             : null
         }
         onSubmit={() => {}}
