@@ -91,10 +91,12 @@ export const formatWithCommaAndFractionDigits = (
   value: number | string,
   digits: number = 2
 ) => {
-  return value?.toLocaleString(undefined, {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  });
+  return isNaN(Number(value))
+    ? "0.00"
+    : Number(value)?.toLocaleString(undefined, {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits,
+      });
 };
 
 export const transferTaskObjectForFormValue = (

@@ -10,7 +10,6 @@ import { Formik, FormikProps } from "formik";
 import { Box, Grid2 } from "@mui/material";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import { taskService } from "../../service/task/TaskService";
-import { successToast } from "../../components/common/ToastMsg";
 import { t } from "i18next";
 import { Products } from "../Products";
 import { NafathVerifyModal } from "../../components/dialog/NafathVerifyModal";
@@ -22,8 +21,8 @@ import {
 } from "../../components/dialog/SIMAHAuthorization";
 import { Qualify } from "../Qualify";
 import { yup } from "../../utils/constant";
-import { useNavigate } from "react-router-dom";
 import InputTextField from "../../components/common/InputTextField";
+import { ApplyLoanSuccess } from "./ApplyLoanSuccess";
 
 export type FinanceRequestSimulationStep =
   | "Tailor Loan"
@@ -34,7 +33,8 @@ export type FinanceRequestSimulationStep =
   | "Commodity"
   | "Documents"
   | "financeCalculator"
-  | "Update Salary";
+  | "Update Salary"
+  | "ApplyLoanSuccessFeedback";
 
 export const FinanceRequestSimulationFields = {
   sendToQararBtn: "send_to_qarar_button",
@@ -47,8 +47,6 @@ export const FinanceRequestSimulationFields = {
 };
 
 const FinanceRequestSimulation = () => {
-  const navigate = useNavigate();
-
   const [initValues, setInitValues] = useState<IObject>({});
   const [step, setStep] = useState<FinanceRequestSimulationStep>("Product");
   const [groupedVariables, setGroupedVariables] = useState<IObject>({});
@@ -158,8 +156,8 @@ const FinanceRequestSimulation = () => {
           setWorkflowDetail();
           setModalDetail({ isFor: "nafath" });
         } else {
-          successToast(t("financeSimulationCommitSuccess"));
-          navigate("/login");
+          // successToast(t("financeSimulationCommitSuccess"));
+          setStep("ApplyLoanSuccessFeedback");
         }
       }
     });
@@ -458,9 +456,10 @@ const FinanceRequestSimulation = () => {
         );
       case "SimahAuthSuccess":
         return <Qualify handleButtonClick={handleNextStep} />;
+      case "ApplyLoanSuccessFeedback":
+        return <ApplyLoanSuccess handleGoHome={() => setStep("Product")} />;
       default:
-        <></>;
-        break;
+        return <></>;
     }
   }, [step]);
 
