@@ -1573,6 +1573,24 @@ body[dir="rtl"] {
     font-weight: 700;
     color: var(--blackBrown);
   }
+
+  .tailorYourFinanceContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex-direction: column;
+
+    img {
+      width: 120px;
+      height: auto;
+    }
+
+    .tailorYourFinanceButton {
+      height: fit-content;
+    }
+  }
 }
 
 .congratsStep {
@@ -1633,23 +1651,5 @@ body[dir="rtl"] {
 
   .qualifyForm {
     height: 100%;
-  }
-
-  .tailorYourFinanceContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    flex-direction: column;
-
-    img {
-      width: 100px;
-      height: auto;
-    }
-
-    .tailorYourFinanceButton {
-      height: fit-content;
-    }
   }
 }
