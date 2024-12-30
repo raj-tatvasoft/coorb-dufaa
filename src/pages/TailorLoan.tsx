@@ -44,11 +44,13 @@ export const TailorLoan = ({
   hideSalaryExpense = false,
   handleBtnClick,
   hideApplyBtn = false,
+  isDefaultTenureToMaxLoan = false,
 }: {
   eligibleTitle?: string;
   hideSalaryExpense?: boolean;
   handleBtnClick?: () => void;
   hideApplyBtn?: boolean;
+  isDefaultTenureToMaxLoan?: boolean;
 }) => {
   const { t } = useTranslation();
   const {
@@ -84,7 +86,11 @@ export const TailorLoan = ({
     if (values?.[TailorLoanFields.loanPrincipalMin]) {
       setFieldValue(
         TailorLoanFields.loanPrincipal,
-        values?.[TailorLoanFields.loanPrincipalMin]
+        values?.[
+          isDefaultTenureToMaxLoan
+            ? TailorLoanFields.loanPrincipalMax
+            : TailorLoanFields.loanPrincipalMin
+        ]
       );
       setFieldValue(
         TailorLoanFields.loanTenure,
@@ -382,7 +388,11 @@ export const TailorLoan = ({
               <div className="stepperContainer">
                 {/* <StepFrame stepCount={6} activeStep={3} /> */}
                 <ButtonField
-                  lbl={"apply_for_loan_btn"}
+                  lbl={
+                    eligibleTitle === t("tryLoanSimulationUpTo")
+                      ? "apply_for_loan_btn"
+                      : "acceptTheLoan"
+                  }
                   handleClick={() => {
                     if (values[TailorLoanFields.listOfLoanProducts]) {
                       if (handleBtnClick) handleBtnClick();
