@@ -413,5 +413,11 @@
   "youQualify": "You Qualify!",
   "eligibleMessage": "You are eligible for top-up of up to",
   "tailorYourFinance": "Tailor Your Finance",
-  "loan_charges": "Admin Fees"
+  "loan_charges": "Admin Fees",
+  "congratsMessage": "Congrats, {{user}}",
+  "lockedPersonalFinanceMessage": "We've locked in your personal finance of",
+  "goHome": "Go Home",
+  "amountCreditMessage": "The Amount will be credited to your account",
+  "amountCreditTimeMessage": "within 24 hours. ",
+  "contactCallCenterMessage": "Please contact call center if you don't receive the amount. "
 }

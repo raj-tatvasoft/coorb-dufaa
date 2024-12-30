@@ -1575,6 +1575,59 @@ body[dir="rtl"] {
   }
 }
 
+.congratsStep {
+  text-align: center;
+  .congratsMessage {
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--pitchBrown);
+  }
+
+  .lockedFinanceMessage {
+    font-size: 20px;
+    color: var(--textColor);
+  }
+
+  .eligibleAmount {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--blackBrown);
+  }
+
+  .goHomeBtnWrapper {
+    width: 100%;
+  }
+
+  .activateInfoCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    background: var(--pitchBrown);
+    padding: 28px 24px;
+    border-radius: 22px;
+    gap: 10px;
+
+    img {
+      width: 42px;
+      height: auto;
+    }
+
+    .activateInfo {
+      font-weight: 400;
+      font-size: 16px;
+      color: var(--goldenPeach);
+
+      span {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
 .formikComponent {
   height: 100%;
 
