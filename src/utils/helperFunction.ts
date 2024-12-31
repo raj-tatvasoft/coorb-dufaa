@@ -18,7 +18,7 @@ export const checkIsIcon = (imagePath: string) => {
 export const transferTaskObjectForPayload = (data: IObject) => {
   const newData: ITaskDetail & {
     taskInstanceTokenId?: string;
-  } = JSON.parse(JSON.stringify(data.initialDetails));
+  } = JSON.parse(JSON.stringify(data?.initialDetails));
   Object.keys(newData?.variables).forEach((key: string) => {
     const variable = newData.variables[key];
     const formFieldVal = data[variable.i18nName];
@@ -209,4 +209,11 @@ export const getUserName = () => {
 export const setUserName = (userName: string) => {
   localStorage.setItem(CONST_WORDS.username, userName);
   storageUserName = userName;
+};
+
+export const handleLogout = () => {
+  Object.values(CONST_WORDS).forEach((key) => {
+    localStorage.removeItem(key);
+  });
+  window.location.pathname = "/login";
 };

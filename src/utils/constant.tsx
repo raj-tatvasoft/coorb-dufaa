@@ -344,6 +344,7 @@ export const CONST_WORDS = {
   sessionTaskDetail: "CME_TASK_DETAIL",
   token: "CME_TOKEN",
   username: "CME_USERNAME",
+  lastActivePage: "CME_LAST_ACTIVE_PAGE",
 };
 
 export const ALLOWED_FILE_EXTENSION = ["pdf", "jpg", "png", "jpeg", "gif"];

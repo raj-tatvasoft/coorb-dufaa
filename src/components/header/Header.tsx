@@ -2,13 +2,11 @@ import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import "./Header.scss";
 import i18n from "../../translation/i18n";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { getUserName } from "../../utils/helperFunction";
+import { getUserName, handleLogout } from "../../utils/helperFunction";
 import { useEffect, useState } from "react";
 
 export const Header = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -56,8 +54,7 @@ export const Header = () => {
               className="logoutButton"
               size="large"
               onClick={() => {
-                localStorage.clear();
-                navigate("/login");
+                handleLogout();
               }}
             >
               {t("logout")}

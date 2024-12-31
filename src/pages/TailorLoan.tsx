@@ -420,19 +420,6 @@ export const TailorLoan = ({
                 />
               </div>
             )}
-          {hideApplyBtn && (
-            <ButtonField
-              lbl={"back"}
-              handleClick={() => {
-                if (handleBtnClick) handleBtnClick();
-              }}
-              name={"back"}
-              variableStyle={{
-                bgColor: "var(--btnDarkGreyBg)",
-                size: "large",
-              }}
-            />
-          )}
         </>
       ) : (
         <LoanTailorTabForm

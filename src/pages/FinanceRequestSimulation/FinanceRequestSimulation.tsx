@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getFirstPendingWorkflowDetail,
+  getUserName,
   handleGenericButtonClick,
   transferTaskObjectForFormValue,
   transferTaskObjectForPayload,
@@ -20,7 +21,7 @@ import {
   SIMAHAuthorization,
 } from "../../components/dialog/SIMAHAuthorization";
 import { Qualify } from "../Qualify";
-import { yup } from "../../utils/constant";
+import { CONST_WORDS, yup } from "../../utils/constant";
 import InputTextField from "../../components/common/InputTextField";
 import { ApplyLoanSuccess } from "./ApplyLoanSuccess";
 
@@ -30,6 +31,7 @@ export type FinanceRequestSimulationStep =
   | "Salary Review"
   | "Expenses"
   | "SimahAuthSuccess"
+  | "Accept Loan"
   | "Commodity"
   | "Documents"
   | "financeCalculator"
@@ -50,7 +52,6 @@ const FinanceRequestSimulation = () => {
   const [initValues, setInitValues] = useState<IObject>({});
   const [step, setStep] = useState<FinanceRequestSimulationStep>("Product");
   const [groupedVariables, setGroupedVariables] = useState<IObject>({});
-  const [loanSimulatorCount, setLoanSimulatorCount] = useState(1);
   const [currentFlow, setCurrentFlow] = useState<
     "simulateOnly" | "simulateAndRequest" | ""
   >("");
@@ -64,7 +65,17 @@ const FinanceRequestSimulation = () => {
 
   useEffect(() => {
     setWorkflowDetail();
+    const lastPage = localStorage.getItem(
+      CONST_WORDS.lastActivePage + "_" + getUserName()
+    ) as FinanceRequestSimulationStep;
+    if (lastPage) setStep(lastPage);
   }, []);
+
+  useEffect(() => {
+    if (step) {
+      updateLastActivePage();
+    }
+  }, [step]);
 
   const loanTailorSchema = yup.object().shape({
     [TailorLoanFields.loanPrincipal]: yup
@@ -92,6 +103,11 @@ const FinanceRequestSimulation = () => {
         t(FinanceRequestSimulationFields.commodityType) + " " + t("isRequired")
       ),
   });
+
+  const saveWorkflowTaskDetail = () => {
+    if (formRef.current?.values?.initialDetails)
+      taskService.save(transferTaskObjectForPayload(formRef.current?.values));
+  };
 
   const setWorkflowDetail = () => {
     getFirstPendingWorkflowDetail().then((res) => {
@@ -164,14 +180,16 @@ const FinanceRequestSimulation = () => {
   };
 
   const handleNextStep = async () => {
+    if (step) saveWorkflowTaskDetail();
     switch (step) {
       case "Product":
-        setLoanSimulatorCount(1);
         setStep("Tailor Loan");
         break;
       case "Tailor Loan":
-        if (loanSimulatorCount === 1) setModalDetail({ isFor: "nafath" });
-        else setStep("Commodity");
+        setModalDetail({ isFor: "nafath" });
+        break;
+      case "Accept Loan":
+        setStep("Commodity");
         break;
       case "Salary Review":
       case "Update Salary":
@@ -182,8 +200,7 @@ const FinanceRequestSimulation = () => {
         setStep("SimahAuthSuccess");
         break;
       case "SimahAuthSuccess":
-        setLoanSimulatorCount(2);
-        setStep("Tailor Loan");
+        setStep("Accept Loan");
         break;
       case "Commodity":
         setStep("Documents");
@@ -191,6 +208,45 @@ const FinanceRequestSimulation = () => {
       default:
         break;
     }
+  };
+
+  const handleBackStep = () => {
+    switch (step) {
+      case "financeCalculator":
+      case "Tailor Loan":
+        setStep("Product");
+        break;
+      case "Salary Review":
+        setStep("Tailor Loan");
+        break;
+      case "Update Salary":
+        setStep("Salary Review");
+        break;
+      case "Expenses":
+        setStep("Salary Review");
+        break;
+      case "SimahAuthSuccess":
+        setStep("Expenses");
+        break;
+      case "Accept Loan":
+        setStep("SimahAuthSuccess");
+        break;
+      case "Commodity":
+        setStep("Accept Loan");
+        break;
+      case "Documents":
+        setStep("Commodity");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const updateLastActivePage = () => {
+    localStorage.setItem(
+      CONST_WORDS.lastActivePage + "_" + getUserName(),
+      step
+    );
   };
 
   const handleBtnClick = (
@@ -264,15 +320,16 @@ const FinanceRequestSimulation = () => {
     switch (step) {
       case "Tailor Loan":
       case "financeCalculator":
+      case "Accept Loan":
         return (
           <TailorLoan
             eligibleTitle={
-              loanSimulatorCount === 1
+              step !== "Accept Loan"
                 ? t("tryLoanSimulationUpTo")
                 : t("eligibleLoanMessage")
             }
-            hideSalaryExpense={loanSimulatorCount !== 2}
-            isDefaultTenureToMaxLoan={loanSimulatorCount === 2}
+            hideSalaryExpense={step !== "Accept Loan"}
+            isDefaultTenureToMaxLoan={step === "Accept Loan"}
             handleBtnClick={() => {
               if (step === "financeCalculator") {
                 setStep("Product");
@@ -353,19 +410,6 @@ const FinanceRequestSimulation = () => {
                 }}
                 name={FinanceRequestSimulationFields.sendToQararBtn}
                 endIcon="RightBtnArrow.svg"
-                variableStyle={{
-                  size: "large",
-                  bgColor: "var(--btnDarkGreyBg)",
-                }}
-              />
-            </div>
-            <div className="mt-2">
-              <ButtonField
-                lbl={"back"}
-                handleClick={() => {
-                  setStep("Salary Review");
-                }}
-                name={"Back"}
                 variableStyle={{
                   size: "large",
                   bgColor: "var(--btnDarkGreyBg)",
@@ -457,11 +501,17 @@ const FinanceRequestSimulation = () => {
       case "SimahAuthSuccess":
         return <Qualify handleButtonClick={handleNextStep} />;
       case "ApplyLoanSuccessFeedback":
-        return <ApplyLoanSuccess handleGoHome={() => setStep("Product")} />;
+        return (
+          <ApplyLoanSuccess
+            handleGoHome={() => {
+              setStep("Product");
+            }}
+          />
+        );
       default:
         return <></>;
     }
-  }, [step]);
+  }, [step, initValues]);
 
   const handleCloseModal = () => {
     setModalDetail({ isFor: "" });
@@ -512,6 +562,23 @@ const FinanceRequestSimulation = () => {
           return (
             <form className="workflowDetailWrapper" onSubmit={handleSubmit}>
               {renderStepContent}
+              {!["Product", "ApplyLoanSuccessFeedback"].find(
+                (x) => x === step
+              ) && (
+                <div className="mt-2">
+                  <ButtonField
+                    lbl={"back"}
+                    handleClick={() => {
+                      handleBackStep();
+                    }}
+                    name={"Back"}
+                    variableStyle={{
+                      size: "large",
+                      bgColor: "var(--btnDarkGreyBg)",
+                    }}
+                  />
+                </div>
+              )}
               {modalDetail.isFor === "nafath" ? (
                 <NafathVerifyModal
                   handleClose={handleCloseModal}
