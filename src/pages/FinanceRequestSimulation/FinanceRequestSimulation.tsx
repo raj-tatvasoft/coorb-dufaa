@@ -24,6 +24,7 @@ import { Qualify } from "../Qualify";
 import { CONST_WORDS, yup } from "../../utils/constant";
 import InputTextField from "../../components/common/InputTextField";
 import { ApplyLoanSuccess } from "./ApplyLoanSuccess";
+import { regex } from "../../utils/regex";
 
 export type FinanceRequestSimulationStep =
   | "Tailor Loan"
@@ -103,6 +104,26 @@ const FinanceRequestSimulation = () => {
         t(FinanceRequestSimulationFields.commodityType) + " " + t("isRequired")
       ),
   });
+
+  const ExpensesValidationSchema = yup.object().shape(
+    step === "Expenses"
+      ? Object.values(groupedVariables["Expenses"]).reduce(
+          (acc: IObject, obj: any) => {
+            if (obj.i18nName !== FinanceRequestSimulationFields.totalExpenses)
+              acc[obj.i18nName] = yup
+                .string()
+                .required(`${t(obj.i18nName)} ${t("isRequired")}`)
+                .matches(
+                  regex.Expenses,
+                  `${t(obj.i18nName)} ${t("containPositiveValue")}`
+                );
+
+            return acc;
+          },
+          {}
+        )
+      : {}
+  );
 
   const saveWorkflowTaskDetail = () => {
     if (formRef.current?.values?.initialDetails)
@@ -275,6 +296,9 @@ const FinanceRequestSimulation = () => {
             if (defaultSetValues)
               newValues = { ...newValues, ...defaultSetValues };
             setInitValues(newValues);
+            if (step === "Expenses") {
+              setModalDetail({ isFor: "simah" });
+            }
             if (!isPreventStepChange)
               setTimeout(() => {
                 handleNextStep();
@@ -396,14 +420,13 @@ const FinanceRequestSimulation = () => {
                   if (step === "Expenses") {
                     handleBtnClick(
                       FinanceRequestSimulationFields.sendToQararBtn,
-                      true,
+                      false,
                       true,
                       null,
                       {
                         [SimahAuthModalFields.SIMAHCheckbox]: true,
                       }
                     );
-                    setModalDetail({ isFor: "simah" });
                   } else {
                     handleNextStep();
                   }
@@ -552,6 +575,8 @@ const FinanceRequestSimulation = () => {
             ? loanTailorSchema
             : step === "Commodity"
             ? commodityValidationSchema
+            : step === "Expenses"
+            ? ExpensesValidationSchema
             : null
         }
         onSubmit={() => {}}

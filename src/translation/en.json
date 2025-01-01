@@ -142,7 +142,7 @@
   "validEmail": "Please enter a valid Email.",
   "minLengthShouldBe": "Min {{length}} characters required",
   "maxLengthShouldBe": "Max {{length}} characters allowed",
-  "passwordValid": "Password must contain at least one letter, one number, and one special character and length must be 8 to 15 characters long",
+  "passwordValid": "Password must be 8 to 15 characters long, with at least one uppercase letter, one lowercase letter, one number, and one special character",
   "passwordConfirmPasswordMustMatch": "Password and Confirm Password must match",
 
   "hello": "Hello",
@@ -425,5 +425,11 @@
   "iAmOkWithSalary": "I am ok with My Salary",
   "iAmNotOkWithSalary": "Dispute  Salary",
   "salary_basic": "Basic Salary",
-  "salary_home_allowance": "Home Allowance"
+  "salary_home_allowance": "Home Allowance",
+  "onlyNumericCharactersMessage": "should only consist of numeric characters.",
+  "startWith1or2": "must start with 1 or 2",
+  "atLeast6CharactersLong": "should have at least 6 characters",
+  "onlyContainLettersNumbersAndUnderscores": "can only contain letters, numbers and underscores",
+  "passwordCannotBeSameAsUsername": "password cannot be same as username",
+  "containPositiveValue": "cannot be negative."
 }

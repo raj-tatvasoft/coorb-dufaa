@@ -46,7 +46,12 @@ export const Home = () => {
   const welcomeValidationSchema = yup.object().shape({
     [WelcomeFields.nationalId]: yup
       .string()
-      .required(`${t(WelcomeFields.nationalId)} ${t("isRequired")}`),
+      .required(`${t(WelcomeFields.nationalId)} ${t("isRequired")}`)
+      .matches(
+        /^\d+$/,
+        `${t(WelcomeFields.nationalId)} ${t("onlyNumericCharactersMessage")}`
+      )
+      .matches(/^[12]/, `${t(WelcomeFields.nationalId)} ${t("startWith1or2")}`),
     [WelcomeFields.saudiMobNo]: yup
       .string()
       .matches(regex.SaudiMobNo, t("invalidSaudiMobileNumber"))
@@ -71,7 +76,17 @@ export const Home = () => {
   const userEnrollmentValidationSchema = yup.object().shape({
     [UserEnrollmentFields.userName]: yup
       .string()
-      .required(`${t(UserEnrollmentFields.userName)} ${t("isRequired")}`),
+      .required(`${t(UserEnrollmentFields.userName)} ${t("isRequired")}`)
+      .matches(
+        /^[a-zA-Z0-9_]+$/,
+        `${t(UserEnrollmentFields.userName)} ${t(
+          "onlyContainLettersNumbersAndUnderscores"
+        )}`
+      )
+      .min(
+        6,
+        `${t(UserEnrollmentFields.userName)} ${t("atLeast6CharactersLong")}`
+      ),
     // [UserEnrollmentFields.name]: yup
     //   .string()
     //   .required(`${t(UserEnrollmentFields.name)} ${t("isRequired")}`),
@@ -82,7 +97,11 @@ export const Home = () => {
     [UserEnrollmentFields.password]: yup
       .string()
       .required(`${t(UserEnrollmentFields.password)} ${t("isRequired")}`)
-      .matches(regex.Password, t("passwordValid")),
+      .matches(regex.Password, t("passwordValid"))
+      .notOneOf(
+        [yup.ref(UserEnrollmentFields.userName), undefined],
+        t("passwordCannotBeSameAsUsername")
+      ),
     [UserEnrollmentFields.confirmPassword]: yup
       .string()
       .oneOf(
