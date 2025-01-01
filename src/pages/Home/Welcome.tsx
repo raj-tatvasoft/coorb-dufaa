@@ -6,6 +6,7 @@ import InputTextField from "../../components/common/InputTextField";
 import { useEffect } from "react";
 import { CONST_WORDS } from "../../utils/constant";
 import { useNavigate } from "react-router-dom";
+import { regex } from "../../utils/regex";
 
 export const WelcomeFields = {
   nationalId: "national_id_iqama_text",
@@ -50,6 +51,7 @@ const Welcome = ({
               name={WelcomeFields.nationalId}
               placeholder={t("NationalIDorIqama")}
               startIcon={"ID.svg"}
+              valRegex={regex.Integer}
             />
           </Grid>
           <Grid size={{ xs: 12 }}>
