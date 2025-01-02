@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { FormikContextType, useFormikContext } from "formik";
 import { IObject } from "../../service/commonModel";
 import ButtonField from "../common/ButtonField";
+import { errorToast } from "../common/ToastMsg";
 
 export const OTPFields = {
   otp: "otp",
@@ -40,6 +41,7 @@ export const OTPModal = ({
     setFieldTouched,
     setFieldValue,
     validateField,
+    values,
   }: FormikContextType<IObject> = useFormikContext();
 
   return (
@@ -96,7 +98,11 @@ export const OTPModal = ({
         <div className="mt-4 flex gap-2">
           <ButtonField
             lbl={OTPFields.validateBtn}
-            handleClick={() => handleButtonClick(OTPFields.resendBtn)}
+            handleClick={() => {
+              if (values[OTPFields.otp] === "1111")
+                handleButtonClick(OTPFields.resendBtn);
+              else errorToast(t("invalidOTP"));
+            }}
             name={OTPFields.validateBtn}
             variableStyle={{
               bgColor: "var(--btnDarkGreyBg)",
