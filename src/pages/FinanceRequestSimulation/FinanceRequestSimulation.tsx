@@ -25,6 +25,7 @@ import { CONST_WORDS, yup } from "../../utils/constant";
 import InputTextField from "../../components/common/InputTextField";
 import { ApplyLoanSuccess } from "./ApplyLoanSuccess";
 import { regex } from "../../utils/regex";
+import { errorToast } from "../../components/common/ToastMsg";
 
 export type FinanceRequestSimulationStep =
   | "Tailor Loan"
@@ -47,10 +48,13 @@ export const FinanceRequestSimulationFields = {
   docSigningOtp: "doc_signing_otp",
   qararScore: "qarar_score",
   totalExpenses: "total_expenses",
+  numberOfDependents: "number_of_dependents",
 };
 
 const FinanceRequestSimulation = () => {
   const [initValues, setInitValues] = useState<IObject>({});
+  const [isCommodityPurchased, setIsCommodityPurchased] =
+    useState<boolean>(false);
   const [step, setStep] = useState<FinanceRequestSimulationStep>("Product");
   const [groupedVariables, setGroupedVariables] = useState<IObject>({});
   const [currentFlow, setCurrentFlow] = useState<
@@ -109,10 +113,30 @@ const FinanceRequestSimulation = () => {
     step === "Expenses"
       ? Object.values(groupedVariables["Expenses"]).reduce(
           (acc: IObject, obj: any) => {
-            if (obj.i18nName !== FinanceRequestSimulationFields.totalExpenses)
+            if (
+              obj.i18nName !== FinanceRequestSimulationFields.totalExpenses &&
+              obj.i18nName !== FinanceRequestSimulationFields.numberOfDependents
+            )
               acc[obj.i18nName] = yup
                 .string()
                 .required(`${t(obj.i18nName)} ${t("isRequired")}`)
+                .matches(
+                  regex.Expenses,
+                  `${t(obj.i18nName)} ${t("containPositiveValue")}`
+                );
+            if (
+              obj.i18nName === FinanceRequestSimulationFields.numberOfDependents
+            )
+              acc[obj.i18nName] = yup
+                .string()
+                .required(`${t(obj.i18nName)} ${t("isRequired")}`)
+                .test(
+                  "max-allowed",
+                  t("maxNumberAllowed", { allowedNo: 10 }),
+                  (value: string) => {
+                    return Number(value) < 11;
+                  }
+                )
                 .matches(
                   regex.Expenses,
                   `${t(obj.i18nName)} ${t("containPositiveValue")}`
@@ -201,6 +225,7 @@ const FinanceRequestSimulation = () => {
   };
 
   const handleNextStep = async () => {
+    setIsCommodityPurchased(false);
     if (step) saveWorkflowTaskDetail();
     switch (step) {
       case "Product":
@@ -452,7 +477,10 @@ const FinanceRequestSimulation = () => {
                   handleBtnClick(
                     FinanceRequestSimulationFields.commodityPurchaseBtn,
                     false,
-                    true
+                    true,
+                    () => {
+                      setIsCommodityPurchased(true);
+                    }
                   );
                 }}
                 name={FinanceRequestSimulationFields.commodityPurchaseBtn}
@@ -466,7 +494,8 @@ const FinanceRequestSimulation = () => {
               <ButtonField
                 lbl={"next"}
                 handleClick={() => {
-                  handleNextStep();
+                  if (isCommodityPurchased) handleNextStep();
+                  else errorToast(t("plsPurchaseCommodityFirst"));
                 }}
                 name={FinanceRequestSimulationFields.commodityPurchaseBtn}
                 endIcon="RightBtnArrow.svg"
