@@ -759,6 +759,12 @@ body[dir="rtl"] {
   .datePickerCloseButton {
     display: none;
   }
+
+  .passwordStrength {
+    color: var(--textLight);
+    padding-inline-start: 12px;
+    font-size: 12px;
+  }
 }
 
 .main-content {

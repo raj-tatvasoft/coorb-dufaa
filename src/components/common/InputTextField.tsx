@@ -161,7 +161,7 @@ const InputTextField: FC<
             {fieldType === "password" &&
               field.value &&
               showPasswordStrength && (
-                <div>
+                <div className="passwordStrength">
                   {t("passwordStrength", { strength: passwordStrength })}
                 </div>
               )}

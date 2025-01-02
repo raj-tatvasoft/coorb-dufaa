@@ -433,5 +433,6 @@
   "passwordCannotBeSameAsUsername": "password cannot be same as username",
   "containPositiveValue": "cannot be negative.",
   "passwordStrength": "Password Strength is {{strength}}",
-  "welcomeMsg": "Welcome to Dufa'a"
+  "welcomeMsg": "Welcome to Dufa'a",
+  "max10Characters": "must be 10 characters long"
 }
