@@ -79,10 +79,8 @@ export const Home = () => {
       .string()
       .required(`${t(UserEnrollmentFields.userName)} ${t("isRequired")}`)
       .matches(
-        /^[a-zA-Z0-9_]+$/,
-        `${t(UserEnrollmentFields.userName)} ${t(
-          "onlyContainLettersNumbersAndUnderscores"
-        )}`
+        /^[a-zA-Z0-9_@.]+$/,
+        `${t(UserEnrollmentFields.userName)} ${t("userNameValidation")}`
       )
       .min(
         6,

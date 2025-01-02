@@ -429,7 +429,7 @@
   "onlyNumericCharactersMessage": "should only consist of numeric characters.",
   "startWith1or2": "must start with 1 or 2",
   "atLeast6CharactersLong": "should have at least 6 characters",
-  "onlyContainLettersNumbersAndUnderscores": "can only contain letters, numbers and underscores",
+  "userNameValidation": "can only use letters, numbers, and these symbols( _ , . , @ )",
   "passwordCannotBeSameAsUsername": "password cannot be same as username",
   "containPositiveValue": "cannot be negative.",
   "passwordStrength": "Password Strength is {{strength}}",
