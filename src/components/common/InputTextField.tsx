@@ -32,7 +32,7 @@ const InputTextField: FC<
     showPasswordStrength = false,
   } = props;
 
-  const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
+  const { setFieldValue, setFieldTouched, errors }: FormikContextType<IObject> =
     useFormikContext();
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
@@ -164,10 +164,11 @@ const InputTextField: FC<
                 },
               }}
             />
-            {fieldType === "password" &&
+            {!errors?.[name] &&
+              fieldType === "password" &&
               field.value &&
               showPasswordStrength && (
-                <div className="passwordStrength">
+                <div className="passwordStrength mt-1">
                   {t("passwordStrength", { strength: passwordStrength })}
                 </div>
               )}
