@@ -37,6 +37,7 @@ export const TailorLoanFields = {
   qararScore: "qarar_score",
   totalExpenses: "total_expenses",
   loanCharges: "loan_charges",
+  netLoanAmount: "net_loan_amount",
 };
 
 export const TailorLoan = ({
@@ -160,6 +161,10 @@ export const TailorLoan = ({
               [TailorLoanFields.loanCharges]: formatWithCommaAndFractionDigits(
                 Number(newValues[TailorLoanFields.loanCharges])
               ),
+              [TailorLoanFields.netLoanAmount]:
+                formatWithCommaAndFractionDigits(
+                  Number(newValues[TailorLoanFields.netLoanAmount])
+                ),
             },
           });
         }, 0);
@@ -232,7 +237,18 @@ export const TailorLoan = ({
               </div>
             </div>
           </div>
-          <p className="groupLabel">{t("tailorYourPersonalLoan")}</p>
+          <div className="groupLabelContainer">
+            <p className="groupLabel">{t("tailorYourPersonalLoan")}</p>
+            <div className="loanCalculator">
+              <a
+                href="https://google.com"
+                target="_blank"
+                className="termAndCondition"
+              >
+                {t("t&c")}
+              </a>
+            </div>
+          </div>
 
           <div className="tailorLoanCard">
             <SliderField
@@ -347,6 +363,13 @@ export const TailorLoan = ({
                     t("amountWithSAR", {
                       amount:
                         simulateLoan.details[TailorLoanFields.loanCharges],
+                    })
+                  )}
+                  {renderLoanDetails(
+                    TailorLoanFields.netLoanAmount,
+                    t("amountWithSAR", {
+                      amount:
+                        simulateLoan.details[TailorLoanFields.netLoanAmount],
                     })
                   )}
                 </div>

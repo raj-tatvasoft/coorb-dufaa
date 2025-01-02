@@ -1006,6 +1006,10 @@ body[dir="rtl"] {
       line-height: 15px;
       color: var(--warmOrange);
       cursor: pointer;
+
+      .termAndCondition {
+        text-decoration: underline;
+      }
     }
   }
 

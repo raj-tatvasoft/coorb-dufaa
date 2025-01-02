@@ -414,7 +414,7 @@
   "eligibleMessage": "You are eligible for top-up of up to",
   "eligibleLoanMessage": "You are eligible for Loan of ",
   "tailorYourFinance": "Tailor Your Finance",
-  "loan_charges": "Admin Fees",
+  "loan_charges": "Fees & Profit",
   "congratsMessage": "Congrats, {{user}}",
   "lockedPersonalFinanceMessage": "We've locked in your personal finance of",
   "goHome": "Go Home",
@@ -435,5 +435,7 @@
   "passwordStrength": "Password Strength is {{strength}}",
   "welcomeMsg": "Welcome to Dufa'a",
   "max10Characters": "must be 10 characters long",
-  "invalidOTP": "Invalid OTP"
+  "invalidOTP": "Invalid OTP",
+  "t&c": "Terms & Conditions",
+  "net_loan_amount": "Net Loan Amount"
 }
