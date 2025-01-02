@@ -13,7 +13,9 @@ import OTPInput from "./OTPField";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import zxcvbn from "zxcvbn";
 
-const InputTextField: FC<IGenericFieldProps> = (props) => {
+const InputTextField: FC<
+  IGenericFieldProps & { showPasswordStrength?: boolean }
+> = (props) => {
   const { t } = useTranslation();
   const {
     lbl = "",
@@ -27,6 +29,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
     endIcon,
     variableStyle,
     showLbl = false,
+    showPasswordStrength = false,
   } = props;
 
   const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
@@ -91,6 +94,7 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                   } else if (score === 3 || score === 4) {
                     setPasswordStrength("Strong");
                   }
+                  if (targetVal?.includes(" ")) return;
                 }
                 if (valRegex) {
                   if (valRegex.test(targetVal)) setFieldValue(name, targetVal);
@@ -154,9 +158,13 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                 },
               }}
             />
-            {fieldType === "password" && field.value && (
-              <div>{t("passwordStrength", { strength: passwordStrength })}</div>
-            )}
+            {fieldType === "password" &&
+              field.value &&
+              showPasswordStrength && (
+                <div>
+                  {t("passwordStrength", { strength: passwordStrength })}
+                </div>
+              )}
             {/* <FieldHelper desc={t(lbl + "_desc")} /> */}
           </div>
         )

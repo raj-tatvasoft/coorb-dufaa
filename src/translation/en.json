@@ -432,5 +432,6 @@
   "onlyContainLettersNumbersAndUnderscores": "can only contain letters, numbers and underscores",
   "passwordCannotBeSameAsUsername": "password cannot be same as username",
   "containPositiveValue": "cannot be negative.",
-  "passwordStrength": "Password Strength is {{strength}}"
+  "passwordStrength": "Password Strength is {{strength}}",
+  "welcomeMsg": "Welcome to Dufa'a"
 }

@@ -50,6 +50,7 @@ const UserEnrollment = ({
               <InputTextField
                 name={name}
                 placeholder={name}
+                showPasswordStrength
                 fieldType={
                   name === UserEnrollmentFields.confirmPassword ||
                   name === UserEnrollmentFields.password
