@@ -118,7 +118,7 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
               className="dNone"
               onChange={handleFileChange}
               disabled={Boolean(readOnly)}
-              accept=".pdf,.jpeg,.jpg,.png,.gif"
+              accept=".pdf,.jpeg,.jpg,.png"
             />
             <div>
               <label
@@ -139,7 +139,12 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
                   <span>
                     {t(lbl ? lbl : `uploadFile`) + (required ? "*" : "")}
                   </span>
-                  <p>{t("uploadFileDesc")}</p>
+                  <p>
+                    {t("uploadFileDesc")} -{" "}
+                    {t("allowedFiles", {
+                      files: ALLOWED_FILE_EXTENSION.join(", "),
+                    })}
+                  </p>
                 </div>
                 {field.value && (
                   <IconButton
