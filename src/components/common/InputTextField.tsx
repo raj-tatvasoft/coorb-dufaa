@@ -76,6 +76,12 @@ const InputTextField: FC<
                     : "password"
                   : fieldType
               }
+              onCopy={(e) => {
+                fieldType === "password" && e.preventDefault();
+              }}
+              onPaste={(e) => {
+                fieldType === "password" && e.preventDefault();
+              }}
               placeholder={placeholder ? t(placeholder) : ""}
               {...field}
               value={field.value ?? ""}
