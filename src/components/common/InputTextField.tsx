@@ -11,6 +11,7 @@ import { IGenericFieldProps, IObject } from "../../service/commonModel";
 import { checkIsIcon } from "../../utils/helperFunction";
 import OTPInput from "./OTPField";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import zxcvbn from "zxcvbn";
 
 const InputTextField: FC<IGenericFieldProps> = (props) => {
   const { t } = useTranslation();
@@ -31,8 +32,10 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
   const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
     useFormikContext();
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState("");
 
   const isTextArea = fieldType === "textarea";
+
   return (
     <Field name={name}>
       {({ field, meta }: FieldProps) =>
@@ -77,6 +80,18 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
               rows={isTextArea ? 4 : 1}
               onChange={(e) => {
                 const targetVal = e.target.value;
+                if (fieldType === "password") {
+                  const result = zxcvbn(targetVal);
+                  const score = result.score;
+
+                  if (score === 0 || score === 1) {
+                    setPasswordStrength("Weak");
+                  } else if (score === 2) {
+                    setPasswordStrength("Medium");
+                  } else if (score === 3 || score === 4) {
+                    setPasswordStrength("Strong");
+                  }
+                }
                 if (valRegex) {
                   if (valRegex.test(targetVal)) setFieldValue(name, targetVal);
                 } else {
@@ -139,6 +154,9 @@ const InputTextField: FC<IGenericFieldProps> = (props) => {
                 },
               }}
             />
+            {fieldType === "password" && field.value && (
+              <div>{t("passwordStrength", { strength: passwordStrength })}</div>
+            )}
             {/* <FieldHelper desc={t(lbl + "_desc")} /> */}
           </div>
         )

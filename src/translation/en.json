@@ -431,5 +431,6 @@
   "atLeast6CharactersLong": "should have at least 6 characters",
   "onlyContainLettersNumbersAndUnderscores": "can only contain letters, numbers and underscores",
   "passwordCannotBeSameAsUsername": "password cannot be same as username",
-  "containPositiveValue": "cannot be negative."
+  "containPositiveValue": "cannot be negative.",
+  "passwordStrength": "Password Strength is {{strength}}"
 }
