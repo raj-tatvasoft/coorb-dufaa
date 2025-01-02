@@ -76,6 +76,12 @@ const InputTextField: FC<
                     : "password"
                   : fieldType
               }
+              onCopy={(e) => {
+                fieldType === "password" && e.preventDefault();
+              }}
+              onPaste={(e) => {
+                fieldType === "password" && e.preventDefault();
+              }}
               placeholder={placeholder ? t(placeholder) : ""}
               {...field}
               value={field.value ?? ""}
@@ -161,7 +167,7 @@ const InputTextField: FC<
             {fieldType === "password" &&
               field.value &&
               showPasswordStrength && (
-                <div>
+                <div className="passwordStrength">
                   {t("passwordStrength", { strength: passwordStrength })}
                 </div>
               )}

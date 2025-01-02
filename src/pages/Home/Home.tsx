@@ -51,7 +51,8 @@ export const Home = () => {
         /^\d+$/,
         `${t(WelcomeFields.nationalId)} ${t("onlyNumericCharactersMessage")}`
       )
-      .matches(/^[12]/, `${t(WelcomeFields.nationalId)} ${t("startWith1or2")}`),
+      .matches(/^[12]/, `${t(WelcomeFields.nationalId)} ${t("startWith1or2")}`)
+      .length(10, `${t(WelcomeFields.nationalId)} ${t("max10Characters")}`),
     [WelcomeFields.saudiMobNo]: yup
       .string()
       .matches(regex.SaudiMobNo, t("invalidSaudiMobileNumber"))
@@ -78,10 +79,8 @@ export const Home = () => {
       .string()
       .required(`${t(UserEnrollmentFields.userName)} ${t("isRequired")}`)
       .matches(
-        /^[a-zA-Z0-9_]+$/,
-        `${t(UserEnrollmentFields.userName)} ${t(
-          "onlyContainLettersNumbersAndUnderscores"
-        )}`
+        /^[a-zA-Z0-9_@.]+$/,
+        `${t(UserEnrollmentFields.userName)} ${t("userNameValidation")}`
       )
       .min(
         6,
