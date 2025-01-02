@@ -37,7 +37,6 @@ export const Login = () => {
           // } else {
           //   navigate("/finance-request");
           // }
-          successToast(t("welcomeMsg"));
           navigate("/finance-request-simulation");
         }
       })
