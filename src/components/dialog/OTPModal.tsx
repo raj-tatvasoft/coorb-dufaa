@@ -99,7 +99,10 @@ export const OTPModal = ({
           <ButtonField
             lbl={OTPFields.validateBtn}
             handleClick={() => {
-              if (values[OTPFields.otp] === "1111")
+              if (
+                values[OTPFields.otp] === "1111" ||
+                values[OTPFields.otp]?.length !== 4
+              )
                 handleButtonClick(OTPFields.resendBtn);
               else errorToast(t("invalidOTP"));
             }}
