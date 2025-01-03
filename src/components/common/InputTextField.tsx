@@ -102,19 +102,6 @@ const InputTextField: FC<
                   const result = zxcvbn(targetVal);
                   const score = result.score;
 
-                  // const rawValue = e.target.value.replace(/,/g, "");
-                  // if (min && Number(rawValue) < min) {
-                  //   debugger;
-                  //   setFieldValue(name, min, true);
-                  //   return;
-                  // }
-
-                  // if (max && Number(rawValue) > max) {
-                  //   debugger;
-                  //   setFieldValue(name, max);
-                  //   return;
-                  // }
-
                   if (score === 0 || score === 1) {
                     setPasswordStrength("Weak");
                   } else if (score === 2) {
@@ -132,7 +119,7 @@ const InputTextField: FC<
               onBlur={(e) => {
                 setFieldTouched(name, true, true);
                 setFieldValue(name, e.target?.value?.trim(), true);
-                sliderFocusOut && sliderFocusOut();
+                if (sliderFocusOut) sliderFocusOut();
               }}
               error={Boolean(meta.touched && meta.error)}
               helperText={meta.touched && meta.error ? meta.error : undefined}

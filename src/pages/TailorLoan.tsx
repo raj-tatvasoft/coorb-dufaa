@@ -124,21 +124,27 @@ export const TailorLoan = ({
   };
 
   const handleSimulateLoanBtn = () => {
+    let errorMsg = "";
     if (
       Number(values?.[TailorLoanFields.loanPrincipalMax] ?? 0) <
         Number(values?.[TailorLoanFields.loanPrincipal]) ||
       Number(values?.[TailorLoanFields.loanPrincipalMin] ?? 0) >
-        Number(values?.[TailorLoanFields.loanPrincipal]) ||
+        Number(values?.[TailorLoanFields.loanPrincipal])
+    ) {
+      errorMsg = `${t("invalid")} ${t(TailorLoanFields.loanPrincipal)}`;
+    }
+    if (
       Number(values[TailorLoanFields.loanTenureMax] ?? 0) <
         Number(values[TailorLoanFields.loanTenure]) ||
       Number(values[TailorLoanFields.loanTenureMin] ?? 0) >
         Number(values[TailorLoanFields.loanTenure])
     ) {
-      errorToast(
-        `${t("invalid")} ${t(TailorLoanFields.loanPrincipal)} ${t("or")} ${t(
-          TailorLoanFields.loanTenure
-        )}`
-      );
+      errorMsg +=
+        (errorMsg ? ` ${t("and")} ` : `${t("invalid")} `) +
+        `${t(TailorLoanFields.loanTenure)}`;
+    }
+    if (errorMsg) {
+      errorToast(errorMsg);
       return;
     }
     setSimulateLoan({ isLoading: true, details: {} });

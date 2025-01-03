@@ -49,6 +49,7 @@ export const FinanceRequestSimulationFields = {
   qararScore: "qarar_score",
   totalExpenses: "total_expenses",
   numberOfDependents: "number_of_dependents",
+  userEnteredSalary: "user_entered_salary",
 };
 
 const FinanceRequestSimulation = () => {
@@ -149,6 +150,18 @@ const FinanceRequestSimulation = () => {
       : {}
   );
 
+  const UpdateSalaryValidationSchema = yup.object().shape({
+    [FinanceRequestSimulationFields.userEnteredSalary]: yup
+      .mixed()
+      .test(
+        "max-allowed",
+        t("minSalary", { salaryAmt: 4000 }),
+        (value: any) => {
+          return Number(value) >= 4000 || !Number(value);
+        }
+      ),
+  });
+
   const saveWorkflowTaskDetail = () => {
     if (formRef.current?.values?.initialDetails)
       taskService.save(transferTaskObjectForPayload(formRef.current?.values));
@@ -226,7 +239,7 @@ const FinanceRequestSimulation = () => {
 
   const handleNextStep = async () => {
     setIsCommodityPurchased(false);
-    if (step) saveWorkflowTaskDetail();
+    if (step && step !== "Update Salary") saveWorkflowTaskDetail();
     switch (step) {
       case "Product":
         setStep("Tailor Loan");
@@ -238,8 +251,24 @@ const FinanceRequestSimulation = () => {
         setStep("Commodity");
         break;
       case "Salary Review":
-      case "Update Salary":
         setStep("Expenses");
+        break;
+      case "Update Salary":
+        if (formRef.current) {
+          const { validateForm, setTouched } = formRef.current;
+          validateForm().then((res) => {
+            if (Object.keys(res)?.length) {
+              const touchedFields: IObject = {};
+              Object.keys(res).forEach((field) => {
+                touchedFields[field] = true;
+              });
+              setTouched(touchedFields);
+            } else {
+              setStep("Expenses");
+              saveWorkflowTaskDetail();
+            }
+          });
+        }
         break;
       case "Expenses":
         handleCloseModal();
@@ -606,6 +635,8 @@ const FinanceRequestSimulation = () => {
             ? commodityValidationSchema
             : step === "Expenses"
             ? ExpensesValidationSchema
+            : step === "Update Salary"
+            ? UpdateSalaryValidationSchema
             : null
         }
         onSubmit={() => {}}

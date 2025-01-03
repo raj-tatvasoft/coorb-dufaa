@@ -433,7 +433,7 @@
   "userNameValidation": "can only use letters, numbers, and these symbols( _ , . , @ )",
   "passwordCannotBeSameAsUsername": "password cannot be same as username",
   "containPositiveValue": "cannot be negative.",
-  "passwordStrength": "Password Strength is {{strength}}",
+  "passwordStrength": "Password Strength: {{strength}}",
   "welcomeMsg": "Welcome to Dufa'a",
   "plsPurchaseCommodityFirst": "Please first Purchase Commodity",
   "max10Characters": "must be 10 characters long",
@@ -443,5 +443,6 @@
   "allowedFiles": "Allowed files: {{files}}",
   "invalid": "Invalid",
   "or": "or",
-  "month": "months"
+  "month": "months",
+  "minSalary": "Salary must be greater than or equal to {{salaryAmt}}"
 }
