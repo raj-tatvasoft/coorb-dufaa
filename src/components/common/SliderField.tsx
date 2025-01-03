@@ -1,11 +1,11 @@
 import { Slider, SliderThumb } from "@mui/material";
+import { Field, FieldProps, useFormikContext } from "formik";
 import { t } from "i18next";
-import { IGenericFieldProps, IObject } from "../../service/commonModel";
-import { FC, useEffect, useState } from "react";
-import { Field, FieldProps, FormikContextType, useFormikContext } from "formik";
+import { FC } from "react";
+import { IGenericFieldProps } from "../../service/commonModel";
+import { regex } from "../../utils/regex";
 import InputTextField from "./InputTextField";
 import { errorToast } from "./ToastMsg";
-import { regex } from "../../utils/regex";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ThumbComponentProps extends React.HTMLAttributes<unknown> {}
