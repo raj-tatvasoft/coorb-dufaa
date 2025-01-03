@@ -90,6 +90,7 @@ const InputTextField: FC<
               onChange={(e) => {
                 const targetVal = e.target.value;
                 if (fieldType === "password") {
+                  if (targetVal?.includes(" ")) return;
                   const result = zxcvbn(targetVal);
                   const score = result.score;
 
@@ -100,7 +101,6 @@ const InputTextField: FC<
                   } else if (score === 3 || score === 4) {
                     setPasswordStrength("Strong");
                   }
-                  if (targetVal?.includes(" ")) return;
                 }
                 if (valRegex) {
                   if (valRegex.test(targetVal)) setFieldValue(name, targetVal);
