@@ -439,5 +439,8 @@
   "max10Characters": "must be 10 characters long",
   "invalidOTP": "Invalid OTP",
   "t&c": "Terms & Conditions",
-  "net_loan_amount": "Net Loan Amount"
+  "net_loan_amount": "Net Loan Amount",
+  "invalid": "Invalid",
+  "or": "or",
+  "month": "months"
 }

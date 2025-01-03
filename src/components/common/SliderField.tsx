@@ -1,8 +1,11 @@
 import { Slider, SliderThumb } from "@mui/material";
 import { t } from "i18next";
-import { IGenericFieldProps } from "../../service/commonModel";
-import { FC } from "react";
-import { Field, FieldProps, useFormikContext } from "formik";
+import { IGenericFieldProps, IObject } from "../../service/commonModel";
+import { FC, useEffect, useState } from "react";
+import { Field, FieldProps, FormikContextType, useFormikContext } from "formik";
+import InputTextField from "./InputTextField";
+import { errorToast } from "./ToastMsg";
+import { regex } from "../../utils/regex";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ThumbComponentProps extends React.HTMLAttributes<unknown> {}
@@ -24,12 +27,14 @@ const SliderField: FC<
     formatValue?: (val: string | number) => string | number;
     rightLbl?: string;
     subLbl?: string;
+    valLbl?: string;
     min: number;
     max: number;
     step: number;
   }
 > = (props) => {
-  const { formatValue, lbl, rightLbl, subLbl, name, min, max, step } = props;
+  const { formatValue, lbl, rightLbl, subLbl, name, min, max, step, valLbl } =
+    props;
   const { setFieldValue } = useFormikContext();
 
   return (
@@ -38,7 +43,25 @@ const SliderField: FC<
         <div className="sliderContainer">
           <div className="sliderLabel">
             {lbl && <p className="label">{t(lbl)}</p>}
-            {rightLbl && <p className="value">{rightLbl}</p>}
+            {rightLbl && (
+              <div>
+                <InputTextField
+                  name={name}
+                  decimalVariant="standard"
+                  sliderFocusOut={() => {
+                    if (
+                      (max && Number(field.value) > max) ||
+                      (min && Number(field.value) < min)
+                    ) {
+                      errorToast(`${t("invalid")} ${t(name)}`);
+                    }
+                  }}
+                  endIcon={valLbl}
+                  isSliderInput
+                  valRegex={regex.Integer}
+                />
+              </div>
+            )}
           </div>
           {subLbl && (
             <p className="minMax">

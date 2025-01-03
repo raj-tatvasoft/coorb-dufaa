@@ -14,6 +14,7 @@ import {
 } from "../utils/helperFunction";
 import LoanTailorTabForm from "./LoanTailorTabForm";
 import SelectField from "../components/common/SelectField";
+import { errorToast } from "../components/common/ToastMsg";
 
 export const TailorLoanFields = {
   loanPrincipalMin: "loan_principal_min",
@@ -123,6 +124,23 @@ export const TailorLoan = ({
   };
 
   const handleSimulateLoanBtn = () => {
+    if (
+      Number(values?.[TailorLoanFields.loanPrincipalMax] ?? 0) <
+        Number(values?.[TailorLoanFields.loanPrincipal]) ||
+      Number(values?.[TailorLoanFields.loanPrincipalMin] ?? 0) >
+        Number(values?.[TailorLoanFields.loanPrincipal]) ||
+      Number(values[TailorLoanFields.loanTenureMax] ?? 0) <
+        Number(values[TailorLoanFields.loanTenure]) ||
+      Number(values[TailorLoanFields.loanTenureMin] ?? 0) >
+        Number(values[TailorLoanFields.loanTenure])
+    ) {
+      errorToast(
+        `${t("invalid")} ${t(TailorLoanFields.loanPrincipal)} ${t("or")} ${t(
+          TailorLoanFields.loanTenure
+        )}`
+      );
+      return;
+    }
     setSimulateLoan({ isLoading: true, details: {} });
     handleGenericButtonClick(
       values,
@@ -274,6 +292,7 @@ export const TailorLoan = ({
                 ),
               })}
               step={1000}
+              valLbl="SAR"
             />
 
             <SliderField
@@ -286,6 +305,7 @@ export const TailorLoan = ({
               max={Number(values[TailorLoanFields.loanTenureMax] ?? 0)}
               subLbl={"inMonths"}
               step={1}
+              valLbl="month"
             />
 
             {/* <ToggleButtonGroupField

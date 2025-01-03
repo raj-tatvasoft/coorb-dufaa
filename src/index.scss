@@ -696,6 +696,22 @@ body[dir="rtl"] {
       background-color: var(--white);
       padding-left: 9px;
     }
+
+    &.sliderTextField {
+      > div {
+        &::before,
+        &::after {
+          border-color: var(--warmOrange);
+        }
+      }
+      input {
+        background: transparent;
+        padding: 0;
+        color: var(--warmOrange);
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
   }
 
   .checkboxFormField {

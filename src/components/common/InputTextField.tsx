@@ -14,7 +14,12 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import zxcvbn from "zxcvbn";
 
 const InputTextField: FC<
-  IGenericFieldProps & { showPasswordStrength?: boolean }
+  IGenericFieldProps & {
+    showPasswordStrength?: boolean;
+    decimalVariant?: "outlined" | "filled" | "standard";
+    isSliderInput?: boolean;
+    sliderFocusOut?: () => void;
+  }
 > = (props) => {
   const { t } = useTranslation();
   const {
@@ -30,6 +35,9 @@ const InputTextField: FC<
     variableStyle,
     showLbl = false,
     showPasswordStrength = false,
+    decimalVariant = "outlined",
+    isSliderInput = false,
+    sliderFocusOut,
   } = props;
 
   const { setFieldValue, setFieldTouched }: FormikContextType<IObject> =
@@ -65,10 +73,10 @@ const InputTextField: FC<
               classes={{
                 root: `input-textfield ${
                   !field.value && Boolean(readOnly) ? "disabledWithNoValue" : ""
-                }`,
+                } ${isSliderInput ? "sliderTextField" : ""}`,
               }}
               id={`textfield-${name}`}
-              variant="outlined"
+              variant={decimalVariant}
               type={
                 fieldType === "password"
                   ? showPassword
@@ -93,6 +101,19 @@ const InputTextField: FC<
                   const result = zxcvbn(targetVal);
                   const score = result.score;
 
+                  // const rawValue = e.target.value.replace(/,/g, "");
+                  // if (min && Number(rawValue) < min) {
+                  //   debugger;
+                  //   setFieldValue(name, min, true);
+                  //   return;
+                  // }
+
+                  // if (max && Number(rawValue) > max) {
+                  //   debugger;
+                  //   setFieldValue(name, max);
+                  //   return;
+                  // }
+
                   if (score === 0 || score === 1) {
                     setPasswordStrength("Weak");
                   } else if (score === 2) {
@@ -111,6 +132,7 @@ const InputTextField: FC<
               onBlur={(e) => {
                 setFieldTouched(name, true, true);
                 setFieldValue(name, e.target?.value?.trim(), true);
+                sliderFocusOut && sliderFocusOut();
               }}
               error={Boolean(meta.touched && meta.error)}
               helperText={meta.touched && meta.error ? meta.error : undefined}
@@ -133,16 +155,28 @@ const InputTextField: FC<
                     </InputAdornment>
                   ) : null,
                   endAdornment: endIcon ? (
-                    <InputAdornment
-                      position="end"
-                      classes={{ root: "end-adornment" }}
-                    >
-                      {checkIsIcon(endIcon) ? (
-                        <img src={`images/${endIcon}`} />
-                      ) : (
-                        endIcon
-                      )}
-                    </InputAdornment>
+                    isSliderInput ? (
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          color: "var(--warmOrange)",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {t(endIcon)}
+                      </p>
+                    ) : (
+                      <InputAdornment
+                        position="end"
+                        classes={{ root: "end-adornment" }}
+                      >
+                        {checkIsIcon(endIcon) ? (
+                          <img src={`images/${endIcon}`} />
+                        ) : (
+                          endIcon
+                        )}
+                      </InputAdornment>
+                    )
                   ) : fieldType === "password" ? (
                     <InputAdornment
                       position="end"
@@ -161,6 +195,7 @@ const InputTextField: FC<
                       </IconButton>
                     </InputAdornment>
                   ) : null,
+                  style: { width: isSliderInput ? "120px" : "" },
                 },
               }}
             />
