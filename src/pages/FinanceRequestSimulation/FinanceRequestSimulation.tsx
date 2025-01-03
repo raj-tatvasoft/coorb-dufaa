@@ -111,7 +111,7 @@ const FinanceRequestSimulation = () => {
   });
 
   const ExpensesValidationSchema = yup.object().shape(
-    step === "Expenses"
+    step === "Expenses" && groupedVariables?.["Expenses"]
       ? Object.values(groupedVariables["Expenses"]).reduce(
           (acc: IObject, obj: any) => {
             if (
