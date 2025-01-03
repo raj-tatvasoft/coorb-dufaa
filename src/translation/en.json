@@ -440,6 +440,7 @@
   "invalidOTP": "Invalid OTP",
   "t&c": "Terms & Conditions",
   "net_loan_amount": "Net Loan Amount",
+  "allowedFiles": "Allowed files: {{files}}",
   "invalid": "Invalid",
   "or": "or",
   "month": "months"

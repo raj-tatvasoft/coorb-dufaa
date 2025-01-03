@@ -8,7 +8,6 @@ import InputTextField from "../../components/common/InputTextField";
 import { workflowService } from "../../service/workflow/WorkflowService";
 import { CONST_WORDS, yup } from "../../utils/constant";
 import { setUserName } from "../../utils/helperFunction";
-import { successToast } from "../../components/common/ToastMsg";
 
 export interface Login {
   userName: string;
