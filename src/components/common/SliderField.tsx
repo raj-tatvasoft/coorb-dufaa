@@ -31,10 +31,21 @@ const SliderField: FC<
     min: number;
     max: number;
     step: number;
+    onSliderError?: () => void;
   }
 > = (props) => {
-  const { formatValue, lbl, rightLbl, subLbl, name, min, max, step, valLbl } =
-    props;
+  const {
+    formatValue,
+    lbl,
+    rightLbl,
+    subLbl,
+    name,
+    min,
+    max,
+    step,
+    valLbl,
+    onSliderError,
+  } = props;
   const { setFieldValue } = useFormikContext();
 
   return (
@@ -54,6 +65,7 @@ const SliderField: FC<
                       (min && Number(field.value) < min)
                     ) {
                       errorToast(`${t("invalid")} ${t(name)}`);
+                      if (onSliderError) onSliderError();
                     }
                   }}
                   endIcon={valLbl}

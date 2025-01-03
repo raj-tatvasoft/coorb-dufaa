@@ -145,6 +145,7 @@ export const TailorLoan = ({
     }
     if (errorMsg) {
       errorToast(errorMsg);
+      setSimulateLoan({ isLoading: false, details: {} });
       return;
     }
     setSimulateLoan({ isLoading: true, details: {} });
@@ -299,6 +300,9 @@ export const TailorLoan = ({
               })}
               step={1000}
               valLbl="SAR"
+              onSliderError={() =>
+                setSimulateLoan({ isLoading: false, details: {} })
+              }
             />
 
             <SliderField
@@ -312,6 +316,9 @@ export const TailorLoan = ({
               subLbl={"inMonths"}
               step={1}
               valLbl="month"
+              onSliderError={() =>
+                setSimulateLoan({ isLoading: false, details: {} })
+              }
             />
 
             {/* <ToggleButtonGroupField
