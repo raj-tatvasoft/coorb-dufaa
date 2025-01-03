@@ -114,7 +114,7 @@
   "invalidSaudiMobileNumber": "Invalid Saudi Mobile Number",
   "pleaseTickThis": "Required",
   "duffa": "Duffa",
-  "readT&C": "<div>I have read the <a href=\"google.vom\" target=\"_blank\" style=\"color:#C65600\">terms & conditions</a></div>",
+  "readT&C": "<div>I have read the <a href=\"termandconditon.html\" target=\"_blank\" style=\"color:#C65600\">terms & conditions</a></div>",
   "t_an_c_tick": "I have read and accepted the terms & conditions",
   "wantToReceiveMarketingMails": "I want to receive marketing material",
   "codeSentToYourMobileNumber": "A code was sent to your mobile number",
