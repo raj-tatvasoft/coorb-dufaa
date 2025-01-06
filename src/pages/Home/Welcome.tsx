@@ -59,6 +59,7 @@ const Welcome = ({
               name={WelcomeFields.saudiMobNo}
               placeholder={"saudi_mobile_number_text"}
               startIcon={"SmartPhone.svg"}
+              valRegex={regex.MobileNo}
             />
           </Grid>
           <Grid size={{ xs: 12 }}>
