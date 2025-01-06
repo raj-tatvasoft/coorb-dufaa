@@ -585,6 +585,7 @@ const FinanceRequestSimulation = () => {
         return (
           <ApplyLoanSuccess
             handleGoHome={() => {
+              formRef.current?.setValues({});
               setStep("Product");
             }}
           />

@@ -70,7 +70,7 @@ const SliderField: FC<
                   }}
                   endIcon={valLbl}
                   isSliderInput
-                  valRegex={regex.Integer}
+                  valRegex={regex.PositiveNo}
                 />
               </div>
             )}

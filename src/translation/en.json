@@ -260,7 +260,7 @@
   "Welcome": "Welcome",
   "Submit": "Submit",
   "Nafath": "Nafath",
-  "customer_bab_iban": "Customer Bab Iban",
+  "customer_bab_iban": "Customer BaB IBAN",
   "type_of_additional_id": "Type Of Additional Id",
   "title_label": "Title Label",
   "Personal Information": "Personal Information",
@@ -296,7 +296,8 @@
   "Fail": "Fail",
   "simulate_loan_button": "Simulate Finance Button",
   "salary_certificate": "Salary Certificate",
-  "loan_contract_document": "Finance Contract Document",
+  "loan_contract_document": "Loan ID",
+  "iban_expiry_date": "IBAN validity Date",
   "business_sector": "Business Sector",
   "Final Decision": "Final Decision",
   "password": "Password",
@@ -444,5 +445,6 @@
   "invalid": "Invalid",
   "or": "or",
   "month": "months",
-  "minSalary": "Salary must be greater than or equal to {{salaryAmt}}"
+  "minSalary": "Salary must be greater than or equal to {{salaryAmt}}",
+  "apkIsInProcess": "Your application is already in-process"
 }

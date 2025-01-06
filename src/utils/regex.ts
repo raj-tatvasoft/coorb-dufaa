@@ -1,6 +1,7 @@
 export const regex = {
   Integer: /^-?\d*$/,
   MobileNo: /^\+?\d*$/,
+  PositiveNo: /^\d*$/,
   Decimal: /^\d*\.?\d*$/,
   SaudiMobNo: /^(\+966|966)?5\d{8}$/,
   Password:
