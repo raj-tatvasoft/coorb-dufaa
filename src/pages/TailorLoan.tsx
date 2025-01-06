@@ -266,7 +266,7 @@ export const TailorLoan = ({
             <p className="groupLabel">{t("tailorYourPersonalLoan")}</p>
             <div className="loanCalculator">
               <a
-                href="https://google.com"
+                href="termandconditon.html"
                 target="_blank"
                 className="termAndCondition"
               >
