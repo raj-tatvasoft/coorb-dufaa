@@ -88,7 +88,7 @@ const WorkflowFormField: FC<
         );
       return (
         <InputTextField
-          valRegex={regex.Integer}
+          valRegex={regex.PositiveNo}
           {...transferredProps}
           placeholder={transferredProps.lbl}
           showLbl={showLbl ?? false}

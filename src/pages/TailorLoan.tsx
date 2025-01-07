@@ -86,18 +86,25 @@ export const TailorLoan = ({
 
   useEffect(() => {
     if (values?.[TailorLoanFields.loanPrincipalMin]) {
-      setFieldValue(
-        TailorLoanFields.loanPrincipal,
-        values?.[
-          isDefaultTenureToMaxLoan
-            ? TailorLoanFields.loanPrincipalMax
-            : TailorLoanFields.loanPrincipalMin
-        ]
-      );
-      setFieldValue(
-        TailorLoanFields.loanTenure,
-        values?.[TailorLoanFields.loanTenureMin]
-      );
+      if (isDefaultTenureToMaxLoan) {
+        setFieldValue(
+          TailorLoanFields.loanPrincipal,
+          values?.[TailorLoanFields.loanPrincipalMax]
+        );
+        setFieldValue(
+          TailorLoanFields.loanTenure,
+          values?.[TailorLoanFields.loanTenureMax]
+        );
+      } else {
+        setFieldValue(
+          TailorLoanFields.loanPrincipal,
+          values?.[TailorLoanFields.loanPrincipalMin]
+        );
+        setFieldValue(
+          TailorLoanFields.loanTenure,
+          values?.[TailorLoanFields.loanTenureMin]
+        );
+      }
     }
   }, [values?.[TailorLoanFields.loanPrincipalMin]]);
   const renderLoanDetails = (fieldName: string, renderVal?: string) => {

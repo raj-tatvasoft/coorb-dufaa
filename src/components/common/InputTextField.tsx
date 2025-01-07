@@ -19,6 +19,7 @@ const InputTextField: FC<
     decimalVariant?: "outlined" | "filled" | "standard";
     isSliderInput?: boolean;
     sliderFocusOut?: () => void;
+    maxCharLength?: number;
   }
 > = (props) => {
   const { t } = useTranslation();
@@ -38,6 +39,7 @@ const InputTextField: FC<
     decimalVariant = "outlined",
     isSliderInput = false,
     sliderFocusOut,
+    maxCharLength,
   } = props;
 
   const { setFieldValue, setFieldTouched, errors }: FormikContextType<IObject> =
@@ -110,11 +112,16 @@ const InputTextField: FC<
                     setPasswordStrength("Strong");
                   }
                 }
-                if (valRegex) {
-                  if (valRegex.test(targetVal)) setFieldValue(name, targetVal);
-                } else {
-                  setFieldValue(name, targetVal);
-                }
+                const isCharLengthAllowed =
+                  (maxCharLength && targetVal?.length <= maxCharLength) ||
+                  !maxCharLength;
+                if (isCharLengthAllowed)
+                  if (valRegex) {
+                    if (valRegex.test(targetVal))
+                      setFieldValue(name, targetVal);
+                  } else {
+                    setFieldValue(name, targetVal);
+                  }
               }}
               onBlur={(e) => {
                 setFieldTouched(name, true, true);

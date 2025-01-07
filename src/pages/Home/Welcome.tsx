@@ -52,6 +52,7 @@ const Welcome = ({
               placeholder={t("NationalIDorIqama")}
               startIcon={"ID.svg"}
               valRegex={regex.Integer}
+              maxCharLength={10}
             />
           </Grid>
           <Grid size={{ xs: 12 }}>
