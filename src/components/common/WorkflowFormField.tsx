@@ -20,6 +20,7 @@ const WorkflowFormField: FC<
     hideFieldNames?: string[];
     showLbl?: boolean;
     renamedLbl?: IObject;
+    isPreventNegForNumber?: boolean;
   }
 > = (props) => {
   const [comboListOptions, setComboListOptions] = useState<{
@@ -36,6 +37,7 @@ const WorkflowFormField: FC<
     hideFieldNames,
     showLbl,
     renamedLbl,
+    isPreventNegForNumber,
   } = props;
 
   if (hidden || hideFieldNames?.find((x) => x === i18nName)) return <></>;
@@ -88,7 +90,7 @@ const WorkflowFormField: FC<
         );
       return (
         <InputTextField
-          valRegex={regex.PositiveNo}
+          valRegex={isPreventNegForNumber ? regex.PositiveNo : regex.Integer}
           {...transferredProps}
           placeholder={transferredProps.lbl}
           showLbl={showLbl ?? false}

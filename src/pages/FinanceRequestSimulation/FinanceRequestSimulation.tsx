@@ -367,7 +367,7 @@ const FinanceRequestSimulation = () => {
     }
   };
 
-  const renderGroupedDetails = () => {
+  const renderGroupedDetails = (isPreventNegForNumber?: boolean) => {
     return groupedVariables[step]?.map((variable: Variable, i: number) => {
       return (
         <div className="mt-4" key={`finance-request-field-${i}`}>
@@ -384,6 +384,7 @@ const FinanceRequestSimulation = () => {
               FinanceRequestSimulationFields.totalExpenses,
               FinanceRequestSimulationFields.docSigningOtp,
             ]}
+            isPreventNegForNumber={isPreventNegForNumber}
             renamedLbl={{
               [FinanceRequestSimulationFields.commodityType]: "chooseCommodity",
             }}
@@ -466,7 +467,7 @@ const FinanceRequestSimulation = () => {
       case "Update Salary":
         return (
           <>
-            {renderGroupedDetails()}
+            {renderGroupedDetails(step === "Expenses")}
             <div className="mt-4">
               <ButtonField
                 lbl={"next"}
