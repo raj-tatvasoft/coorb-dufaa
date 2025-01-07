@@ -432,7 +432,7 @@ const FinanceRequestSimulation = () => {
       case "Salary Review":
         return (
           <>
-            {renderGroupedDetails()}
+            {renderGroupedDetails(true)}
             <div className="mt-4">
               <ButtonField
                 lbl={"iAmOkWithSalary"}
@@ -467,7 +467,7 @@ const FinanceRequestSimulation = () => {
       case "Update Salary":
         return (
           <>
-            {renderGroupedDetails(step === "Expenses")}
+            {renderGroupedDetails(true)}
             <div className="mt-4">
               <ButtonField
                 lbl={"next"}
