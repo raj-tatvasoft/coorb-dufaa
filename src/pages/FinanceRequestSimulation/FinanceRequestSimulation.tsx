@@ -473,15 +473,11 @@ const FinanceRequestSimulation = () => {
                 lbl={"next"}
                 handleClick={() => {
                   if (step === "Expenses") {
-                    handleBtnClick(
-                      FinanceRequestSimulationFields.sendToQararBtn,
-                      false,
-                      true,
-                      null,
-                      {
-                        [SimahAuthModalFields.SIMAHCheckbox]: true,
-                      }
+                    formRef.current?.setFieldValue(
+                      SimahAuthModalFields.SIMAHCheckbox,
+                      true
                     );
+                    setModalDetail({ isFor: "simah" });
                   } else {
                     handleNextStep();
                   }
@@ -649,9 +645,11 @@ const FinanceRequestSimulation = () => {
           return (
             <form className="workflowDetailWrapper" onSubmit={handleSubmit}>
               {renderStepContent}
-              {!["Product", "ApplyLoanSuccessFeedback"].find(
-                (x) => x === step
-              ) && (
+              {![
+                "Product",
+                "ApplyLoanSuccessFeedback",
+                "SimahAuthSuccess",
+              ].find((x) => x === step) && (
                 <div className="mt-2">
                   <ButtonField
                     lbl={"back"}
@@ -679,7 +677,14 @@ const FinanceRequestSimulation = () => {
                 <SIMAHAuthorization
                   handleClose={handleCloseModal}
                   open={true}
-                  handleContinue={handleNextStep}
+                  handleContinue={() => {
+                    handleBtnClick(
+                      FinanceRequestSimulationFields.sendToQararBtn,
+                      false,
+                      true,
+                      () => handleNextStep()
+                    );
+                  }}
                 />
               ) : (
                 <></>
