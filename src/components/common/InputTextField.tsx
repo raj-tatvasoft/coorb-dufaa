@@ -124,9 +124,11 @@ const InputTextField: FC<
                   }
               }}
               onBlur={(e) => {
-                setFieldTouched(name, true, true);
-                setFieldValue(name, e.target?.value?.trim(), true);
-                if (sliderFocusOut) sliderFocusOut();
+                setTimeout(() => {
+                  setFieldTouched(name, true, true);
+                  setFieldValue(name, e.target?.value?.trim(), true);
+                  if (sliderFocusOut) sliderFocusOut();
+                }, 10);
               }}
               error={Boolean(meta.touched && meta.error)}
               helperText={meta.touched && meta.error ? meta.error : undefined}

@@ -446,5 +446,7 @@
   "or": "or",
   "month": "months",
   "minSalary": "Salary must be greater than or equal to {{salaryAmt}}",
-  "apkIsInProcess": "Your application is already in-process"
+  "apkIsInProcess": "Your application is already in-process",
+  "shareDataWithDufaaErrorToast": "You must agree to share your data with Dufaa to continue.",
+  "termsAnsConditionsCheckboxErrorToast": "You must confirm that you have read the terms & conditions to continue."
 }

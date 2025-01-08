@@ -23,6 +23,7 @@ import { ReviewLoan } from "../ReviewLoan";
 import { TailorLoan, TailorLoanFields } from "../TailorLoan";
 import UserEnrollment, { UserEnrollmentFields } from "./UserEnrollment";
 import Welcome, { WelcomeFields } from "./Welcome";
+import { errorToast } from "../../components/common/ToastMsg";
 
 export type HomeStep =
   | "welcome"
@@ -287,6 +288,32 @@ export const Home = () => {
             touchedFields[field] = true;
           });
           setTouched(touchedFields);
+          if (res && step === "welcome") {
+            const element = document.createElement("ul");
+            element.style.marginLeft = "15px";
+            element.style.listStyle = "disc";
+
+            const appendError = (message: string) => {
+              const error = document.createElement("li");
+              error.textContent = message;
+              element.appendChild(error);
+            };
+
+            Object.entries(res).forEach(([key, value]) => {
+              if (key === WelcomeFields.agreeToShare) {
+                appendError(t("shareDataWithDufaaErrorToast"));
+              } else if (key === WelcomeFields.readTAndC) {
+                appendError(t("termsAnsConditionsCheckboxErrorToast"));
+              } else if (
+                key !== WelcomeFields.agreeToShare &&
+                key !== WelcomeFields.readTAndC
+              ) {
+                appendError(value as string);
+              }
+            });
+
+            errorToast(element.outerHTML);
+          }
         } else {
           handleGenericButtonClick(values, btnName, (data: any) => {
             const newValues = {
