@@ -348,3 +348,4 @@ export const CONST_WORDS = {
 };
 
 export const ALLOWED_FILE_EXTENSION = ["pdf", "jpg", "png", "jpeg"];
+export const ALLOWED_FILE_SIZE = 5 * 1024 * 1024;

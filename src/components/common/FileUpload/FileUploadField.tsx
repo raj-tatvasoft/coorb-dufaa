@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 import { IGenericFieldProps, IObject } from "../../../service/commonModel";
 import { UploadFile, Visibility } from "@mui/icons-material";
 import ViewUploadedFile from "./ViewUploadedFileModal";
-import { ALLOWED_FILE_EXTENSION } from "../../../utils/constant";
+import {
+  ALLOWED_FILE_EXTENSION,
+  ALLOWED_FILE_SIZE,
+} from "../../../utils/constant";
 import { errorToast } from "../ToastMsg";
 import { fileService } from "../../../service/file/FileService";
 
@@ -38,63 +41,68 @@ const FileUploadField: FC<IGenericFieldProps & { isServerUpload?: boolean }> = (
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.currentTarget.files?.[0];
-
+    let errMsg = "";
     if (file) {
-      if (
-        ALLOWED_FILE_EXTENSION.includes(
-          file.name.split(".").pop()!.toLowerCase()
-        )
-      ) {
+      const isValidFile = ALLOWED_FILE_EXTENSION.includes(
+        file.name.split(".").pop()!.toLowerCase()
+      );
+      const isFileSizeAllowed = file.size <= ALLOWED_FILE_SIZE;
+      if (isValidFile && isFileSizeAllowed) {
         if (isServerUpload) {
-          if (file) {
-            const reader = new FileReader();
+          const reader = new FileReader();
 
-            reader.onloadend = () => {
-              fileService
-                .upload(
-                  {
-                    fileName: file.name,
-                    flowInstanceId: values.initialDetails.workflowInstanceId,
-                    flowInstanceTokenId: values.initialDetails.data[8],
-                    taskInstanceId: values.initialDetails.taskInstanceId,
-                    taskInstanceTokenId: values.initialDetails.data[5],
-                    variableTypeId: props.id!,
-                    variableTypeTokenId: Number(props.tokenId),
-                  },
-                  reader.result!.toString()
-                )
-                .then((res) => {
-                  if (res?.data?.message) {
-                    const existingValues = JSON.parse(JSON.stringify(values));
-                    // const varName = name?.split(".")?.pop() ?? name;
-                    // Object.values(
-                    //   existingValues.initialDetails.variables
-                    // ).forEach((x: any) => {
-                    //   if (x.i18nName === varName) {
-                    //     existingValues.initialDetails.variables[
-                    //       x.id
-                    //     ].textValue = res?.data?.message;
-                    //   }
-                    // });
-                    setValues(existingValues);
-                    setFieldValue(name, res?.data?.message, true);
-                    setViewFileDetail({
-                      fileData: "",
-                      fileType: "",
-                      show: false,
-                    });
-                    event.target.value = "";
-                  }
-                });
-            };
+          reader.onloadend = () => {
+            fileService
+              .upload(
+                {
+                  fileName: file.name,
+                  flowInstanceId: values.initialDetails.workflowInstanceId,
+                  flowInstanceTokenId: values.initialDetails.data[8],
+                  taskInstanceId: values.initialDetails.taskInstanceId,
+                  taskInstanceTokenId: values.initialDetails.data[5],
+                  variableTypeId: props.id!,
+                  variableTypeTokenId: Number(props.tokenId),
+                },
+                reader.result!.toString()
+              )
+              .then((res) => {
+                if (res?.data?.message) {
+                  const existingValues = JSON.parse(JSON.stringify(values));
+                  // const varName = name?.split(".")?.pop() ?? name;
+                  // Object.values(
+                  //   existingValues.initialDetails.variables
+                  // ).forEach((x: any) => {
+                  //   if (x.i18nName === varName) {
+                  //     existingValues.initialDetails.variables[
+                  //       x.id
+                  //     ].textValue = res?.data?.message;
+                  //   }
+                  // });
+                  setValues(existingValues);
+                  setFieldValue(name, res?.data?.message, true);
+                  setViewFileDetail({
+                    fileData: "",
+                    fileType: "",
+                    show: false,
+                  });
+                  event.target.value = "";
+                }
+              });
+          };
 
-            reader.readAsDataURL(file);
-          }
+          reader.readAsDataURL(file);
         } else {
           setFieldValue(name, file, true);
         }
       } else {
-        errorToast(t("allowedFileExtensionError"));
+        if (!isValidFile) errMsg = t("allowedFileExtensionError");
+        if (!isFileSizeAllowed)
+          errMsg +=
+            (errMsg ? " " : "") +
+            t("fileSizeLessThanOrEqual", {
+              size: `${ALLOWED_FILE_SIZE / (1024 * 1024)} MB`,
+            });
+        if (errMsg) errorToast(errMsg);
       }
     }
   };
