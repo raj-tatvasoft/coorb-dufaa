@@ -74,7 +74,8 @@ const FinanceRequestSimulation = () => {
     const lastPage = localStorage.getItem(
       CONST_WORDS.lastActivePage + "_" + getUserName()
     ) as FinanceRequestSimulationStep;
-    if (lastPage) setStep(lastPage);
+    if (lastPage)
+      setStep(lastPage === "ApplyLoanSuccessFeedback" ? "Product" : lastPage);
   }, []);
 
   useEffect(() => {
