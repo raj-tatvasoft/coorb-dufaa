@@ -256,6 +256,7 @@
   "Fill Data": "Fill Data",
   "Underwriting": "Underwriting",
   "Fill Application": "Fill Application",
+  "applicationDetails": "Application Details",
   "Reject": "Reject",
   "Welcome": "Welcome",
   "Submit": "Submit",
@@ -450,5 +451,7 @@
   "shareDataWithDufaaErrorToast": "You must agree to share your data with Dufaa to continue.",
   "termsAnsConditionsCheckboxErrorToast": "You must confirm that you have read the terms & conditions to continue.",
   "enterYourSalaryRequired": "Please Enter Your Salary",
-  "fileSizeLessThanOrEqual": "File size must be less than or equal to {{size}}"
+  "fileSizeLessThanOrEqual": "File size must be less than or equal to {{size}}",
+  "father’s_name": "Father's Name",
+  "grandfather’s_name": "Grandfather's Name"
 }

@@ -1,4 +1,6 @@
+import { AxiosResponse } from "axios";
 import { apiRequest } from "../interceptor";
+import { ITaskStatusRes, ITaskSummary } from "./WorkflowModel";
 
 class WorkflowService {
   getStartableWorkflows = async () => {
@@ -23,6 +25,14 @@ class WorkflowService {
     return apiRequest.post(`workflow/start/${id}`, {
       tokenId,
     });
+  };
+
+  getStatus = async (): Promise<AxiosResponse<ITaskStatusRes>> => {
+    return apiRequest.get(`flow/status`);
+  };
+
+  getSummary = async (): Promise<AxiosResponse<ITaskSummary>> => {
+    return apiRequest.get(`flow/summary`);
   };
 }
 

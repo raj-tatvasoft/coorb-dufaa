@@ -16,6 +16,15 @@ class FileService {
   download = async (payload: IDownloadFile) => {
     return await apiRequest.get(`task/file/download`, payload);
   };
+
+  getFileName = async (payload: {
+    taskInstanceId: string;
+    taskInstanceTokenId: string;
+    variableTypeId: string;
+    variableTypeTokenId: string;
+  }) => {
+    return apiRequest.get(`task/file/name`, payload);
+  };
 }
 
 export const fileService = new FileService();

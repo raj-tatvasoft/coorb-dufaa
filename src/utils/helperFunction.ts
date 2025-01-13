@@ -6,6 +6,7 @@ import { taskService } from "../service/task/TaskService";
 import { workflowService } from "../service/workflow/WorkflowService";
 import { CONST_WORDS, JDBC_TYPE } from "./constant";
 import { t } from "i18next";
+import { Dispatch, SetStateAction } from "react";
 
 export const checkIsIcon = (imagePath: string) => {
   const extenstion = imagePath.split(".")?.pop()?.toLowerCase();
@@ -144,12 +145,13 @@ export const transferTaskObjectForFormValue = (
   return newValues;
 };
 
-export const getFirstPendingWorkflowDetail = (): Promise<
-  AxiosResponse<ITaskDetail, any> | undefined
-> => {
+export const getFirstPendingWorkflowDetail = (
+  setSelectedTaskPendingData?: Dispatch<SetStateAction<IObject>>
+): Promise<AxiosResponse<ITaskDetail, any> | undefined> => {
   return workflowService.getpendingWorkflows().then((pendingRes) => {
-    if (pendingRes?.data) {
+    if (pendingRes?.data?.length) {
       const data = pendingRes.data[0];
+      if (setSelectedTaskPendingData) setSelectedTaskPendingData(data);
       return taskService
         .release(data.taskInstanceId, data.data[5].toString())
         .then((relRes) => {

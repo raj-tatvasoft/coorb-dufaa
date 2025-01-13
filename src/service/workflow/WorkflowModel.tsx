@@ -66,3 +66,19 @@ export interface Workflow {
   name: string;
   tokenId: number;
 }
+
+export interface ITaskStatusRes {
+  message: string;
+  errorCode: number;
+  detailedReply: {
+    statusName: string;
+    lastStusChange: string;
+  };
+  timeStamp: string;
+}
+
+export interface ITaskSummary {
+  message: string;
+  errorCode: number;
+  detailedReply: string[][];
+}
