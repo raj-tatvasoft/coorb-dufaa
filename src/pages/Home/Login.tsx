@@ -27,10 +27,18 @@ export const Login = () => {
     const token = `${values.userName}:${values.password}`;
     localStorage.setItem(CONST_WORDS.token, btoa(token));
     workflowService
-      .getpendingWorkflows()
+      .getSummary()
       .then((res) => {
         if (res?.data) {
-          setUserName(values.userName);
+          const firstName = res.data.detailedReply?.find(
+            (x) => x?.[1] === "first_name"
+          )?.[2];
+          const lastName = res.data.detailedReply?.find(
+            (x) => x?.[1] === "last_name"
+          )?.[2];
+          setUserName(
+            firstName || lastName ? `${firstName} ${lastName}` : values.userName
+          );
           // if (res.data[0]?.statusInDesc?.toLowerCase() === "submit") {
           //   navigate("/finance-simulation");
           // } else {
